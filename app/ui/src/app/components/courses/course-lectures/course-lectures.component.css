@@ -1,0 +1,7 @@
+/* *{
+    border:1px solid rebeccapurple;
+} */
+
+button[aria-expanded="true"] > i{
+transform: rotate(90deg);
+}

@@ -1,0 +1,48 @@
+<div class="container-fluid p-0 ">
+    <div class="row justify-content-center">
+      <div class="col">
+        <div class="card  " style="border: none !important;background-color: inherit;">
+          <div class="card-body p-5">
+            <h3 class="card-title text-center mb-4 fs-2 fw-bolder">Course Form</h3>
+            <form [formGroup]="courseForm" (ngSubmit)="onSubmit(courseForm)">
+              <div class="form-group mb-4">
+                <label for="title" class="mb-1">Title</label>
+                <input type="text" id="title" formControlName="title" class="form-control" placeholder="Enter course title">
+                <div *ngIf="courseForm.get('title')?.invalid && courseForm.get('title')?.touched" class="text-danger mt-1">
+                  Title is required
+                </div>
+              </div>
+  
+              <div class="form-group mb-4">
+                <label for="authorName" class="mb-1">Author Name</label>
+                <input type="text" id="authorName" formControlName="authorName" class="form-control" placeholder="Enter author name">
+                <div *ngIf="courseForm.get('authorName')?.invalid && courseForm.get('authorName')?.touched" class="text-danger mt-1">
+                  Author Name is required
+                </div>
+              </div>
+  
+              <div class="form-group mb-4">
+                <label for="synopsis" class="mb-1">Synopsis</label>
+                <textarea id="synopsis" formControlName="synopsis" class="form-control" rows="3" placeholder="Enter synopsis"></textarea>
+                <div *ngIf="courseForm.get('synopsis')?.invalid && courseForm.get('synopsis')?.touched" class="text-danger mt-1">
+                  Synopsis is required
+                </div>
+              </div>
+  
+              <div class="form-group mb-4">
+                <label for="description" class="mb-1">Description</label>
+                <textarea id="description" formControlName="description" class="form-control" rows="3" placeholder="Enter description"></textarea>
+                <div *ngIf="courseForm.get('description')?.invalid && courseForm.get('description')?.touched" class="text-danger mt-1">
+                  Description is required
+                </div>
+              </div>
+  
+              <button type="submit" class="btn btn-primary btn-block" [disabled]="!courseForm.valid" *ngIf="!courseUploaded">Submit</button>
+              <button  class="btn btn-success btn-block" [disabled]="true" *ngIf="courseUploaded">Course uploaded successfully!</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

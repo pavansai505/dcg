@@ -1,0 +1,51 @@
+
+.mainDiv{
+  position: relative;
+  background: linear-gradient(109.2deg, rgb(254, 3, 104) 9.3%, rgb(103, 3, 255) 89.5%);
+  color: white !important;
+}
+.imageHit{
+  position: absolute;
+  aspect-ratio: 1/1;
+  bottom: 0rem;
+  right: 0rem;
+
+   /* The image used */
+background-image: url("../../../../assets/img/mainSpaceTop.png");
+
+/* Full height */
+height: 60vh !important;
+
+/* Center and scale the image nicely */
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+}
+/* .col,.row,.col-md-6{
+border:1px solid white
+} */
+
+/* @media screen and (max-width: 992px) {
+  .imageHit{
+     
+  }
+} */
+
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (min-width: 1000px) {
+  .infoText{
+      padding: 2rem;
+ 
+  }
+}
+@media screen and (max-width: 1350px) {
+  .imageHit{
+      height: 50% !important;
+ 
+  }
+}
+@media screen and (max-width: 600px) {
+  .imageHit{
+      height: 30% !important;
+  }
+}

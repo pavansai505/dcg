@@ -1,0 +1,71 @@
+<app-navbar></app-navbar>
+<div class="container  p-5">
+    <div class="row">
+        <div class="col-lg-3 col">
+            <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary shadow sticky-top" style="width: 100%;">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                  <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                  <span class="fs-4">Sidebar</span>
+                </a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                  <li [class.selectedPath]="isRouteActive('/instructor/dashboard/profile')">
+                    <a href="#" class="nav-link link-body-emphasis" aria-current="page" [routerLink]="['profile']" routerLinkActive="router-link-active" >
+                        <i class="bi bi-person-circle pe-none me-2"></i>
+                      Profile
+                    </a>
+                  </li>
+                  <li [class.selectedPath]="isRouteActive('/instructor/dashboard/stats')">
+                    <a [routerLink]="['stats']" routerLinkActive="router-link-active"  class="nav-link link-body-emphasis">
+                        <i class="bi bi-journal-code pe-none me-2"></i>
+                      Stats
+                    </a>
+                  </li>
+                  <hr>
+                  <li>
+                    <a class="nav-link link-body-emphasis">
+                      <small>Courses</small>
+                    </a>
+                  </li>
+                  <li [class.selectedPath]="isRouteActive('/instructor/dashboard/courses')">
+                    <a [routerLink]="['courses']" routerLinkActive="router-link-active" class="nav-link link-body-emphasis">
+                        <i class="bi bi-patch-check pe-none me-2"></i>
+                      My courses
+                    </a>
+                  </li>
+                  <li [class.selectedPath]="isRouteActive('/instructor/dashboard/courses/add')">
+                    <a [routerLink]="['courses/add']" routerLinkActive="router-link-active" class="nav-link link-body-emphasis">
+                        <i class="bi bi-gift pe-none me-2"></i>
+                      Add courses
+                    </a>
+                  </li>
+                  <li [class.selectedPath]="isRouteActive('/instructor/dashboard/courses/modify')">
+                    <a [routerLink]="['courses/modify']" routerLinkActive="router-link-active" class="nav-link link-body-emphasis">
+                        <i class="bi bi-card-checklist pe-none me-2"></i>
+                      Modify Courses 
+                    </a>
+                  </li>
+                  <li [class.selectedPath]="isRouteActive('/instructor/dashboard/courses/lessons/add')">
+                    <a [routerLink]="['courses/lessons/add']" routerLinkActive="router-link-active" class="nav-link link-body-emphasis">
+                        <i class="bi bi-coin pe-none me-2"></i>
+                      Add lessons
+                    </a>
+                  </li>
+                </ul>
+                <hr>
+                <div class="dropdown">
+                  <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                    <strong>mdo</strong>
+                  </a>
+                </div>
+              </div>
+        </div>
+        <div class="col-lg-9 col ">
+            <div class="p-3 bg-body-tertiary shadow" >
+              <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

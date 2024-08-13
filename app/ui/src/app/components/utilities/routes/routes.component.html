@@ -1,0 +1,134 @@
+<div class="container-fluid centerIt flex-column">
+  <h1 class="text-center mt-5 fs-1 fw-bolder">Routes</h1>
+  <div class="container-fluid px-4 py-5" id="featured-3">
+    <h2 class="pb-2 border-bottom">Common</h2>
+    <div class="row row-cols-4 p-5 g-5">
+      <div class="col">
+        <div
+          class="btn btn-info btn-block"
+          [routerLink]="['/home']"
+          routerLinkActive="router-link-active"
+        >
+          home
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="b-example-divider"></div>
+  <!-- ?Courses -->
+  <div class="container-fluid px-4 py-5" id="featured-3">
+    <h2 class="pb-2 border-bottom">Courses</h2>
+    <div class="row row-cols-4 p-5 g-5">
+      <div class="col">
+        <div
+          class="btn btn-info btn-block"
+          [routerLink]="['/courses/home']"
+          routerLinkActive="router-link-active"
+        >
+          courses
+        </div>
+      </div>
+      <div class="col">
+        <div
+          class="btn btn-info btn-block"
+          [routerLink]="['/courses/search']"
+          routerLinkActive="router-link-active"
+        >
+          search
+        </div>
+      </div>
+      <div class="col">
+        <div
+          class="btn btn-info btn-block"
+          [routerLink]="['/courses/course/info/1']"
+          routerLinkActive="router-link-active"
+        >
+          course info
+        </div>
+      </div>
+      <div class="col">
+        <div
+          class="btn btn-info btn-block"
+          [routerLink]="['/courses/course/1/lectures']"
+          routerLinkActive="router-link-active"
+        >
+          course lectures
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="b-example-divider"></div>
+  <!--? auth -->
+  <div class="container-fluid px-4 py-5" id="featured-3">
+    <h2 class="pb-2 border-bottom">Auth</h2>
+    <div class="row row-cols-4 p-5 g-5">
+      <div class="col">
+        <div
+          class="btn btn-info btn-block"
+          [routerLink]="['/auth/user/signin']"
+          routerLinkActive="router-link-active"
+        >
+          user signin
+        </div>
+      </div>
+      <div class="col">
+        <div
+          class="btn btn-info btn-block"
+          [routerLink]="['/auth/user/signup']"
+          routerLinkActive="router-link-active"
+        >
+          user signup
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="b-example-divider"></div>
+  <!--? User -->
+  <div class="container-fluid px-4 py-5" id="featured-3">
+    <h2 class="pb-2 border-bottom">User</h2>
+    <div class="row row-cols-4 p-5 g-5">
+      <div class="col">
+        <div
+          class="btn btn-info btn-block"
+          [routerLink]="['/user/dashboard']"
+          routerLinkActive="router-link-active"
+        >
+          user dashboard
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="b-example-divider"></div>
+  <!--? Instructor -->
+  <div class="container-fluid px-4 py-5" id="featured-3">
+    <h2 class="pb-2 border-bottom">Instructor</h2>
+    <div class="row row-cols-4 p-5 g-5">
+      <div class="col">
+        <div
+          class="btn btn-info btn-block"
+          [routerLink]="['/instructor/dashboard']"
+          routerLinkActive="router-link-active"
+        >
+        instructor dashboard
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="b-example-divider"></div>
+  <!--? Admin -->
+  <div class="container-fluid px-4 py-5" id="featured-3">
+    <h2 class="pb-2 border-bottom">Admin</h2>
+    <div class="row row-cols-4 p-5 g-5">
+      <div class="col">
+        <div
+          class="btn btn-info btn-block"
+          [routerLink]="['/admin/dashboard']"
+          routerLinkActive="router-link-active"
+        >
+          admin dashboard
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="b-example-divider"></div>
+</div>

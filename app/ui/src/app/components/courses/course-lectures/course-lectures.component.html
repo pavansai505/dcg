@@ -1,0 +1,198 @@
+<!-- <div class="container-fluid">
+  <header class="d-flex justify-content-center py-3">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a
+          class="btn btn-outline-primary"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasWithBothOptions"
+          aria-controls="offcanvasWithBothOptions"
+        >
+          Menu
+        </a>
+      </li>
+      <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+    </ul>
+  </header>
+  <main>
+    <div class="container my-5">
+      <div class="row">
+        <div class="col centerIt">
+          <ng-container *ngIf="currentLecture">
+          
+            <iframe
+              class=""
+              width="760"
+              height="515"
+              [src]="currentLectureVideoUrl | safeUrl"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div
+  class="offcanvas offcanvas-start"
+  data-bs-scroll="true"
+  tabindex="-1"
+  id="offcanvasWithBothOptions"
+  aria-labelledby="offcanvasWithBothOptionsLabel"
+>
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title fs-6 fw-bold" id="offcanvasWithBothOptionsLabel">
+      {{ course.title }}
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="container d-flex flex-column">
+      <div
+        class="progress"
+        role="progressbar"
+        aria-label="Example with label"
+        aria-valuenow="25"
+        aria-valuemin="0"
+        aria-valuemax="100"
+      >
+        <div class="progress-bar" style="width: 25%">25%</div>
+      </div>
+      <div class="accordion py-3" id="accordionExample">
+        <ng-container
+          *ngFor="let unit of keysArray; index as i; trackBy: trackByFn"
+        >
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                attr.data-bs-target="#collapseTwo{{ i }}"
+                aria-expanded="false"
+                attr.aria-controls="collapseTwo{{ i }}"
+              >
+                {{ unit }}
+              </button>
+            </h2>
+            <div
+              id="collapseTwo{{ i }}"
+              class="accordion-collapse collapse"
+              data-bs-parent="#accordionExample"
+            >
+              <div class="accordion-body p-0">
+                <ul class="list-group list-group-flush w-100">
+                  <ng-container *ngFor="let lesson of unitMap[unit]"
+                    ><li
+                      class="list-group-item"
+                      (click)="setCurrentUnit(lesson)"
+                      style="cursor: pointer"
+                    >
+                      {{ lesson.lessonId + ". " + lesson.lessonTitle }}
+                    </li></ng-container
+                  >
+                </ul>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div
+      class="col-lg-3 col-12 col order-lg-1 order-2 bg-body-secondary min-vh-100"
+    >
+      <div class="flex-shrink-0 sticky-top px-3 py-5">
+        <a
+          href="/"
+          class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom"
+        >
+          <span class="fs-6 fw-semibold">{{ course?.title }}</span>
+        </a>
+        <ul class="list-unstyled ps-0">
+          <li
+            class="pb-1"
+            style="border: 1px solid black;"
+            *ngFor="let unit of keysArray; index as i; trackBy: trackByFn"
+          >
+            <button
+              class="btn btn-toggle d-inline-flex align-items-center rounded w-100 collapsed text-dark border-0"
+              data-bs-toggle="collapse"
+              [attr.data-bs-target]="'#' + i + 'collapse'"
+              aria-expanded="false"
+            >
+              <i class="bi bi-caret-right"></i> {{ unit }}
+            </button>
+            <div class="collapse" [id]="i + 'collapse'" style="">
+              <ul class="list-group list-group-numbered">
+                <li
+                  class="list-group-item text-truncate"
+                  *ngFor="let lesson of unitMap[unit]"
+                  (click)="setCurrentUnit(lesson)"
+                >
+                  {{ lesson.lessonActivityName }}
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-9 col-12 col  order-lg-2 order-1">
+      <div class="container ">
+        <div class="row row-cols-1 gy-5 p-lg-5">
+          <div class="col p-0">
+            <iframe
+              class=""
+              style="width: 100%; aspect-ratio: 9/5"
+              [src]="currentLectureVideoUrl | safeUrl"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div class="col">
+            <div class="row row-cols-1  border-start border-dark border-3">
+              <h1 class="fw-bolder">{{currentLecture?.lessonTitle}}</h1>
+              <h4>{{currentLecture?.lessonActivityName}}</h4>
+            </div>
+          </div>
+          <hr>
+          <div class="col">
+            <div class="row row-cols-1 gy-3">
+              <div class="col p-0">
+                <div class="input-group mb-3 ">
+                  <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                  <span class="btn btn-secondary" id="basic-addon2">Comment</span>
+                </div>
+              </div>
+              <div class="col border p-3 rounded bg-body-secondary" *ngFor="let _ of [].constructor(10)">
+              Comment 
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

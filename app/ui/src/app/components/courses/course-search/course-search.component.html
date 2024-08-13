@@ -1,0 +1,82 @@
+<app-course-navbar (searchInputCall)="searchInputCall($event)"></app-course-navbar>
+<div class="container-fluid my-5">
+  <div class="p-5 text-center bg-body-tertiary rounded-3">
+    <h1 class="text-body-emphasis">Basic jumbotron</h1>
+    <p class="lead">
+      This is a simple Bootstrap jumbotron that sits within a
+      <code>.container</code>, recreated with built-in utility classes.
+    </p>
+  </div>
+</div>
+<main class="container">
+  <div class="row mb-3 gy-3">
+    <div class="col col-md-3 col-12">
+      <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary sticky-top">
+        <a
+          href="/"
+          class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
+        >
+          <svg class="bi pe-none me-2" width="40" height="32">
+            <use xlink:href="#bootstrap"></use>
+          </svg>
+          <span class="fs-4">Sidebar</span>
+        </a>
+        <hr />
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item" (click)="reset()">
+            <a  class="nav-link active" aria-current="page">
+              <svg class="bi pe-none me-2" width="16" height="16">
+                <use xlink:href="#home"></use>
+              </svg>
+              Home
+            </a>
+          </li>
+          <li (click)="sortByPrice(1)">
+            <a  class="nav-link link-body-emphasis">
+              <svg class="bi pe-none me-2" width="16" height="16">
+                <use xlink:href="#speedometer2"></use>
+              </svg>
+              Price : Low to High
+            </a>
+          </li>
+          <li (click)="sortByPrice(-1)">
+            <a  class="nav-link link-body-emphasis" >
+              <svg class="bi pe-none me-2" width="16" height="16">
+                <use xlink:href="#table"></use>
+              </svg>
+              Price : High to Low
+            </a>
+          </li>
+          <li>
+            <a  class="nav-link link-body-emphasis">
+              <svg class="bi pe-none me-2" width="16" height="16">
+                <use xlink:href="#grid"></use>
+              </svg>
+              Products
+            </a>
+          </li>
+          <li>
+            <a  class="nav-link link-body-emphasis">
+              <svg class="bi pe-none me-2" width="16" height="16">
+                <use xlink:href="#people-circle"></use>
+              </svg>
+              Customers
+            </a>
+          </li>
+        </ul>
+        <hr />
+        
+      </div>
+    </div>
+    <div class="col col-md-9 col-12">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          <div class="col" *ngFor="let course of courses">
+            <app-course-card [course]="course"></app-course-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<app-footer></app-footer>

@@ -1,0 +1,180 @@
+<div class="container-fluid p-0">
+  <div class="row justify-content-center">
+    <div class="col" *ngIf="!showForm">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col" *ngFor="let course of courses">
+          <div
+            class="card bg-body-tertiary h-100"
+            (click)="showFormForCard(course)"
+            routerLinkActive="router-link-active"
+          >
+            <img
+              src="{{ 'https://picsum.photos/800/500?random=' + course.id }}"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body d-flex flex-column">
+              <p class="card-title fw-bold h-100">
+                {{ course.title }}
+              </p>
+              <p class="card-text">
+                {{ course.description | limitTo : "60" }}
+              </p>
+              <p class="card-text text-success">
+                <i class="bi bi-person-check-fill"></i>
+                {{ course.authorName }}
+              </p>
+              <p class="card-text">Units : {{ course.lectures.length }}</p>
+              <!-- <div
+                class="d-flex justify-content-between align-items-center mt-auto"
+              >
+                <div class="btn-group">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-dark fw-bold"
+                  >
+                    View
+                  </button>
+                  
+                </div>
+                <small class="text-body-secondary">9 mins</small>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col" *ngIf="showForm">
+      <div
+        class="card"
+        style="border: none !important; background-color: inherit"
+      >
+        <div class="card-body p-5">
+          <button class="card-title text-start mb-4 btn btn-info fw-bolder" (click)="selectedCourse=null;showForm=false;">
+            Back
+          </button>
+          <h3 class="card-title text-center mb-4 fs-2 fw-bolder">
+            {{selectedCourse?.title}}
+          </h3>
+          <h3 class="card-title text-center mb-4 fs-2 fw-bolder">
+            Lesson Form
+          </h3>
+          <form
+            [formGroup]="lessonFormGroup"
+            (ngSubmit)="onSubmit(lessonFormGroup)"
+          >
+            <div class="form-group mb-4">
+              <label for="unitId" class="mb-1">Unit ID</label>
+              <input
+                type="number"
+                id="unitId"
+                formControlName="unitId"
+                class="form-control"
+                placeholder="Enter unit ID"
+              />
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="unitTitle" class="mb-1">Unit Title</label>
+              <input
+                type="text"
+                id="unitTitle"
+                formControlName="unitTitle"
+                class="form-control"
+                placeholder="Enter unit title"
+              />
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="lessonId" class="mb-1">Lesson ID</label>
+              <input
+                type="number"
+                id="lessonId"
+                formControlName="lessonId"
+                class="form-control"
+                placeholder="Enter lesson ID"
+              />
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="lessonTitle" class="mb-1">Lesson Title</label>
+              <input
+                type="text"
+                id="lessonTitle"
+                formControlName="lessonTitle"
+                class="form-control"
+                placeholder="Enter lesson title"
+              />
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="lessonActivityName" class="mb-1"
+                >Lesson Activity Name</label
+              >
+              <input
+                type="text"
+                id="lessonActivityName"
+                formControlName="lessonActivityName"
+                class="form-control"
+                placeholder="Enter lesson activity name"
+              />
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="lessonNotes" class="mb-1">Lesson Notes</label>
+              <textarea
+                type="text"
+                id="lessonNotes"
+                formControlName="lessonNotes"
+                class="form-control"
+                placeholder="Enter lesson notes"
+              ></textarea>
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="lessonVideo" class="mb-1">Lesson Video</label>
+              <input
+                type="text"
+                id="lessonVideo"
+                formControlName="lessonVideo"
+                class="form-control"
+                placeholder="Enter lesson video"
+              />
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="lessonObjectives" class="mb-1"
+                >Lesson Objectives</label
+              >
+              <input
+                type="text"
+                id="lessonObjectives"
+                formControlName="lessonObjectives"
+                class="form-control"
+                placeholder="Enter lesson objectives"
+              />
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="enable" class="mb-1 pe-2">Enable</label>
+              <input
+                type="checkbox"
+                id="enable"
+                formControlName="enable"
+                class="form-check-input"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary btn-block"
+              [disabled]="!lessonFormGroup.valid"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

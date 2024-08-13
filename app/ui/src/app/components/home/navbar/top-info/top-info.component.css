@@ -1,0 +1,13 @@
+.badge{
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.08) !important;
+    color: #fff !important;
+}
+
+/* .nav>*,.nav{
+    border:1px solid red
+} */
+

@@ -1,0 +1,65 @@
+<div class="centerIt container-fluid  page min-vh-100 p-2">
+  <div class="container border  shadow-lg">
+    <div class="row  row-cols-lg-2 row-cols-1 ">
+      <div class="col h-100 p-0">
+        <img src="assets/img/signinpage.jpg" class="w-100 h-100" alt="" />
+      </div>
+      <div class="col p-5 centerIt">
+        
+        <form [formGroup]="signInForm" (ngSubmit)="onSubmit(signInForm)" class="w-100 ">
+        <div class="mb-3">
+          <h2>SIGN-IN</h2>
+        </div>
+        
+          <div class="mb-3 mt-5">
+            <label for="exampleFormControlInput1" class="form-label"
+              >Email address</label
+            >
+            <input
+              type="email"
+              class="form-control"
+              id="exampleFormControlInput1"
+              placeholder="name@example.com"
+              formControlName="email"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="inputPassword5" class="form-label">Password</label>
+            <input
+              type="password"
+              id="inputPassword5"
+              class="form-control"
+              aria-describedby="passwordHelpBlock"
+              formControlName="password"
+            />
+            <div id="passwordHelpBlock " class="form-text text-danger" *ngIf="signInForm.invalid &&  signInForm.dirty ">
+              Invalid password or mail id.
+            </div>
+          </div>
+          <div class="mb-3 mt-5 text-center">
+            <button type="submit" class="btn btn-outline-secondary w-50">
+              Submit
+            </button>
+          </div>
+          <div class="mb-3 text-center">
+            <small
+              class="text-body-secondary"
+              [routerLink]="['/auth/user/signup']"
+              style="cursor: pointer"
+              >Don't have an account yet? Create one.</small
+            >
+          </div>
+          <div class="mb-3 text-center">
+            <small
+              class="text-body-secondary"
+              [routerLink]="['/auth/user/forgot-password']"
+              style="cursor: pointer"
+              >Forgot password ?</small
+            >
+          </div>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
