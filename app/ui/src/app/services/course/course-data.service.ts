@@ -68,4 +68,9 @@ export class CourseDataService {
    isCourseRegistered=(data:CourseRegister):Observable<any>=>{
       return this.http.post<any>("http://localhost:8080/api/v1/course/is-registered",data)
    }
+
+   getTotalLectures(course: Course): number {
+    return course.units.reduce((total, unit) => total + unit.lectures.length, 0);
+  }
+
 }

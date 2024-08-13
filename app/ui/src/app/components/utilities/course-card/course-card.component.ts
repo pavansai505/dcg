@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Course } from '../../../models/course/course';
 import { RouterLink } from '@angular/router';
 import { TruncateStringSizePipe } from '../../../pipes/truncate-string-size.pipe';
+import { CourseDataService } from '../../../services/course/course-data.service';
 
 @Component({
   selector: 'app-course-card',
@@ -12,5 +13,10 @@ import { TruncateStringSizePipe } from '../../../pipes/truncate-string-size.pipe
 })
 export class CourseCardComponent {
   @Input() course!:Course
+  courseLecturesCount:number=0
+  constructor(private courseService:CourseDataService){}
+  ngOnInit(){
+    this.courseLecturesCount=this.courseService.getTotalLectures(this.course)
+  }
 
 }

@@ -16,7 +16,13 @@ import CourseApproval from '../../../models/course/courseApproval';
 export class CourseCardApprovalCardsComponent {
   @Input() course!:Course
   @Output() updateCourses=new EventEmitter<null>();
+  courseLecturesCount:number=0
+  
+
   constructor(private courseService:CourseDataService){}
+  ngOnInit(){
+    this.courseLecturesCount=this.courseService.getTotalLectures(this.course)
+  }
   changeStatus(id:number,type:string){
     this.courseService.updateCourseApproval({id:id,approvalStatus:type} as CourseApproval).subscribe({
       next:(data)=>this.updateCourses.emit()
