@@ -1,7 +1,7 @@
 package com.dcg.mvc.lecture;
 
 import com.dcg.common.BaseEntity;
-import com.dcg.mvc.course.Course;
+import com.dcg.mvc.unit.Unit;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,12 +15,11 @@ import lombok.experimental.SuperBuilder;
 @ToString
 @Entity
 public class Lecture extends BaseEntity {
+
     @ManyToOne
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "unit_id")
     @JsonIgnoreProperties("lectures")
-    private Course course;
-    private int unitId;
-    private String unitTitle;
+    private Unit unit;
     private int lessonId;
     private String lessonTitle;
     private String lessonActivityName;

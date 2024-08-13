@@ -4,6 +4,7 @@ import com.dcg.constants.CourseStatus;
 import com.dcg.model.CourseRegister;
 import com.dcg.mvc.lecture.Lecture;
 import com.dcg.mvc.lecture.LectureRepository;
+import com.dcg.mvc.unit.Unit;
 import com.dcg.mvc.user.User;
 import com.dcg.mvc.user.UserRepository;
 import jakarta.transaction.Transactional;
@@ -36,26 +37,10 @@ public class CourseService {
         }
         return courseList;
     }
-    @Transactional
-    public Course addLecture(Lecture lecture,int courseId, Authentication connectedUser){
-        lecture.setCreatedBy(((User) connectedUser.getPrincipal()).getId());
-        Course course=courseRepository.findById(courseId).orElseThrow();
-        lecture.setCourse(course);
-        course.getLectures().add(lecture);
-        lectureRepository.save(lecture);
-        return course;
-    }
-    @Transactional
-    public Course addMultipleLecture(List<Lecture> lectures, int courseId, Authentication connectedUser){
-        Course course=courseRepository.findById(courseId).orElseThrow();
-        for(Lecture lecture:lectures){
-            lecture.setCreatedBy(((User) connectedUser.getPrincipal()).getId());
-            lecture.setCourse(course);
-            course.getLectures().add(lecture);
-            lectureRepository.save(lecture);
-        }
-        return course;
-    }
+
+
+
+
 
     public List<Course> getAllCourses() {
         return courseRepository.findAll();

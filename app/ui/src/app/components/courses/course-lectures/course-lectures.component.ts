@@ -22,11 +22,9 @@ export class CourseLecturesComponent {
   trackByFn!: TrackByFunction<Lecture>;
   $: any;
 https: any;
-  constructor(
-    private courseService: CourseDataService,
+  constructor(private courseService: CourseDataService,
     private activatedRouter: ActivatedRoute,
-    private router:Router
-  ) {}
+    private router:Router) {}
   ngOnInit() {
     const id = Number(this.activatedRouter.snapshot.paramMap.get('id'));
     this.courseService.getCourseById(id).subscribe({

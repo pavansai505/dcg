@@ -3,7 +3,7 @@ package com.dcg.mvc.course;
 import com.dcg.common.BaseEntity;
 import com.dcg.mvc.courseProgress.CourseProgress;
 import com.dcg.mvc.history.CourseActionHistory;
-import com.dcg.mvc.lecture.Lecture;
+import com.dcg.mvc.unit.Unit;
 import com.dcg.mvc.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -19,7 +19,7 @@ import java.util.Set;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"user", "histories", "lectures", "courseProgresses"})
+@ToString(exclude = {"user", "histories", "units", "courseProgresses"})
 @Entity
 public class Course extends BaseEntity {
 
@@ -39,7 +39,7 @@ public class Course extends BaseEntity {
 
     @JsonIgnoreProperties("course")
     @OneToMany(mappedBy = "course", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<Lecture> lectures;
+    private Set<Unit> units;
 
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     private List<CourseProgress> courseProgresses;
