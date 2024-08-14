@@ -14,12 +14,13 @@ pipeline {
             }
         }
 
-        stage('Build Backend') {
+        stage('Clean and Build Backend') {
             steps {
                 dir('app/backend') {
                     script {
-                        // Use bat instead of sh for Windows environment
-                        bat 'mvn clean install'
+                        // Clean and build the Maven project
+                        bat 'mvn clean'
+                        bat 'mvn install'
                     }
                 }
             }
