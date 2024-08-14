@@ -34,6 +34,7 @@ export class CourseInfoComponent {
     this.courseService.getCourseById(id).subscribe({
       next: (value) => {
         this.course = value;
+        this.course.units.sort((a,b)=>a.id-b.id)
         this.courseService
           .isCourseRegistered({ courseId: this.course.id })
           .subscribe({

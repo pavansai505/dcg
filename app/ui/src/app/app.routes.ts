@@ -30,6 +30,7 @@ import { UserCoursesViewComponent } from './components/user/user-dashboard/user-
 import { authInstructorGuard } from './guard/auth-instructor.guard';
 import { ResetPasswordComponent } from './components/auth/user/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './components/auth/user/forgot-password/forgot-password.component';
+import { courseAuthGuard } from './guard/course-auth.guard';
 
 export const routes: Routes = [
   {
@@ -60,7 +61,7 @@ export const routes: Routes = [
   {
     path: 'courses/course/:id/lectures',
     component: CourseLecturesComponent,
-    canActivate:[authGuard]
+    canActivate:[authGuard,courseAuthGuard]
   },
   //? Authentication pages
   // * User authentication paths

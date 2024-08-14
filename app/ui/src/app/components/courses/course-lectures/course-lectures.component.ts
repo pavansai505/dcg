@@ -34,8 +34,7 @@ export class CourseLecturesComponent {
         this.setUnitMapping(value);
         this.setLessonSection();
       },
-      error: (err) => console.error('Observable emitted an error: ' + err),
-      complete: () => console.log('LGTM!'),
+      error: (err) => console.error('Observable emitted an error: ' + err)
     });
   }
   setUnitMapping(value: Course) {
@@ -73,6 +72,7 @@ export class CourseLecturesComponent {
     for (const key of this.keysArray) {
       this.unitMap[key].sort((a, b) => a.lessonId - b.lessonId);
     }
+
   }
   
   
@@ -82,7 +82,6 @@ export class CourseLecturesComponent {
       const lessonId = params['lessonId'];
       if (lessonId) {
         const allLectures = this.course.units.flatMap((unit) => unit.lectures);
-        console.log(allLectures);
         
         const lecture = allLectures.find(
           (lecture) => lecture.id == lessonId
@@ -100,9 +99,7 @@ export class CourseLecturesComponent {
     });
   }
 
-  setCurrentUnitLecture(lesson: Lecture) {
-    console.log(lesson);
-    
+  setCurrentUnitLecture(lesson: Lecture) { 
     this.currentLecture = lesson;
     this.currentLectureVideoUrl =
       'https://www.youtube.com/embed/' + lesson.lessonVideo;
