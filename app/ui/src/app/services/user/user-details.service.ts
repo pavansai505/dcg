@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TokenService } from '../token/token.service';
+import { environment } from '../../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,13 @@ export class UserDetailsService {
    }
    
   getMyDetails=():Observable<any>=>{
-    return this.http.get<any>("http://localhost:8080/api/v1/user/getMyDetails",{
+    return this.http.get<any>(environment.apiBaseUrl+"user/getMyDetails",{
       headers:{
         'Authorization':'Bearer '+this.token.getToken()
       }
     })
  }
   getRegisteredCourses=():Observable<any>=>{
-    return this.http.get<any>("http://localhost:8080/api/v1/user/registered-courses")
+    return this.http.get<any>(environment.apiBaseUrl+"user/registered-courses")
  }
 }

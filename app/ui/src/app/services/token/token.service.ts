@@ -1,17 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
+  private isBrowser: boolean;
 
-  constructor() { }
-  getToken=()=>{
-    return window.sessionStorage.getItem("jwt") || ""
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
   }
-  setToken(key:string,value:any){
 
-    window.sessionStorage.setItem(key,value)
+  getToken = (): string => {
+    if (this.isBrowser) {
+      return window.sessionStorage.getItem("jwt") || "";
+    }
+    return "";
+  }
 
+  setToken(key: string, value: any): void {
+    if (this.isBrowser) {
+      window.sessionStorage.setItem(key, value);
+    }
   }
 }

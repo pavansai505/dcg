@@ -126,7 +126,7 @@
           href="/"
           class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom"
         >
-          <span class="fs-6 fw-semibold">{{ course?.title }}</span>
+          <span class="fs-6 fw-semibold">{{ course.title }}</span>
         </a>
         <ul class="list-unstyled ps-0">
           <li
@@ -142,7 +142,7 @@
             >
               <i class="bi bi-caret-right"></i> {{ unit }}
             </button>
-            <div class="collapse" [id]="i + 'collapse'" style="">
+            <div class="collapse" [id]="i + 'collapse'" >
               <ul class="list-group list-group-numbered">
                 <li
                   class="list-group-item text-truncate"
@@ -174,8 +174,8 @@
           </div>
           <div class="col">
             <div class="row row-cols-1  border-start border-dark border-3">
-              <h1 class="fw-bolder">{{currentLecture?.lessonTitle}}</h1>
-              <h4>{{currentLecture?.lessonActivityName}}</h4>
+              <h1 class="fw-bolder">{{currentLecture.lessonTitle}}</h1>
+              <h4>{{currentLecture.lessonActivityName}}</h4>
             </div>
           </div>
           <hr>

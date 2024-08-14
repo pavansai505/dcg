@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
+import { TokenService } from '../token/token.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -9,8 +10,8 @@ export class AccessControlService {
   isUser:boolean=false
   isAdmin:boolean=false
   isInstructor:boolean=false
-  constructor() {
-    const token = window.sessionStorage.getItem('jwt') || '';
+  constructor(private tokenService:TokenService) {
+    const token = tokenService.getToken() || '';
     if (token != '') {
       this.result = jwtDecode(token);
       this.roles = this.result.authorities.map((ele: any) => {

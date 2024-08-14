@@ -6,6 +6,7 @@ import { Course } from '../../models/course/course';
 import CourseApproval from '../../models/course/courseApproval';
 import CourseRegister from '../../models/course/courseRegister';
 import { Lecture } from '../../models/course/lecture';
+import { environment } from '../../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
@@ -17,56 +18,56 @@ export class CourseDataService {
     
    }
    getCourses=():Observable<any>=>{
-      return this.http.get<any>("http://localhost:8080/api/v1/course/get",{
+      return this.http.get<any>(environment.apiBaseUrl+"course/get",{
         headers:{
           'Authorization':'Bearer '+this.token.getToken()
         }
       })
    }
    getCourseById=(id:number):Observable<any>=>{
-      return this.http.get<any>("http://localhost:8080/api/v1/course/get/"+id,{
+      return this.http.get<any>(environment.apiBaseUrl+"course/get/"+id,{
         headers:{
           'Authorization':'Bearer '+this.token.getToken()
         }
       })
    }
    getCoursesByUserId=(id:number):Observable<any>=>{
-      return this.http.get<any>("http://localhost:8080/api/v1/course/getByUserId/"+id,{
+      return this.http.get<any>(environment.apiBaseUrl+"course/getByUserId/"+id,{
         headers:{
           'Authorization':'Bearer '+this.token.getToken()
         }
       })
    }
    getCourseByLoggedInUserId=():Observable<any>=>{
-      return this.http.get<any>("http://localhost:8080/api/v1/course/getByUserId",{
+      return this.http.get<any>(environment.apiBaseUrl+"course/getByUserId",{
         headers:{
           'Authorization':'Bearer '+this.token.getToken()
         }
       })
    }
    addCourse=(course:Course):Observable<any>=>{
-      return this.http.post<any>("http://localhost:8080/api/v1/course/add",course,{
+      return this.http.post<any>(environment.apiBaseUrl+"course/add",course,{
         headers:{
           'Authorization':'Bearer '+this.token.getToken()
         }
       })
    }
    addLectures=(lecture:Lecture,id:number):Observable<any>=>{
-      return this.http.post<any>("http://localhost:8080/api/v1/course/lecture/add/"+id,lecture,{
+      return this.http.post<any>(environment.apiBaseUrl+"course/lecture/add/"+id,lecture,{
         headers:{
           'Authorization':'Bearer '+this.token.getToken()
         }
       })
    }
    updateCourseApproval=(approvalStatus:CourseApproval):Observable<any>=>{
-      return this.http.put<any>("http://localhost:8080/api/v1/course/updateCourseApproval",approvalStatus)
+      return this.http.put<any>(environment.apiBaseUrl+"course/updateCourseApproval",approvalStatus)
    }
 
    registerToCourse=(data:CourseRegister):Observable<any>=>{
-      return this.http.put<any>("http://localhost:8080/api/v1/course/register",data)
+      return this.http.put<any>(environment.apiBaseUrl+"course/register",data)
    }
    isCourseRegistered=(data:CourseRegister):Observable<any>=>{
-      return this.http.post<any>("http://localhost:8080/api/v1/course/is-registered",data)
+      return this.http.post<any>(environment.apiBaseUrl+"course/is-registered",data)
    }
 
    getTotalLectures(course: Course): number {

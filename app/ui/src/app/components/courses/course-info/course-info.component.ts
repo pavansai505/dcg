@@ -1,11 +1,11 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, Inject, PLATFORM_ID } from '@angular/core';
 import { NavbarComponent } from '../../utilities/navbar/navbar.component';
 import { FooterComponent } from '../../utilities/footer/footer.component';
 import { CourseDataService } from '../../../services/course/course-data.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Course } from '../../../models/course/course';
 import { PaymentService } from '../../../services/course/payment.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 declare var Razorpay: any;
 
@@ -19,11 +19,16 @@ declare var Razorpay: any;
 export class CourseInfoComponent {
   course!: Course;
   isCourseRegistered: boolean = false;
+  isBrowser: boolean=false;
+
   constructor(
     private courseService: CourseDataService,
     private activatedRouter: ActivatedRoute,
-    private paymentService: PaymentService
-  ) {}
+    private paymentService: PaymentService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
   ngOnInit() {
     const id = Number(this.activatedRouter.snapshot.paramMap.get('id'));
     this.courseService.getCourseById(id).subscribe({
@@ -60,7 +65,7 @@ export class CourseInfoComponent {
         bubbles: true,
         cancelable: true,
       });
-      window.dispatchEvent(event);
+      
     },
     prefill: {
       name: '',
