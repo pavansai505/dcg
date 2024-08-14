@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials' // Replace with your Docker Hub credentials ID
+        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
         DOCKER_IMAGE_TAG = "${env.BUILD_ID}"
-        DOCKER_HUB_REPO = 'pavansai505/dcg' // Replace with your Docker Hub repository name
+        DOCKER_HUB_REPO = 'pavansai505/dcg'
     }
 
     stages {
@@ -14,13 +14,11 @@ pipeline {
             }
         }
 
-        stage('Clean and Build Backend') {
+        stage('Build Backend') {
             steps {
                 dir('app/backend') {
                     script {
-                        // Clean and build the Maven project
-                        bat 'mvn clean'
-                        bat 'mvn install'
+                        bat 'mvn clean install'
                     }
                 }
             }
