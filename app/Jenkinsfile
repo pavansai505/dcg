@@ -18,8 +18,8 @@ pipeline {
             steps {
                 dir('app/backend') {
                     script {
-                        // Clean and install dependencies to build the JAR file
-                        sh 'mvn clean install'
+                        // Use bat instead of sh for Windows environment
+                        bat 'mvn clean install'
                     }
                 }
             }
