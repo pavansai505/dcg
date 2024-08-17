@@ -14,10 +14,10 @@ import { Lecture } from '../../../models/course/lecture';
   styleUrl: './course-lectures.component.css',
 })
 export class CourseLecturesComponent {
-  course!: Course;
+  course!: Course | null;
   keysArray: string[] = [];
   unitMap: { [key: string]: any[] } = {};
-  currentLecture!: Lecture;
+  currentLecture!: Lecture | null;
   currentLectureVideoUrl!: string;
   trackByFn!: TrackByFunction<Lecture>;
   $: any;
@@ -73,6 +73,10 @@ export class CourseLecturesComponent {
       this.unitMap[key].sort((a, b) => a.lessonId - b.lessonId);
     }
 
+
+    
+
+
   }
   
   
@@ -81,9 +85,9 @@ export class CourseLecturesComponent {
     this.activatedRouter.queryParams.subscribe((params) => {
       const lessonId = params['lessonId'];
       if (lessonId) {
-        const allLectures = this.course.units.flatMap((unit) => unit.lectures);
+        const allLectures = this.course?.units.flatMap((unit) => unit.lectures);
         
-        const lecture = allLectures.find(
+        const lecture = allLectures?.find(
           (lecture) => lecture.id == lessonId
         );
         // Handle the case where lecture is undefined
@@ -109,4 +113,9 @@ export class CourseLecturesComponent {
       queryParamsHandling: 'merge', // Merge with existing query params
     });
   }
+
+  isActive(lesson: any): boolean {
+    return this.currentLecture == lesson;
+  }
+
 }

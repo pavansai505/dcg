@@ -9,7 +9,7 @@ export interface Lecture {
   unit: Unit; // Reference to the unit
   lessonId: number;
   lessonTitle: string;
-  lessonActivityName: string;
+  lessonActivityName: string |null;
   lessonNotes: string;
   lessonVideo: string;
   lessonObjectives: string;

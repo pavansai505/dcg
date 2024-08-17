@@ -1,18 +1,18 @@
 <div class="container-fluid">
+  <div class="row" style="background-color: #222427;color : white; font-weight: bold;">
+    <div class="col text-center py-3">
+      <span style="font-size: 2vh;">{{ course?.title }}</span>
+    </div>
+  </div>
   <div class="row">
-    <div
-      class="col-lg-3 col-12 col order-lg-1 order-2 bg-body-secondary min-vh-100"
+    <!--! Verion 1 -->
+    <!-- <div
+      class="col-lg-3 col-12 col order-lg-1 order-2 bg-body-light min-vh-100"
     >
-      <div class="flex-shrink-0 sticky-top px-3 py-5">
-        <a
-          href="/"
-          class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom"
-        >
-          <span class="fs-6 fw-semibold">{{ course?.title }}</span>
-        </a>
-        <ul class="list-unstyled ps-0">
+      <div class="flex-shrink-0 px-3 py-5 shadow">
+        <ul class="list-unstyled ps-0 shadow-lg">
           <li
-            class="pb-1"
+            class="pb-1 list-group-item-info list-group-item"
             style="border: 1px solid black;"
             *ngFor="let unit of keysArray; index as i; trackBy: trackByFn"
           >
@@ -21,10 +21,11 @@
               data-bs-toggle="collapse"
               [attr.data-bs-target]="'#' + i + 'collapse'"
               aria-expanded="false"
+              style="text-align: left;"
             >
               <i class="bi bi-caret-right"></i> {{ unit }}
             </button>
-            <div class="collapse" [id]="i + 'collapse'" >
+            <div class="collapse" [id]="i + 'collapse'">
               <ul class="list-group list-group-numbered">
                 <li
                   class="list-group-item text-truncate"
@@ -38,10 +39,46 @@
           </li>
         </ul>
       </div>
+    </div> -->
+    <!--! Version 2  -->
+    <div class="col-lg-3 col-12 col order-lg-1 order-2 bg-body-light min-vh-100">
+      <div class="flex-shrink-0 px-3 py-3 shadow">
+        <ul class="list-unstyled ps-0 shadow-lg">
+          <li
+            class="pb-1 list-group-item"
+            style="border: 1px solid #ddd; border-radius: 0.5rem;"
+            *ngFor="let unit of keysArray; index as i; trackBy: trackByFn"
+          >
+            <button
+              class="btn btn-toggle d-inline-flex align-items-center rounded w-100 collapsed text-dark border-0"
+              data-bs-toggle="collapse"
+              [attr.data-bs-target]="'#' + i + 'collapse'"
+              aria-expanded="false"
+              style="text-align: left; padding: 0.75rem 1rem;"
+            >
+              <i class="bi bi-caret-right"></i> {{ unit }}
+            </button>
+            <div class="collapse" [id]="i + 'collapse'">
+              <ul class="list-group list-group-numbered shadow-lg">
+                <li
+                  class="list-group-item text-truncate mx-3"
+                  *ngFor="let lesson of unitMap[unit]"
+                  (click)="setCurrentUnitLecture(lesson)"
+                  [ngClass]="{'active': isActive(lesson)}"
+                  style="cursor: pointer; padding: 0.75rem 1rem;"
+                >
+                  {{ lesson.lessonActivityName }}
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div class="col-lg-9 col-12 col  order-lg-2 order-1">
-      <div class="container ">
-        <div class="row row-cols-1 gy-5 p-lg-5">
+    
+    <div class="col-lg-9 col-12 col order-lg-2 order-1">
+      <div class="container p-3 sticky-top">
+        <div class="row row-cols-1 gy-2 ">
           <div class="col p-0">
             <iframe
               class=""
@@ -55,25 +92,38 @@
             ></iframe>
           </div>
           <div class="col">
-            <div class="row row-cols-1  border-start border-dark border-3">
-              <h1 class="fw-bolder">{{currentLecture?.lessonTitle}}</h1>
-              <h4>{{currentLecture?.lessonActivityName}}</h4>
+            <div class="row row-cols-1 border-start border-dark border-3">
+              <h1 class="fw-bolder">{{ currentLecture?.lessonTitle }}</h1>
+              <h4>{{ currentLecture?.lessonActivityName }}</h4>
             </div>
           </div>
-          <hr>
+          <hr />
+          <!-- ? Comment Section
           <div class="col">
+            
             <div class="row row-cols-1 gy-3">
               <div class="col p-0">
-                <div class="input-group mb-3 ">
-                  <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                  <span class="btn btn-secondary" id="basic-addon2">Comment</span>
+                <div class="input-group mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Recipient's username"
+                    aria-label="Recipient's username"
+                    aria-describedby="basic-addon2"
+                  />
+                  <span class="btn btn-secondary" id="basic-addon2"
+                    >Comment</span
+                  >
                 </div>
               </div>
-              <div class="col border p-3 rounded bg-body-secondary" *ngFor="let _ of [].constructor(10)">
-              Comment 
+              <div
+                class="col border p-3 rounded bg-body-secondary"
+                *ngFor="let _ of [].constructor(10)"
+              >
+                Comment
+              </div>
             </div>
-            </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

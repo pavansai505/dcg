@@ -5,3 +5,27 @@
 button[aria-expanded="true"] > i{
 transform: rotate(90deg);
 }
+
+
+.btn-toggle:hover {
+    background-color: #f8f9fa;
+    border-color: #e0e0e0;
+  }
+  
+  .list-group-item.active {
+    background-color: #d4edda;
+    color: #000;
+    border:1px solid rgb(32, 170, 32);
+    transform: scale(1.03);
+  }
+  
+  .collapse {
+    transition: height 0.35s ease;
+  }
+  
+  @media (max-width: 768px) {
+    .btn-toggle {
+      font-size: 0.9rem;
+    }
+  }
+  
