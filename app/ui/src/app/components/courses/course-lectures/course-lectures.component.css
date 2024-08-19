@@ -29,3 +29,45 @@ transform: rotate(90deg);
     }
   }
   
+
+  .code-container {
+    position: relative; /* Allows absolute positioning of the button */
+    background-color: #f4f4f4; /* Light gray background for the code block */
+    border: 1px solid #ccc; /* Light gray border for a subtle effect */
+    border-radius: 8px; /* Rounded corners for a modern look */
+    padding: 1rem; /* Padding around the code */
+    overflow-x: auto; /* Horizontal scroll for long lines */
+  }
+  
+  .code-block {
+    white-space: pre-line; /* Wrap text if it exceeds the container width */
+    font-family: 'Courier New', Courier, monospace; /* Monospace font for code */
+    font-size: 0.875rem; /* Slightly smaller font size for code */
+    margin: 0; /* Remove default margin */
+    line-height: 1.5; /* Line height for readability */
+    background-color: #282c34; /* Dark background for code */
+    color: #f8f8f2; /* Light text color for code */
+    padding: 1rem; /* Padding inside the code block */
+    border-radius: 4px; /* Rounded corners for the code block */
+    border: 1px solid #444; /* Slightly darker border for the code block */
+  }
+  
+  .copy-btn {
+    position: absolute; /* Absolute positioning */
+    top: 1rem; /* Distance from the top of the container */
+    right: 1rem; /* Distance from the right of the container */
+    padding: 0.5rem 1rem; /* Button padding */
+    font-size: 0.875rem; /* Button font size */
+    z-index: 1; /* Ensure the button is on top */
+    background-color: #007bff; /* Blue background for the button */
+    color: #ffffff; /* White text color for the button */
+    border: none; /* Remove default button border */
+    border-radius: 4px; /* Rounded corners for the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  }
+  
+  .copy-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  

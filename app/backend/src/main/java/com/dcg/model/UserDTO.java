@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Component
 public class UserDTO {
-    private Integer id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;

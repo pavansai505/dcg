@@ -1,3 +1,4 @@
+import { Quiz } from "./quiz";
 import { Unit } from "./unit"; // Import Unit if needed
 
 export interface Lecture {
@@ -8,10 +9,10 @@ export interface Lecture {
   lastModifiedBy: number | null;
   unit: Unit; // Reference to the unit
   lessonId: number;
-  lessonTitle: string;
-  lessonActivityName: string |null;
+  lessonTitle: string | null;
   lessonNotes: string;
   lessonVideo: string;
-  lessonObjectives: string;
+  code: string;
   enable: boolean;
+  quizzes:Quiz[];
 }

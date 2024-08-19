@@ -25,7 +25,7 @@ public class UnitService {
     private LectureRepository lectureRepository;
 
     @Transactional
-    public Course addUnitToCourse(Unit unit, int courseId, Authentication connectedUser) {
+    public Course addUnitToCourse(Unit unit, Long courseId, Authentication connectedUser) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
@@ -41,7 +41,7 @@ public class UnitService {
     }
 
     @Transactional
-    public Course addMultipleUnitsToCourse(List<Unit> units, int courseId, Authentication connectedUser) {
+    public Course addMultipleUnitsToCourse(List<Unit> units, Long courseId, Authentication connectedUser) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
@@ -59,7 +59,7 @@ public class UnitService {
     }
 
     @Transactional
-    public Course addLectureToUnit(Lecture lecture, int unitId, int courseId, Authentication connectedUser) {
+    public Course addLectureToUnit(Lecture lecture, Long unitId, Long courseId, Authentication connectedUser) {
         lecture.setCreatedBy(((User) connectedUser.getPrincipal()).getId());
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
@@ -80,7 +80,7 @@ public class UnitService {
     }
 
     @Transactional
-    public Course addMultipleLecturesToUnit(List<Lecture> lectures, int unitId, int courseId, Authentication connectedUser) {
+    public Course addMultipleLecturesToUnit(List<Lecture> lectures, Long unitId, Long courseId, Authentication connectedUser) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 

@@ -55,7 +55,7 @@ public class UserService {
         return userRepository.findByEmail(user.getEmail()).get().getFullName();
     }
 
-    public int getUserCount(){
+    public Long getUserCount(){
         return userRepository.getUserCount();
     }
 

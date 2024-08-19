@@ -24,7 +24,7 @@ public class Unit extends BaseEntity {
     @JsonIgnoreProperties("units")
     private Course course;
 
-    private int unitId;
+    private Long unitId;
     private String unitTitle;
 
     @OneToMany(mappedBy = "unit", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)

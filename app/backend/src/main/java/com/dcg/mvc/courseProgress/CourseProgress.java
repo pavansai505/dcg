@@ -17,9 +17,9 @@ import lombok.experimental.SuperBuilder;
 @Entity
 public class CourseProgress extends BaseEntity {
 
-    private int progress;
+    private Long progress;
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
-    private int accessRange;
+    private Long accessRange;
 }

@@ -45,17 +45,17 @@ public class CourseService {
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
     }
-    public Course getCourseById(int id) {
+    public Course getCourseById(Long id) {
         return courseRepository.findById(id).orElse(
                 Course.builder().title("No Course Found").build()
         );
     }
 
-    public int getCourseCount(){
+    public Long getCourseCount(){
         return courseRepository.getCourseCount();
     }
 
-    public List<Course> getCoursesByUserId(int id){
+    public List<Course> getCoursesByUserId(Long id){
         return courseRepository.findByCreatedBy(id);
     }
 
@@ -67,7 +67,7 @@ public class CourseService {
 
     @Transactional
     public Course registerUserToCourse(CourseRegister courseRegister, UserDetails principal) {
-        int id=courseRegister.getCourseId();
+        Long id=courseRegister.getCourseId();
         Course course=courseRepository.findById(id).orElse(null);
         User user=userRepository.findByEmail(principal.getUsername()).get();
         if(!user.getCourses().contains(course)){
@@ -78,7 +78,7 @@ public class CourseService {
         return course;
     }
     public boolean isUserRegisteredForCourse(CourseRegister courseRegister, UserDetails principal) {
-        int id=courseRegister.getCourseId();
+        Long id=courseRegister.getCourseId();
         Course course=courseRepository.findById(id).orElse(null);
         User user=userRepository.findByEmail(principal.getUsername()).get();
         return (user.getCourses().contains(course));

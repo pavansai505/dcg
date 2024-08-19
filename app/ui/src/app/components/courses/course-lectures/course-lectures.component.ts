@@ -5,15 +5,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SafeUrlPipe } from '../../../pipes/safe-url.pipe';
 import { Lecture } from '../../../models/course/lecture';
+import { PointsListPipe } from '../../../pipes/points-list.pipe';
 
 @Component({
   selector: 'app-course-lectures',
   standalone: true,
-  imports: [CommonModule, SafeUrlPipe],
+  imports: [CommonModule, SafeUrlPipe,PointsListPipe],
   templateUrl: './course-lectures.component.html',
   styleUrl: './course-lectures.component.css',
 })
 export class CourseLecturesComponent {
+  
   course!: Course | null;
   keysArray: string[] = [];
   unitMap: { [key: string]: any[] } = {};
@@ -22,6 +24,7 @@ export class CourseLecturesComponent {
   trackByFn!: TrackByFunction<Lecture>;
   $: any;
   https: any;
+  lectures: Lecture[] = [];
   constructor(
     private courseService: CourseDataService,
     private activatedRouter: ActivatedRoute,
@@ -29,37 +32,40 @@ export class CourseLecturesComponent {
   ) {}
   ngOnInit() {
     const id = Number(this.activatedRouter.snapshot.paramMap.get('id'));
+
     this.courseService.getCourseById(id).subscribe({
       next: (value) => {
         this.setUnitMapping(value);
         this.setLessonSection();
       },
-      error: (err) => console.error('Observable emitted an error: ' + err)
+      error: (err) => console.error('Observable emitted an error: ' + err),
     });
   }
   setUnitMapping(value: Course) {
     this.course = value;
-  
+
     // Initialize the unitMap
     this.unitMap = {};
-    value.units.sort((a,b)=>a.id-b.id)
+    value.units.sort((a, b) => a.id - b.id);
     // Process each unit within the course
-    value.units.forEach((unit,idx) => {
+    value.units.forEach((unit, idx) => {
       // Generate a unique key for each unit
-      
-      const key = `${idx+1} - ${unit.unitTitle}`;
-  
+
+      const key = `${idx + 1} - ${unit.unitTitle}`;
+
       // Initialize the array for this unit key if it doesn't already exist
       if (!this.unitMap[key]) {
         this.unitMap[key] = [];
       }
-  
+
       // Add each lecture to the unit's array in the map
       unit.lectures.forEach((lecture) => {
         this.unitMap[key].push(lecture);
       });
+      unit.lectures.sort((a,b)=>a.lessonId-b.lessonId)
+      this.lectures=[...this.lectures,...unit.lectures]
     });
-  
+
     // Create an array of unit keys and sort them based on unitId
     this.keysArray = Object.keys(this.unitMap);
     this.keysArray.sort((a, b) => {
@@ -67,31 +73,24 @@ export class CourseLecturesComponent {
       const unitIdB = parseInt(b.split(' - ')[0], 10);
       return unitIdA - unitIdB;
     });
-  
+
     // Sort each unit's lectures by lessonId
     for (const key of this.keysArray) {
       this.unitMap[key].sort((a, b) => a.lessonId - b.lessonId);
     }
-
-
     
-
-
+    
   }
-  
-  
 
   setLessonSection() {
     this.activatedRouter.queryParams.subscribe((params) => {
       const lessonId = params['lessonId'];
       if (lessonId) {
         const allLectures = this.course?.units.flatMap((unit) => unit.lectures);
-        
-        const lecture = allLectures?.find(
-          (lecture) => lecture.id == lessonId
-        );
+
+        const lecture = allLectures?.find((lecture) => lecture.id == lessonId);
         // Handle the case where lecture is undefined
-        
+
         if (lecture) {
           this.setCurrentUnitLecture(lecture);
         } else {
@@ -103,10 +102,32 @@ export class CourseLecturesComponent {
     });
   }
 
-  setCurrentUnitLecture(lesson: Lecture) { 
+  goToNext() {
+    if (this.currentLecture) {
+      console.log(this.currentLecture,this.lectures[this.lectures.indexOf(this.currentLecture) + 1]);
+      
+      this.setCurrentUnitLecture(
+        this.lectures[this.lectures.indexOf(this.currentLecture) + 1]
+      );
+    }
+  }
+  isLast() {
+    if (this.currentLecture) {
+      // console.log(this.unitMap);
+
+      return (
+        this.lectures.length > this.lectures.indexOf(this.currentLecture) + 1
+      );
+    }
+    return false;
+  }
+
+  setCurrentUnitLecture(lesson: Lecture) {
+    console.log(lesson);
+    
     this.currentLecture = lesson;
     this.currentLectureVideoUrl =
-      'https://www.youtube.com/embed/' + lesson.lessonVideo;
+      'https://www.youtube.com/embed/' + lesson.lessonVideo+"?rel=0";
     this.router.navigate([], {
       relativeTo: this.activatedRouter,
       queryParams: { lessonId: lesson.id },
@@ -117,5 +138,23 @@ export class CourseLecturesComponent {
   isActive(lesson: any): boolean {
     return this.currentLecture == lesson;
   }
+  // Method to get option label based on index
+  getOptionLabel(index: number): string {
+    const labels = ['A', 'B', 'C', 'D'];
+    return labels[index] || '';
+  }
+  copyCode() {
+    const codeElement = document.getElementById('code-block');
+    if (codeElement) {
+      const range = document.createRange();
+      range.selectNode(codeElement);
+      window.getSelection()?.removeAllRanges();
+      window.getSelection()?.addRange(range);
+      document.execCommand('copy');
+      window.getSelection()?.removeAllRanges(); // Deselect the text
+      alert('Code copied to clipboard!');
+    }
+  }
 
+  
 }

@@ -2,7 +2,8 @@ package com.dcg.mvc.lecture;
 
 import com.dcg.common.BaseEntity;
 import com.dcg.mvc.unit.Unit;
-import com.dcg.mvc.comment.Comment; // Import Comment class
+import com.dcg.mvc.comment.Comment;
+import com.dcg.mvc.quiz.Quiz;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,7 +16,7 @@ import java.util.Set;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"unit", "comments", "quizzes"})
 @Entity
 public class Lecture extends BaseEntity {
 
@@ -24,15 +25,21 @@ public class Lecture extends BaseEntity {
     @JsonIgnoreProperties("lectures")
     private Unit unit;
 
-    private int lessonId;
+    private Long lessonId;
     private String lessonTitle;
-    private String lessonActivityName;
+    @Column(columnDefinition = "LONGTEXT")
     private String lessonNotes;
     private String lessonVideo;
-    private String lessonObjectives;
     private boolean enable;
+
+    @Column(columnDefinition = "LONGTEXT")
+    private String code;
 
     @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("lecture")
-    private Set<Comment> comments; // Add this line
+    private Set<Comment> comments;
+
+    @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("lecture")
+    private Set<Quiz> quizzes; // One-to-many relationship with Quiz
 }

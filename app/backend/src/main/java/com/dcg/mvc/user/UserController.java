@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping("/getUserCount")
-    public ResponseEntity<Integer> getCourseCount(){
+    public ResponseEntity<Long> getCourseCount(){
         return ResponseEntity.ok().body(userService.getUserCount());
     }
     @GetMapping("/getMyDetails")

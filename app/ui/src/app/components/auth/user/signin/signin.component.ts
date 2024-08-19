@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import {  ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { TokenService } from '../../../../services/token/token.service';
+import { AccessControlService } from '../../../../services/auth/access-control.service';
 
 @Component({
   selector: 'app-signin',
@@ -14,7 +15,7 @@ import { TokenService } from '../../../../services/token/token.service';
 })
 export class SigninComponent {
   redirectURL:any
-  constructor(private authService:AuthService,private router:Router,private tokenService:TokenService,private route:ActivatedRoute){
+  constructor(private authService:AuthService,private router:Router,private tokenService:TokenService,private route:ActivatedRoute,private accessControl:AccessControlService){
     let params = this.route.snapshot.queryParams;
     if (params['redirectURL']) {
         this.redirectURL = params['redirectURL'];
@@ -27,7 +28,7 @@ export class SigninComponent {
   onSubmit(form:FormGroup) {
     
     this.authService.signIn(form.value).subscribe({
-      next: (value) =>{this.tokenService.setToken("jwt",value.token);this.tokenService.setToken("username",value.username)},
+      next: (value) =>{this.tokenService.setToken("jwt",value.token);this.tokenService.setToken("username",value.username);this.accessControl.refreshAccessControl()},
       error: (err) => console.error('Observable emitted an error: ' + err),
       complete: () =>{
         if(this.redirectURL){

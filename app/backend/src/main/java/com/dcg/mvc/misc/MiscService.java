@@ -15,9 +15,9 @@ public class MiscService {
 
     public AdminDashboardStats getAdminDashboardStats(){
         return AdminDashboardStats.builder()
-                .userCount(userRepository.findAll().size())
-                .courseCount(courseRepository.findAll().size())
-                .registrationsCount(0)
-                .salesCount(0).build();
+                .userCount(Long.valueOf(userRepository.findAll().size()))
+                .courseCount(Long.valueOf(courseRepository.findAll().size()))
+                .registrationsCount(0L)
+                .salesCount(0L).build();
     }
 }

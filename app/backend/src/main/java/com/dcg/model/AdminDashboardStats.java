@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 @Builder
 public class AdminDashboardStats {
-    private int userCount;
-    private int courseCount;
-    private int registrationsCount;
-    private int salesCount;
+    private Long userCount;
+    private Long courseCount;
+    private Long registrationsCount;
+    private Long salesCount;
 }

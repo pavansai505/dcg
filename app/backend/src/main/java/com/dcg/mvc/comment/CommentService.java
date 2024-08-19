@@ -19,7 +19,7 @@ public class CommentService {
     private LectureRepository lectureRepository;
 
     @Transactional
-    public Comment addCommentToLecture(int lectureId, Comment comment, Authentication connectedUser) {
+    public Comment addCommentToLecture(Long lectureId, Comment comment, Authentication connectedUser) {
         // Find the lecture by ID
         Lecture lecture = lectureRepository.findById(lectureId)
                 .orElseThrow(() -> new RuntimeException("Lecture not found"));

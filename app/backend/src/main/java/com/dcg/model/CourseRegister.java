@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class CourseRegister {
-    private int courseId;
+    private Long courseId;
     private String key;
 }

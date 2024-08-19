@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Repository
-public interface CourseRepository extends JpaRepository<Course,Integer> {
+public interface CourseRepository extends JpaRepository<Course,Long> {
 
     @Query(value = "select count(*) from course",nativeQuery = true)
-    public int getCourseCount();
+    public Long getCourseCount();
 
-    List<Course> findByCreatedBy(int id);
+    List<Course> findByCreatedBy(Long id);
 }

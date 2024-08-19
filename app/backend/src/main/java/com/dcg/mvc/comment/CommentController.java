@@ -15,7 +15,7 @@ public class CommentController {
 
     @PostMapping("/lectures/{lectureId}")
     public ResponseEntity<Comment> addCommentToLecture(
-            @PathVariable int lectureId,
+            @PathVariable Long lectureId,
             @RequestBody Comment comment,
             Authentication authentication) {
         try {

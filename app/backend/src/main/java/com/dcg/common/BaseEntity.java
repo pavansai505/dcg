@@ -25,7 +25,7 @@ public class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -37,9 +37,9 @@ public class BaseEntity {
 
     @CreatedBy
     @Column(nullable = false, updatable = false)
-    private Integer createdBy;
+    private Long createdBy;
 
     @LastModifiedBy
     @Column(insertable = false)
-    private Integer lastModifiedBy;
+    private Long lastModifiedBy;
 }

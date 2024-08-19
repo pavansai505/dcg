@@ -38,7 +38,7 @@ public class CourseController {
     @PostMapping("/unit/add/{courseId}")
     public ResponseEntity<Course> addUnit(
             @RequestBody Unit unit,
-            @PathVariable int courseId,
+            @PathVariable Long courseId,
             Authentication connectedUser) {
         Course updatedCourse = unitService.addUnitToCourse(unit, courseId, connectedUser);
         return ResponseEntity.ok(updatedCourse);
@@ -47,7 +47,7 @@ public class CourseController {
     @PostMapping("/units/addMultiple/{courseId}")
     public ResponseEntity<Course> addMultipleUnits(
             @RequestBody List<Unit> units,
-            @PathVariable int courseId,
+            @PathVariable Long courseId,
             Authentication connectedUser) {
         Course updatedCourse = unitService.addMultipleUnitsToCourse(units, courseId, connectedUser);
         return ResponseEntity.ok(updatedCourse);
@@ -56,8 +56,8 @@ public class CourseController {
     @PostMapping("/lectures/add/{courseId}/{unitId}")
     public ResponseEntity<Course> saveLecture(
             @RequestBody Lecture lecture,
-            @PathVariable int courseId,
-            @PathVariable int unitId,
+            @PathVariable Long courseId,
+            @PathVariable Long unitId,
             Authentication connectedUser) {
         Course updatedCourse = unitService.addLectureToUnit(lecture, unitId, courseId, connectedUser);
         return ResponseEntity.ok(updatedCourse);
@@ -66,8 +66,8 @@ public class CourseController {
     @PostMapping("/lectures/addMultiple/{courseId}/{unitId}")
     public ResponseEntity<Course> saveMultipleLecturesToUnit(
             @RequestBody List<Lecture> lectures,
-            @PathVariable int courseId,
-            @PathVariable int unitId,
+            @PathVariable Long courseId,
+            @PathVariable Long unitId,
             Authentication connectedUser) {
         Course updatedCourse = unitService.addMultipleLecturesToUnit(lectures, unitId, courseId, connectedUser);
         return ResponseEntity.ok(updatedCourse);
@@ -80,7 +80,7 @@ public class CourseController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Course> getCourseById(@PathVariable int id) {
+    public ResponseEntity<Course> getCourseById(@PathVariable Long id) {
         Course course = courseService.getCourseById(id);
         return ResponseEntity.ok(course);
     }
@@ -93,14 +93,14 @@ public class CourseController {
     }
 
     @GetMapping("/getByUserId/{id}")
-    public ResponseEntity<List<Course>> getCoursesByUserId(@PathVariable int id) {
+    public ResponseEntity<List<Course>> getCoursesByUserId(@PathVariable Long id) {
         List<Course> courses = courseService.getCoursesByUserId(id);
         return ResponseEntity.ok(courses);
     }
 
     @GetMapping("/getCourseCount")
-    public ResponseEntity<Integer> getCourseCount() {
-        Integer count = courseService.getCourseCount();
+    public ResponseEntity<Long> getCourseCount() {
+        Long count = courseService.getCourseCount();
         return ResponseEntity.ok(count);
     }
 
