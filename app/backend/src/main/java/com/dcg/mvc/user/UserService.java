@@ -50,6 +50,9 @@ public class UserService {
         return jwtTokenCreation.createToken((User) auth.getPrincipal());
 
     }
+    public User getMyDetails(String username){
+        return userRepository.findByEmail(username).get();
+    }
 
     public String getUsername(User user){
         return userRepository.findByEmail(user.getEmail()).get().getFullName();

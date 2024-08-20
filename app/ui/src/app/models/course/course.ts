@@ -1,3 +1,4 @@
+import { User } from "../user/user";
 import { Lecture } from "./lecture";
 import { Unit } from "./unit";
 
@@ -16,4 +17,5 @@ export interface Course {
   courseProgresses: any[]; // Assuming this interface exists
   approvalStatus: string;
   price: number;
+  users:User[];
 }

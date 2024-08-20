@@ -1,5 +1,7 @@
 package com.dcg.mvc.course;
 
+import com.dcg.mapper.CourseMapper;
+import com.dcg.model.CourseDTO;
 import com.dcg.model.CourseRegister;
 import com.dcg.model.RegistrationStatusResponse;
 import com.dcg.mvc.lecture.Lecture;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/course")
@@ -22,6 +25,7 @@ import java.util.Map;
 public class CourseController {
     private final CourseService courseService;
     private final UnitService unitService;
+    private final CourseMapper courseMapper;
 
     @PostMapping("/add")
     public ResponseEntity<Course> saveCourse(@RequestBody Course course, Authentication connectedUser) {
@@ -86,10 +90,16 @@ public class CourseController {
     }
 
     @GetMapping("/getByUserId")
-    public ResponseEntity<List<Course>> getCoursesByLoggedInUserId(Authentication currentUser) {
+    public ResponseEntity<List<CourseDTO>> getCoursesByLoggedInUserId(Authentication currentUser) {
         User user = (User) currentUser.getPrincipal();
         List<Course> courses = courseService.getCoursesByUserId(user.getId());
-        return ResponseEntity.ok(courses);
+
+        // Convert List<Course> to List<CourseDTO>
+        List<CourseDTO> courseDTOs = courses.stream()
+                .map(courseMapper::toDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(courseDTOs);
     }
 
     @GetMapping("/getByUserId/{id}")

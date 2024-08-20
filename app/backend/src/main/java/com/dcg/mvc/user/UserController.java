@@ -1,6 +1,7 @@
 package com.dcg.mvc.user;
 
 import com.dcg.handlers.password.ForgotPasswordHandler;
+import com.dcg.mapper.UserMapper;
 import com.dcg.model.*;
 import com.dcg.mvc.course.Course;
 import com.dcg.response.TokenResponse;
@@ -28,6 +29,7 @@ public class UserController {
     private final UserDTO userDTO;
     private final ForgotPasswordHandler forgotPasswordHandler;
     private final EmailService emailService;
+    private final UserMapper userMapper;
 
 
     @PostMapping("/auth/register")
@@ -51,7 +53,7 @@ public class UserController {
     @Transactional
     public ResponseEntity<UserDTO> getMyDetails(Authentication authentication){
 
-        return ResponseEntity.ok().body(userDTO.convertToDTO((User) authentication.getPrincipal()));
+        return ResponseEntity.ok().body(userMapper.convertToDTO(userService.getMyDetails(((User) authentication.getPrincipal()).getUsername())));
     }
 
     @GetMapping("/registered-courses")
