@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class CourseProgress extends BaseEntity {
+public class LectureProgress extends BaseEntity {
 
     private Long progress;
     @ManyToOne
