@@ -1,12 +1,11 @@
-package com.dcg.mvc.courseProgress;
+package com.dcg.mvc.lectureProgress;
 
 import com.dcg.common.BaseEntity;
-import com.dcg.mvc.course.Course;
+import com.dcg.mvc.lecture.Lecture;
+import com.dcg.mvc.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Getter
@@ -14,12 +13,28 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"user", "lecture"})
 @Entity
 public class LectureProgress extends BaseEntity {
 
-    private Long progress;
     @ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course course;
-    private Long accessRange;
+    @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties("lectureProgresses")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "lecture_id")
+    @JsonIgnoreProperties("lectureProgresses")
+    private Lecture lecture;
+
+    private boolean viewed;
+
+    // Utility methods for managing bidirectional relationships
+    public void markAsViewed() {
+        this.viewed = true;
+    }
+
+    public void markAsNotViewed() {
+        this.viewed = false;
+    }
 }

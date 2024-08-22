@@ -1,8 +1,11 @@
 package com.dcg.mvc.user;
 
+import com.dcg.mvc.badge.Badge;
 import com.dcg.mvc.course.Course;
 import com.dcg.mvc.history.CourseActionHistory;
+import com.dcg.mvc.lectureProgress.LectureProgress;
 import com.dcg.mvc.role.Role;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -16,8 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Setter
@@ -26,12 +28,12 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Entity
 @SuperBuilder
-@Table(name= "user")
+@Table(name = "user")
 @EntityListeners(AuditingEntityListener.class)
-@ToString(exclude = {"roles", "courses", "histories"})
+@ToString(exclude = {"roles", "courses", "histories", "badges", "lectureProgresses"})
 public class User implements UserDetails, Principal {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
@@ -44,10 +46,24 @@ public class User implements UserDetails, Principal {
     private List<Role> roles;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Course> courses;
+    private List<Course> courses = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("user")
+    private List<LectureProgress> lectureProgresses = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_badge",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "badge_id")
+    )
+    @JsonIgnoreProperties("users")
+    private Set<Badge> badges = new HashSet<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<CourseActionHistory> histories;
+    @JsonIgnoreProperties("user")
+    private List<CourseActionHistory> histories = new ArrayList<>();
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -57,7 +73,7 @@ public class User implements UserDetails, Principal {
     @Column(insertable = false)
     private LocalDateTime lastModifiedDate;
 
-    public String getFullName(){
+    public String getFullName() {
         return firstName + " " + lastName;
     }
 
@@ -107,5 +123,15 @@ public class User implements UserDetails, Principal {
     public void removeCourse(Course course) {
         this.courses.remove(course);
         course.getUser().remove(this);
+    }
+
+    public void addBadge(Badge badge) {
+        this.badges.add(badge);
+        badge.getUsers().add(this);
+    }
+
+    public void removeBadge(Badge badge) {
+        this.badges.remove(badge);
+        badge.getUsers().remove(this);
     }
 }

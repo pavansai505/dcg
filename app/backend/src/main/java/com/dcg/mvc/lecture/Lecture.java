@@ -1,14 +1,18 @@
 package com.dcg.mvc.lecture;
 
 import com.dcg.common.BaseEntity;
+import com.dcg.mvc.lectureProgress.LectureProgress;
 import com.dcg.mvc.unit.Unit;
 import com.dcg.mvc.comment.Comment;
 import com.dcg.mvc.quiz.Quiz;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -42,4 +46,9 @@ public class Lecture extends BaseEntity {
     @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("lecture")
     private Set<Quiz> quizzes; // One-to-many relationship with Quiz
+
+    @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<LectureProgress> lectureProgresses = new ArrayList<>();
+
 }

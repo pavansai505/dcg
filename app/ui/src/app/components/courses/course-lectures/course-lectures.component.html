@@ -48,6 +48,14 @@
       class="col-lg-3 col-12 col order-lg-1 order-2 bg-body-light min-vh-100"
     >
       <div class="flex-shrink-0 px-3 py-3 shadow sticky-top">
+        <div
+          class="progress my-3"
+          role="progressbar"
+          aria-label="Example with label"
+          
+        >
+          <div class="progress-bar" [style.width]="completePercentage">{{completePercentage}}</div>
+        </div>
         <ul class="list-unstyled ps-0 shadow-lg">
           <li
             class="pb-1 list-group-item"
@@ -68,11 +76,19 @@
                 <li
                   class="list-group-item text-truncate mx-3"
                   *ngFor="let lesson of unitMap[unit]"
-                  (click)="setCurrentUnitLecture(lesson)"
+                  (click)="
+                    setCurrentUnitLecture(lesson); markLectureViewed(lesson.id)
+                  "
                   [ngClass]="{ active: isActive(lesson) }"
                   style="cursor: pointer; padding: 0.75rem 1rem"
                 >
                   {{ lesson.lessonTitle }}
+                  <span class="float-end"
+                    ><i
+                      class="bi bi-check-circle text-success"
+                      *ngIf="lectureStatuses[lesson.id]"
+                    ></i
+                  ></span>
                 </li>
               </ul>
             </div>
@@ -118,20 +134,20 @@
           <!-- ** Code -->
           <div class="col">
             <div class="card p-3 shadow-sm">
-              <div class="card-body">
+              <div class="card-head">
                 <h4 class="card-title mb-3">Code Example</h4>
                 <div class="code-container">
                   <pre class="code-block" id="code-block">
                     {{ currentLecture?.code }}
                   </pre>
-                  <button class="btn btn-primary copy-btn" (click)="copyCode()">Copy</button>
+                  <button class="btn btn-primary copy-btn" (click)="copyCode()">
+                    Copy
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-          
-          
-          
+
           <div class="col">
             <!-- <ng-container
               *ngFor="
@@ -162,15 +178,26 @@
               >
                 <h2 class="mb-4">Quiz {{ j + 1 }}</h2>
                 <div class="row">
-                  <ng-container *ngFor="let question of quiz.questions; index as i">
+                  <ng-container
+                    *ngFor="let question of quiz.questions; index as i"
+                  >
                     <div class="col-12 mb-4">
                       <div class="card p-3 shadow-sm">
                         <div class="card-body">
-                          <h3 class="card-title mb-3">Question {{ i + 1 }}: {{ question.questionText }}</h3>
+                          <h3 class="card-title mb-3">
+                            Question {{ i + 1 }}: {{ question.questionText }}
+                          </h3>
                           <div class="form-group">
                             <div class="list-group">
-                              <ng-container *ngFor="let option of question.options; let idx = index">
-                                <div class="list-group-item d-flex align-items-center">
+                              <ng-container
+                                *ngFor="
+                                  let option of question.options;
+                                  let idx = index
+                                "
+                              >
+                                <div
+                                  class="list-group-item d-flex align-items-center"
+                                >
                                   <input
                                     type="radio"
                                     name="question{{ question.id }}"
@@ -178,7 +205,10 @@
                                     class="form-check-input me-2"
                                     [value]="option"
                                   />
-                                  <label class="form-check-label" [for]="'option' + question.id + '_' + idx">
+                                  <label
+                                    class="form-check-label"
+                                    [for]="'option' + question.id + '_' + idx"
+                                  >
                                     {{ getOptionLabel(idx) }}. {{ option }}
                                   </label>
                                 </div>
@@ -186,7 +216,8 @@
                             </div>
                           </div>
                           <div class="mt-3">
-                            <strong>Correct Answer:</strong> {{ question.correctAnswer }}
+                            <strong>Correct Answer:</strong>
+                            {{ question.correctAnswer }}
                           </div>
                         </div>
                       </div>
@@ -195,7 +226,6 @@
                 </div>
               </ng-container>
             </div>
-            
           </div>
 
           <!-- ? Comment Section

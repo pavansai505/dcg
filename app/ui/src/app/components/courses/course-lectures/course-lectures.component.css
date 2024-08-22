@@ -35,7 +35,7 @@ transform: rotate(90deg);
     background-color: #f4f4f4; /* Light gray background for the code block */
     border: 1px solid #ccc; /* Light gray border for a subtle effect */
     border-radius: 8px; /* Rounded corners for a modern look */
-    padding: 1rem; /* Padding around the code */
+    padding: 0rem; /* Padding around the code */
     overflow-x: auto; /* Horizontal scroll for long lines */
   }
   

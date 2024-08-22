@@ -28,5 +28,6 @@ public class Unit extends BaseEntity {
     private String unitTitle;
 
     @OneToMany(mappedBy = "unit", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OrderBy("id ASC")
     private Set<Lecture> lectures;
 }

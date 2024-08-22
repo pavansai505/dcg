@@ -74,4 +74,12 @@ export class CourseDataService {
     return course.units.reduce((total, unit) => total + unit.lectures.length, 0);
   }
 
+   isLectureViewed(lectureId:number): Observable<any> {
+    return this.http.get<any>(environment.apiBaseUrl+'lecture-progress/is-viewed/'+lectureId);
+  }
+   markLectureViewed(lectureId:number): Observable<any> {
+    return this.http.post<any>(environment.apiBaseUrl+'lecture-progress/mark-viewed/'+lectureId,{});
+  }
+  
+
 }

@@ -2,7 +2,6 @@ package com.dcg.model;
 
 import com.dcg.mvc.user.User;
 import com.dcg.mvc.unit.Unit;
-import com.dcg.mvc.courseProgress.CourseProgress;
 import com.dcg.mvc.history.CourseActionHistory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +26,6 @@ public class CourseDTO {
 
     private List<User> users; // List of User entities
     private Set<Unit> units; // Set of Unit entities
-    private List<CourseProgress> courseProgresses; // List of CourseProgress entities
     private List<CourseActionHistory> histories; // List of CourseActionHistory entities
 
     private LocalDateTime createdDate;

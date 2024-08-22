@@ -11,4 +11,5 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class CustomResponse {
     private String message;
+    private boolean isResultTrue;
 }

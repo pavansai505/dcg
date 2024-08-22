@@ -10,12 +10,11 @@ import { PointsListPipe } from '../../../pipes/points-list.pipe';
 @Component({
   selector: 'app-course-lectures',
   standalone: true,
-  imports: [CommonModule, SafeUrlPipe,PointsListPipe],
+  imports: [CommonModule, SafeUrlPipe, PointsListPipe],
   templateUrl: './course-lectures.component.html',
   styleUrl: './course-lectures.component.css',
 })
 export class CourseLecturesComponent {
-  
   course!: Course | null;
   keysArray: string[] = [];
   unitMap: { [key: string]: any[] } = {};
@@ -25,6 +24,8 @@ export class CourseLecturesComponent {
   $: any;
   https: any;
   lectures: Lecture[] = [];
+  lectureStatuses: { [key: number]: boolean } = {};
+  completePercentage:string="0%"
   constructor(
     private courseService: CourseDataService,
     private activatedRouter: ActivatedRoute,
@@ -37,9 +38,11 @@ export class CourseLecturesComponent {
       next: (value) => {
         this.setUnitMapping(value);
         this.setLessonSection();
+        this.setLessonProgress(value)
       },
       error: (err) => console.error('Observable emitted an error: ' + err),
     });
+    
   }
   setUnitMapping(value: Course) {
     this.course = value;
@@ -62,8 +65,8 @@ export class CourseLecturesComponent {
       unit.lectures.forEach((lecture) => {
         this.unitMap[key].push(lecture);
       });
-      unit.lectures.sort((a,b)=>a.lessonId-b.lessonId)
-      this.lectures=[...this.lectures,...unit.lectures]
+      unit.lectures.sort((a, b) => a.lessonId - b.lessonId);
+      this.lectures = [...this.lectures, ...unit.lectures];
     });
 
     // Create an array of unit keys and sort them based on unitId
@@ -78,8 +81,31 @@ export class CourseLecturesComponent {
     for (const key of this.keysArray) {
       this.unitMap[key].sort((a, b) => a.lessonId - b.lessonId);
     }
+  }
+
+  setLessonProgress(course:Course | null){
     
-    
+    if(course==null) return 
+    var total=0;
+    var completed=0;
+   const lectureIds=course.units.flatMap((unit)=>unit.lectures.map((lecture:any)=>lecture.id))
+   lectureIds.forEach(lectureId => {
+     this.courseService.isLectureViewed(lectureId).subscribe(
+       {
+        next:(value)=>{
+          this.lectureStatuses[lectureId] = value.resultTrue
+          total+=1
+          if(value.resultTrue){
+            completed+=1
+          }
+          
+          this.completePercentage=Math.round((completed/total)*100)+"%"
+        }
+        
+       }
+     );
+   });
+   
   }
 
   setLessonSection() {
@@ -104,8 +130,8 @@ export class CourseLecturesComponent {
 
   goToNext() {
     if (this.currentLecture) {
-      console.log(this.currentLecture,this.lectures[this.lectures.indexOf(this.currentLecture) + 1]);
       
+
       this.setCurrentUnitLecture(
         this.lectures[this.lectures.indexOf(this.currentLecture) + 1]
       );
@@ -123,11 +149,10 @@ export class CourseLecturesComponent {
   }
 
   setCurrentUnitLecture(lesson: Lecture) {
-    console.log(lesson);
-    
+   
     this.currentLecture = lesson;
     this.currentLectureVideoUrl =
-      'https://www.youtube.com/embed/' + lesson.lessonVideo+"?rel=0";
+      'https://www.youtube.com/embed/' + lesson.lessonVideo + '?rel=0';
     this.router.navigate([], {
       relativeTo: this.activatedRouter,
       queryParams: { lessonId: lesson.id },
@@ -156,5 +181,20 @@ export class CourseLecturesComponent {
     }
   }
 
-  
+  isLectureViewed(lectureId:number){
+    this.courseService.isLectureViewed(lectureId).subscribe({
+      next:(data)=>{return data.isTrue}
+    })
+  }
+
+  markLectureViewed(lectureId:number){
+    if(!this.lectureStatuses[lectureId]){
+      this.courseService.markLectureViewed(lectureId).subscribe({
+        next:(value)=>this.setLessonProgress(this.course)
+        
+      })
+    }
+    
+  }
+
 }
