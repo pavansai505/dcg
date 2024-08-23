@@ -16,7 +16,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableMethodSecurity(securedEnabled = true)
+@EnableMethodSecurity(securedEnabled = true,prePostEnabled = false)
 public class SecurityConfig  {
     private final AuthenticationProvider authenticationProvider;
     private final JwtVerify jwtVerify;
@@ -24,7 +24,7 @@ public class SecurityConfig  {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req -> req.requestMatchers("user/auth/**","role/**").permitAll()
+                .authorizeHttpRequests(req -> req.requestMatchers("user/auth/**","role/**","course/get/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))

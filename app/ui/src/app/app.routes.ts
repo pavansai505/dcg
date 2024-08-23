@@ -31,6 +31,8 @@ import { authInstructorGuard } from './guard/auth-instructor.guard';
 import { ResetPasswordComponent } from './components/auth/user/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './components/auth/user/forgot-password/forgot-password.component';
 import { courseAuthGuard } from './guard/course-auth.guard';
+import { AboutComponent } from './components/details/about/about.component';
+import { ContactComponent } from './components/details/contact/contact.component';
 
 export const routes: Routes = [
   {
@@ -40,6 +42,14 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+  },
+  //*  Details page
+  {
+    path:'about',
+    component:AboutComponent
+  },{
+    path:'contact',
+    component:ContactComponent
   },
   // * Courses
   {
