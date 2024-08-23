@@ -21,7 +21,6 @@ export class CourseLecturesComponent {
   currentLecture!: Lecture | null;
   currentLectureVideoUrl!: string;
   trackByFn!: TrackByFunction<Lecture>;
-  $: any;
   https: any;
   lectures: Lecture[] = [];
   lectureStatuses: { [key: number]: boolean } = {};
@@ -181,11 +180,6 @@ export class CourseLecturesComponent {
     }
   }
 
-  isLectureViewed(lectureId:number){
-    this.courseService.isLectureViewed(lectureId).subscribe({
-      next:(data)=>{return data.isTrue}
-    })
-  }
 
   markLectureViewed(lectureId:number){
     if(!this.lectureStatuses[lectureId]){

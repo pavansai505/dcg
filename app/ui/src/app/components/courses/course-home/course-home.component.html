@@ -151,18 +151,47 @@
         <code>.container</code>, recreated with built-in utility classes.
       </p>
     </div>
-
-    <div class="album py-5 bg-body-tertiary">
+<!-- ! Pagination -->
+    <!-- <div class="album py-5 bg-body-tertiary">
       <div class="container">
         <div
-          class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4  g-3"
+          class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3"
         >
           <div class="col" *ngFor="let course of courses">
             <app-course-card [course]="course"></app-course-card>
           </div>
         </div>
       </div>
+    </div> -->
+    <div class="album py-5 bg-body-tertiary">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+          <div class="col" *ngFor="let course of paginatedCourses">
+            <app-course-card [course]="course"></app-course-card>
+          </div>
+        </div>
+    
+        <!-- Pagination controls -->
+        <nav aria-label="Page navigation">
+          <ul class="pagination centerIt mt-5">
+            <li class="page-item" [ngClass]="{'disabled': currentPage === 1}">
+              <a class="page-link" (click)="previousPage()" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item" *ngFor="let page of pages" [ngClass]="{'active': page === currentPage}">
+              <a class="page-link" (click)="goToPage(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" [ngClass]="{'disabled': currentPage === totalPages}">
+              <a class="page-link" (click)="nextPage()" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
+    
   </div>
   <!-- * teachers -->
   <div class="container px-4 py-5" id="custom-cards">
