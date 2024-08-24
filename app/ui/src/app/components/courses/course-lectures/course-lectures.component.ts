@@ -1,7 +1,7 @@
 import { Component, TrackByFunction } from '@angular/core';
 import { CourseDataService } from '../../../services/course/course-data.service';
 import { Course } from '../../../models/course/course';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SafeUrlPipe } from '../../../pipes/safe-url.pipe';
 import { Lecture } from '../../../models/course/lecture';
@@ -10,7 +10,7 @@ import { PointsListPipe } from '../../../pipes/points-list.pipe';
 @Component({
   selector: 'app-course-lectures',
   standalone: true,
-  imports: [CommonModule, SafeUrlPipe, PointsListPipe],
+  imports: [CommonModule, SafeUrlPipe, PointsListPipe,RouterLink],
   templateUrl: './course-lectures.component.html',
   styleUrl: './course-lectures.component.css',
 })

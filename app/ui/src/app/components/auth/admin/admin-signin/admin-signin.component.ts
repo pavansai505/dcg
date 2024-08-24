@@ -34,7 +34,7 @@ export class AdminSigninComponent {
         if(this.redirectURL){
           this.router.navigate([this.redirectURL.slice(1)])
         }else{
-          this.router.navigate(['/home'])
+          this.router.navigate(['/courses/home'])
         }
       },
     });

@@ -1,0 +1,57 @@
+/* General Styles */
+.section-team {
+  padding: 5rem 0;
+}
+
+/* Title Section */
+.title-a {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+/* Team Member Card */
+.card {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: all 0.2s linear;
+}
+
+.card-img-top {
+  width: 150px; /* Adjust the width to fit the design */
+  height: 150px; /* Adjust the height to fit the design */
+  object-fit: cover;
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
+    rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  z-index: 4;
+}
+.card:hover{
+  transform: scale(1.01);
+  background-color: #0093e9;
+  background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
+  color: white !important;
+  transition: all 0.2s linear;
+}
+.card:hover *{
+  color: #fff !important;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+}
+
+.socials-footer a {
+  font-size: 1.25rem;
+  color: #000;
+}
+
+.socials-footer a:hover {
+  color: #007bff; /* Adjust the color as per your theme */
+}
+
+.text-muted {
+  color: #6c757d;
+}

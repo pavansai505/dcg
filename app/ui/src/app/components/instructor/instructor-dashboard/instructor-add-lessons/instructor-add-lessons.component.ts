@@ -9,6 +9,7 @@ import {
 import { CourseDataService } from '../../../../services/course/course-data.service';
 import { TruncateStringSizePipe } from '../../../../pipes/truncate-string-size.pipe';
 import { Course } from '../../../../models/course/course';
+import { ToastService } from '../../../../services/toast/toast.service';
 
 @Component({
   selector: 'app-instructor-add-lessons',
@@ -19,19 +20,18 @@ import { Course } from '../../../../models/course/course';
 })
 export class InstructorAddLessonsComponent {
   showForm: boolean = false;
+  showLectureForm: boolean = false;
   selectedCourse: Course | null = null;
+  selectedUnit: number | null = null;
   lessonFormGroup: FormGroup;
   courses: any;
-  constructor(private courseService: CourseDataService) {
+  constructor(private courseService: CourseDataService,private toast:ToastService) {
     this.lessonFormGroup = new FormGroup({
-      unitId: new FormControl(),
-      unitTitle: new FormControl('', Validators.required),
-      lessonId: new FormControl(),
+      lessonId: new FormControl('', Validators.required),
       lessonTitle: new FormControl('', Validators.required),
-      lessonActivityName: new FormControl('', Validators.required),
       lessonNotes: new FormControl('', Validators.required),
       lessonVideo: new FormControl('', Validators.required),
-      lessonObjectives: new FormControl('', Validators.required),
+      code: new FormControl('', Validators.required),
       enable: new FormControl(true, Validators.required),
     });
   }
@@ -45,18 +45,32 @@ export class InstructorAddLessonsComponent {
   showFormForCard(course: Course): void {
     this.selectedCourse = course;
     this.showForm = true;
+    this.showLectureForm=false
+  }
+  setUnit(e: any) {
+    this.selectedUnit = e.target.value;
+    this.showLectureForm=true
   }
   onSubmit(form: FormGroup) {
-    if (this.selectedCourse != null) {
+    console.log(this.selectedUnit);
+    console.log(form.value);
+    
+    
+    if (this.selectedCourse && this.selectedUnit) {
       this.courseService
-        .addLectures(form.value, this.selectedCourse.id)
+        .addLectures([form.value], this.selectedCourse.id,this.selectedUnit)
         .subscribe({
           next: (value) => {
-            console.log(value);
+            this.toast.showToast("Lecture added succesfully!")
+            this.lessonFormGroup.reset({
+              enable: true // Set default value for enable field if needed
+            });
           },
           error: (err) => console.error('Observable emitted an error: ' + err),
           complete: () => {},
         });
     }
   }
+
+  
 }

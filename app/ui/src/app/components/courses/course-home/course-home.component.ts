@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../../utilities/navbar/navbar.component';
 import { TruncateStringSizePipe } from '../../../pipes/truncate-string-size.pipe';
 import { CourseCardComponent } from '../../utilities/course-card/course-card.component';
+import { CrewComponent } from "../../utilities/crew/crew.component";
 
 @Component({
   selector: 'app-course-home',
   standalone: true,
-  imports: [RouterLink, CommonModule, NavbarComponent, TruncateStringSizePipe, CourseCardComponent],
+  imports: [RouterLink, CommonModule, NavbarComponent, TruncateStringSizePipe, CourseCardComponent, CrewComponent],
   templateUrl: './course-home.component.html',
   styleUrls: ['./course-home.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

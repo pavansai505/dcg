@@ -8,6 +8,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   if(accessControl.isUser){
     return true
   }else{
+    console.log("User access only");
     router.navigate(['auth/user/signin'],{queryParams:{'redirectURL':state.url}})
     return false
   }

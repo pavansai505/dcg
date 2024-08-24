@@ -37,6 +37,14 @@
                 </div>
               </div>
   
+              <div class="form-group mb-4">
+                <label for="price" class="mb-1">Price</label>
+                <input type="number" id="price" formControlName="price" class="form-control" rows="3" placeholder="Enter price" />
+                <div *ngIf="courseForm.get('price')?.invalid && courseForm.get('price')?.touched" class="text-danger mt-1">
+                  Price is required
+                </div>
+              </div>
+  
               <button type="submit" class="btn btn-primary btn-block" [disabled]="!courseForm.valid" *ngIf="!courseUploaded">Submit</button>
               <button  class="btn btn-success btn-block" [disabled]="true" *ngIf="courseUploaded">Course uploaded successfully!</button>
             </form>

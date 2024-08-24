@@ -7,6 +7,7 @@ import CourseApproval from '../../models/course/courseApproval';
 import CourseRegister from '../../models/course/courseRegister';
 import { Lecture } from '../../models/course/lecture';
 import { environment } from '../../../environments/environments';
+import { Unit } from '../../models/course/unit';
 
 @Injectable({
   providedIn: 'root'
@@ -52,12 +53,11 @@ export class CourseDataService {
         }
       })
    }
-   addLectures=(lecture:Lecture,id:number):Observable<any>=>{
-      return this.http.post<any>(environment.apiBaseUrl+"course/lecture/add/"+id,lecture,{
-        headers:{
-          'Authorization':'Bearer '+this.token.getToken()
-        }
-      })
+   addUnits=(units:Unit[],id:number):Observable<any>=>{
+      return this.http.post<any>(environment.apiBaseUrl+"course/units/addMultiple/"+id,units)
+   }
+   addLectures=(lecture:Lecture[],courseId:number,lectureId:number):Observable<any>=>{
+      return this.http.post<any>(environment.apiBaseUrl+"course/lectures/addMultiple/"+courseId+"/"+lectureId,lecture)
    }
    updateCourseApproval=(approvalStatus:CourseApproval):Observable<any>=>{
       return this.http.put<any>(environment.apiBaseUrl+"course/updateCourseApproval",approvalStatus)

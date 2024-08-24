@@ -4,6 +4,7 @@
     style="background-color: #222427; color: white; font-weight: bold"
   >
     <div class="col text-center py-3">
+      <span class="float-start btn btn-outline-light btn-sm" [routerLink]="['/courses/course/info/'+course?.id]" routerLinkActive="router-link-active" >Back</span>
       <span style="font-size: 2vh">{{ course?.title }}</span>
     </div>
   </div>

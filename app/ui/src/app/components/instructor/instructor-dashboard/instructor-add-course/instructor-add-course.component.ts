@@ -24,12 +24,12 @@ export class InstructorAddCourseComponent {
       authorName: new FormControl('', Validators.required),
       synopsis: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
+      price:new FormControl(0,Validators.required)
     });
   }
   onSubmit(form: FormGroup) {
     this.courseService.addCourse(form.value).subscribe({
       next: (value) => {
-        console.log(value);
         this.courseUploaded=true
         
       },

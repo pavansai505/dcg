@@ -1,29 +1,70 @@
-h1, h3 {
-    color: #2c3e50;
-  }
-  
-  p {
-    color: #7f8c8d;
-  }
-  
-  .btn-primary {
-    background-color: #3498db;
-    border-color: #3498db;
-  }
-  
-  .map-responsive {
-    overflow: hidden;
-    padding-bottom: 56.25%;
-    position: relative;
-    height: 0;
-  }
-  
-  .map-responsive iframe {
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    border: none;
-  }
-  
+/* General Styles */
+.container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* Header Section */
+.display-4 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.text-primary {
+  color: #007bff !important;
+}
+
+/* Introduction Paragraph */
+.lead {
+  font-size: 1.25rem;
+}
+
+/* Contact Information Section */
+.list-group-item {
+  border: 1px solid #dee2e6;
+  border-radius: .375rem;
+  margin-bottom: .5rem;
+  padding: .75rem 1.25rem;
+  transition: background-color .15s ease-in-out, color .15s ease-in-out;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+.contact-item i {
+  font-size: 1.25rem;
+}
+
+/* Icon Colors */
+.bi-globe { color: #007bff; }
+.bi-telegram { color: #0088cc; }
+.bi-instagram { color: #e4405f; }
+.bi-twitter { color: #1da1f2; }
+.bi-linkedin { color: #0077b5; }
+.bi-facebook { color: #4267b2; }
+.bi-mix { color: #5d5d5d; }
+.bi-tumblr { color: #35465c; }
+.bi-ok { color: #f36f6f; }
+.bi-reddit { color: #ff4500; }
+.bi-blogger { color: #fc8d2f; }
+.bi-envelope { color: #6c757d; }
+
+/* Map Section */
+.embed-responsive {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  border-radius: .375rem;
+}
+
+.embed-responsive-16by9::before {
+  display: block;
+  content: "";
+}
+
+.shadow-lg {
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+}

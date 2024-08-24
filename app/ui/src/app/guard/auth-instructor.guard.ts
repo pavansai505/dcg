@@ -8,6 +8,7 @@ export const authInstructorGuard: CanActivateFn = (route, state) => {
   if(accessControl.isInstructor){
     return true
   }else{
+    console.log("Instructor access only");
     router.navigate(['auth/user/signin'],{queryParams:{'redirectURL':state.url}})
     return false
   }

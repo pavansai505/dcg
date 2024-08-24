@@ -16,7 +16,6 @@ export class CourseCardComponent {
   courseLecturesCount:number=0
   constructor(private courseService:CourseDataService){}
   ngOnInit(){
-    this.courseLecturesCount=this.courseService.getTotalLectures(this.course)
   }
 
 }

@@ -9,6 +9,8 @@ export const authAdminGuard: CanActivateFn = (route, state) => {
   if(accessControl.isAdmin){
     return true
   }else{
+    console.log("Admin access only");
+    
     router.navigate(['auth/admin/signin'],{queryParams:{'redirectURL':state.url}})
     return false
   }

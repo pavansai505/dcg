@@ -33,6 +33,7 @@ import { ForgotPasswordComponent } from './components/auth/user/forgot-password/
 import { courseAuthGuard } from './guard/course-auth.guard';
 import { AboutComponent } from './components/details/about/about.component';
 import { ContactComponent } from './components/details/contact/contact.component';
+import { InstructorAddUnitsComponent } from './components/instructor/instructor-dashboard/instructor-add-units/instructor-add-units.component';
 
 export const routes: Routes = [
   {
@@ -150,6 +151,11 @@ export const routes: Routes = [
         path: 'courses/add',
         component: InstructorAddCourseComponent,
       },
+      {
+        path:'courses/units/add',
+        component:InstructorAddUnitsComponent
+      }
+      ,
       {
         path:'courses/lessons/add',
         component:InstructorAddLessonsComponent

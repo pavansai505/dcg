@@ -50,45 +50,34 @@
         style="border: none !important; background-color: inherit"
       >
         <div class="card-body p-5">
-          <button class="card-title text-start mb-4 btn btn-info fw-bolder" (click)="selectedCourse=null;showForm=false;">
+          <button
+            class="card-title text-start mb-4 btn btn-info fw-bolder"
+            (click)="selectedCourse = null; showForm = false"
+          >
             Back
           </button>
           <h3 class="card-title text-center mb-4 fs-2 fw-bolder">
-            {{selectedCourse?.title}}
+            {{ selectedCourse?.title }}
           </h3>
           <h3 class="card-title text-center mb-4 fs-2 fw-bolder">
             Lesson Form
           </h3>
+          <div>
+            <label for="unitId" class="mb-1">Select a unit</label>
+            <select class="form-select mb-4" id="unitId" aria-label="Default select example" (input)="setUnit($event)">
+              <option value="" selected disabled hidden>Choose</option>
+              <option *ngFor="let unit of selectedCourse?.units" value={{unit.id}}>{{unit.unitTitle}}</option>
+            </select>
+          </div>
           <form
             [formGroup]="lessonFormGroup"
             (ngSubmit)="onSubmit(lessonFormGroup)"
+            *ngIf="showLectureForm"
           >
-            <div class="form-group mb-4">
-              <label for="unitId" class="mb-1">Unit ID</label>
-              <input
-                type="number"
-                id="unitId"
-                formControlName="unitId"
-                class="form-control"
-                placeholder="Enter unit ID"
-              />
-            </div>
-
-            <div class="form-group mb-4">
-              <label for="unitTitle" class="mb-1">Unit Title</label>
-              <input
-                type="text"
-                id="unitTitle"
-                formControlName="unitTitle"
-                class="form-control"
-                placeholder="Enter unit title"
-              />
-            </div>
-
             <div class="form-group mb-4">
               <label for="lessonId" class="mb-1">Lesson ID</label>
               <input
-                type="number"
+                type="text"
                 id="lessonId"
                 formControlName="lessonId"
                 class="form-control"
@@ -104,19 +93,6 @@
                 formControlName="lessonTitle"
                 class="form-control"
                 placeholder="Enter lesson title"
-              />
-            </div>
-
-            <div class="form-group mb-4">
-              <label for="lessonActivityName" class="mb-1"
-                >Lesson Activity Name</label
-              >
-              <input
-                type="text"
-                id="lessonActivityName"
-                formControlName="lessonActivityName"
-                class="form-control"
-                placeholder="Enter lesson activity name"
               />
             </div>
 
@@ -143,16 +119,13 @@
             </div>
 
             <div class="form-group mb-4">
-              <label for="lessonObjectives" class="mb-1"
-                >Lesson Objectives</label
-              >
-              <input
-                type="text"
-                id="lessonObjectives"
-                formControlName="lessonObjectives"
+              <label for="code" class="mb-1">Code</label>
+              <textarea
+                id="code"
+                formControlName="code"
                 class="form-control"
-                placeholder="Enter lesson objectives"
-              />
+                placeholder="Enter lesson code"
+              ></textarea>
             </div>
 
             <div class="form-group mb-4">

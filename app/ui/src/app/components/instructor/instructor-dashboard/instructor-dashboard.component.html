@@ -45,6 +45,12 @@
                       Modify Courses 
                     </a>
                   </li>
+                  <li [class.selectedPath]="isRouteActive('/instructor/dashboard/courses/units/add')">
+                    <a [routerLink]="['courses/units/add']" routerLinkActive="router-link-active" class="nav-link link-body-emphasis">
+                      <i class="bi bi-journal pe-none me-2"></i>
+                      Add units
+                    </a>
+                  </li>
                   <li [class.selectedPath]="isRouteActive('/instructor/dashboard/courses/lessons/add')">
                     <a [routerLink]="['courses/lessons/add']" routerLinkActive="router-link-active" class="nav-link link-body-emphasis">
                         <i class="bi bi-coin pe-none me-2"></i>
