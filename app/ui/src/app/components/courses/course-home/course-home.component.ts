@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CourseDataService } from '../../../services/course/course-data.service';
 import { Course } from '../../../models/course/course';
@@ -7,11 +7,12 @@ import { NavbarComponent } from '../../utilities/navbar/navbar.component';
 import { TruncateStringSizePipe } from '../../../pipes/truncate-string-size.pipe';
 import { CourseCardComponent } from '../../utilities/course-card/course-card.component';
 import { CrewComponent } from "../../utilities/crew/crew.component";
+import { FooterComponent } from "../../utilities/footer/footer.component";
 
 @Component({
   selector: 'app-course-home',
   standalone: true,
-  imports: [RouterLink, CommonModule, NavbarComponent, TruncateStringSizePipe, CourseCardComponent, CrewComponent],
+  imports: [RouterLink, CommonModule, NavbarComponent, TruncateStringSizePipe, CourseCardComponent, CrewComponent, FooterComponent],
   templateUrl: './course-home.component.html',
   styleUrls: ['./course-home.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -33,6 +34,15 @@ export class CourseHomeComponent implements OnInit {
       }
     }
   };
+  @ViewChild('courses') coursesSection!: ElementRef;
+
+  // Function to scroll to the specified section
+  scrollToSection(sectionId: string) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 
   constructor(private router: Router, private courseService: CourseDataService) {}
 

@@ -14,8 +14,26 @@
         </div>
       </div>
     </section> -->
+    <!-- * Banner or Hero -->
+    <!-- Hero Section for E-Learning Platform -->
+<div class="container col-xxl-8 px-4 py-5 ">
+  <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+    <div class="col-10 col-sm-8 col-lg-6">
+      <img src="assets/img/mainPage.jpg" loading="lazy" class="d-block mx-lg-auto img-fluid rounded shadow-sm" alt="E-Learning Platform Preview" width="700" height="500" loading="lazy">
+    </div>
+    <div class="col-lg-6">
+      <h1 class="display-4 fw-bold text-dark mb-4">Empowering Learning, One Course at a Time</h1>
+      <p class="lead text-muted mb-4">Our platform offers a comprehensive collection of courses, carefully crafted to help you master new skills and knowledge. With interactive lectures, quizzes, and badges, we make learning engaging and rewarding.</p>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <a  class="btn btn-primary btn-lg px-4 me-md-2" (click)="scrollToSection('courses')" >Explore Courses</a>
+        <a  [routerLink]="['/courses/search']"  routerLinkActive="router-link-active"  class="btn btn-outline-secondary btn-lg px-4">Join Now</a>
+      </div>
+    </div>
+  </div>
+</div>
+
   <!-- * Carousel -->
-  <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+  <!-- <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button
         type="button"
@@ -141,15 +159,53 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
-  </div>
+  </div> -->
+  <!-- <div id="carouselExampleCaptions" class="carousel slide" >
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="https://wowslider.com/sliders/demo-93/data1/images/lake.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>First slide label</h5>
+          <p>Some representative placeholder content for the first slide.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://wowslider.com/sliders/demo-93/data1/images/lake.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Second slide label</h5>
+          <p>Some representative placeholder content for the second slide.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://wowslider.com/sliders/demo-93/data1/images/lake.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Third slide label</h5>
+          <p>Some representative placeholder content for the third slide.</p>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div> -->
   <!-- * Courses -->
-  <div class="container my-5">
+  <div class="container my-5" id="courses">
     <div class="p-5 text-center bg-body-tertiary rounded-3">
-      <h1 class="text-body-emphasis">Basic jumbotron</h1>
+      <h1 class="text-body-emphasis">Courses</h1>
       <p class="lead">
-        This is a simple Bootstrap jumbotron that sits within a
-        <code>.container</code>, recreated with built-in utility classes.
+        Discover a diverse range of courses designed to enhance your skills and advance your career. From beginner to advanced levels, our platform offers something for everyone. Start your learning journey today!
       </p>
+      
     </div>
 <!-- ! Pagination -->
     <!-- <div class="album py-5 bg-body-tertiary">
@@ -202,7 +258,7 @@
 
   <!-- * Testimonials -->
   <div class="container px-4 py-5" id="featured-3">
-    <h2 class="pb-2 border-bottom">Columns with icons</h2>
+    <h2 class="pb-2 border-bottom">Our Top Features</h2>
     <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
       <swiper-container
         loop="true"
@@ -217,254 +273,80 @@
         <swiper-slide>
           <div class="feature">
             <div
-              class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3"
+              class="feature-icon d-inline-flex align-items-center justify-content-center  bg-gradient fs-2 mb-3"
             >
-              <svg class="bi" width="1em" height="1em">
-                <use xlink:href="#people-circle"></use>
-              </svg>
+              <i class="bi bi-book"></i>
             </div>
-            <h3 class="fs-2 text-body-emphasis">Featured title</h3>
+            <h3 class="fs-2 text-body-emphasis">Diverse Course Catalog</h3>
             <p>
-              Paragraph of text beneath the heading to explain the heading.
-              We'll add onto it with another sentence and probably just keep
-              going until we run out of words.
+              Explore a wide range of subjects and skills with our extensive library of courses, from technology to arts.
             </p>
             <a href="#" class="icon-link">
-              Call to action
-              <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+              Learn More
+              <i class="bi bi-chevron-right"></i>
             </a>
           </div>
         </swiper-slide>
-
+  
+        <swiper-slide>
+          <div class="feature">
+            <div
+              class="feature-icon d-inline-flex align-items-center justify-content-center bg-gradient fs-2 mb-3"
+            >
+              <i class="bi bi-clock"></i>
+            </div>
+            <h3 class="fs-2 text-body-emphasis">Flexible Learning</h3>
+            <p>
+              Learn at your own pace with our self-paced courses and flexible scheduling options.
+            </p>
+            <a href="#" class="icon-link">
+              Explore Options
+              <i class="bi bi-chevron-right"></i>
+            </a>
+          </div>
+        </swiper-slide>
+  
+        <swiper-slide>
+          <div class="feature">
+            <div
+              class="feature-icon d-inline-flex align-items-center justify-content-center  bg-gradient fs-2 mb-3"
+            >
+              <i class="bi bi-person-check"></i>
+            </div>
+            <h3 class="fs-2 text-body-emphasis">Expert Instructors</h3>
+            <p>
+              Learn from industry professionals and experienced educators who are passionate about teaching.
+            </p>
+            <a href="#" class="icon-link">
+              Meet Our Instructors
+              <i class="bi bi-chevron-right"></i>
+            </a>
+          </div>
+        </swiper-slide>
+  
         <swiper-slide>
           <div class="feature">
             <div
               class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3"
             >
-              <svg class="bi" width="1em" height="1em">
-                <use xlink:href="#people-circle"></use>
-              </svg>
+              <i class="bi bi-award"></i>
             </div>
-            <h3 class="fs-2 text-body-emphasis">Featured title</h3>
+            <h3 class="fs-2 text-body-emphasis">Certification Programs</h3>
             <p>
-              Paragraph of text beneath the heading to explain the heading.
-              We'll add onto it with another sentence and probably just keep
-              going until we run out of words.
+              Earn recognized certificates upon course completion to boost your resume and career prospects.
             </p>
             <a href="#" class="icon-link">
-              Call to action
-              <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
-            </a>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div class="feature">
-            <div
-              class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3"
-            >
-              <svg class="bi" width="1em" height="1em">
-                <use xlink:href="#people-circle"></use>
-              </svg>
-            </div>
-            <h3 class="fs-2 text-body-emphasis">Featured title</h3>
-            <p>
-              Paragraph of text beneath the heading to explain the heading.
-              We'll add onto it with another sentence and probably just keep
-              going until we run out of words.
-            </p>
-            <a href="#" class="icon-link">
-              Call to action
-              <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
-            </a>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div class="feature">
-            <div
-              class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3"
-            >
-              <svg class="bi" width="1em" height="1em">
-                <use xlink:href="#people-circle"></use>
-              </svg>
-            </div>
-            <h3 class="fs-2 text-body-emphasis">Featured title</h3>
-            <p>
-              Paragraph of text beneath the heading to explain the heading.
-              We'll add onto it with another sentence and probably just keep
-              going until we run out of words.
-            </p>
-            <a href="#" class="icon-link">
-              Call to action
-              <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+              See Certifications
+              <i class="bi bi-chevron-right"></i>
             </a>
           </div>
         </swiper-slide>
       </swiper-container>
     </div>
   </div>
+  
+  
 </main>
 <div class="b-example-divider border"></div>
 <!-- * Footer -->
-<div class="container">
-  <footer
-    class="d-flex flex-wrap justify-content-between align-items-center py-3 my-1 border-bottom"
-  >
-    <p class="col-md-4 mb-0 text-body-secondary">© 2024 Company, Inc</p>
-
-    <a
-      href="/"
-      class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
-    >
-      <svg
-        fill="#000000"
-        height="40"
-        width="40"
-        viewBox="-1 0 19 19"
-        xmlns="http://www.w3.org/2000/svg"
-        class="cf-icon-svg"
-      >
-        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-        <g
-          id="SVGRepo_tracerCarrier"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        ></g>
-        <g id="SVGRepo_iconCarrier">
-          <path
-            d="M16.141 7.905c.24.102.24.269 0 .37l-7.204 3.058a1.288 1.288 0 0 1-.874 0L.859 8.276c-.24-.102-.24-.27 0-.371l7.204-3.058a1.287 1.287 0 0 1 .874 0zm-6.833 4.303 3.983-1.69v2.081c0 1.394-2.145 2.524-4.791 2.524s-4.79-1.13-4.79-2.524v-2.082l3.982 1.69a2.226 2.226 0 0 0 1.616 0zm4.94 1.677h1.642v-1.091a.822.822 0 1 0-1.643 0zm.82-3.603a.554.554 0 1 0-.553-.554.554.554 0 0 0 .554.554zm0 1.415a.554.554 0 1 0-.553-.555.554.554 0 0 0 .554.555z"
-          ></path>
-        </g>
-      </svg>
-      &nbsp; <span class="fs-4 fw-bolder">deepcodecguru</span>
-    </a>
-
-    <ul class="nav col-md-4 justify-content-end">
-      <li class="nav-item">
-        <a href="#" class="nav-link px-2 text-body-secondary">Home</a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link px-2 text-body-secondary">Features</a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link px-2 text-body-secondary">Pricing</a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link px-2 text-body-secondary">FAQs</a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link px-2 text-body-secondary">About</a>
-      </li>
-    </ul>
-  </footer>
-  <footer class="pt-5">
-    <div class="row">
-      <div class="col-6 col-md-2 mb-3">
-        <h5>Section</h5>
-        <ul class="nav flex-column">
-          <li class="nav-item mb-2">
-            <a href="#" class="nav-link p-0 text-body-secondary">Home</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a href="#" class="nav-link p-0 text-body-secondary">Features</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a href="#" class="nav-link p-0 text-body-secondary">Pricing</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a href="#" class="nav-link p-0 text-body-secondary">FAQs</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a href="#" class="nav-link p-0 text-body-secondary">About</a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="col-6 col-md-2 mb-3">
-        <h5>Section</h5>
-        <ul class="nav flex-column">
-          <li class="nav-item mb-2">
-            <a href="#" class="nav-link p-0 text-body-secondary">Home</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a href="#" class="nav-link p-0 text-body-secondary">Features</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a href="#" class="nav-link p-0 text-body-secondary">Pricing</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a href="#" class="nav-link p-0 text-body-secondary">FAQs</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a href="#" class="nav-link p-0 text-body-secondary">About</a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="col-6 col-md-2 mb-3">
-        <h5>Section</h5>
-        <ul class="nav flex-column">
-          <li class="nav-item mb-2">
-            <a href="#" class="nav-link p-0 text-body-secondary">Home</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a href="#" class="nav-link p-0 text-body-secondary">Features</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a href="#" class="nav-link p-0 text-body-secondary">Pricing</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a href="#" class="nav-link p-0 text-body-secondary">FAQs</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a href="#" class="nav-link p-0 text-body-secondary">About</a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="col-md-5 offset-md-1 mb-3">
-        <form>
-          <h5>Subscribe to our newsletter</h5>
-          <p>Monthly digest of what's new and exciting from us.</p>
-          <div class="d-flex flex-column flex-sm-row w-100 gap-2">
-            <label for="newsletter1" class="visually-hidden"
-              >Email address</label
-            >
-            <input
-              id="newsletter1"
-              type="text"
-              class="form-control"
-              placeholder="Email address"
-            />
-            <button class="btn btn-primary" type="button">Subscribe</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <div
-      class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top"
-    >
-      <p>© 2024 Company, Inc. All rights reserved.</p>
-      <ul class="list-unstyled d-flex">
-        <li class="ms-3">
-          <a class="link-body-emphasis" href="#"
-            ><svg class="bi" width="24" height="24">
-              <use xlink:href="#twitter"></use></svg
-          ></a>
-        </li>
-        <li class="ms-3">
-          <a class="link-body-emphasis" href="#"
-            ><svg class="bi" width="24" height="24">
-              <use xlink:href="#instagram"></use></svg
-          ></a>
-        </li>
-        <li class="ms-3">
-          <a class="link-body-emphasis" href="#"
-            ><svg class="bi" width="24" height="24">
-              <use xlink:href="#facebook"></use></svg
-          ></a>
-        </li>
-      </ul>
-    </div>
-  </footer>
-</div>
+<app-footer></app-footer>
