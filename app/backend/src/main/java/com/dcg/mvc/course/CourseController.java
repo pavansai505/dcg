@@ -137,9 +137,9 @@ public class CourseController {
      * @return The course with the specified ID.
      */
     @GetMapping("/get/{id}")
-    public ResponseEntity<Course> getCourseById(@PathVariable Long id) {
+    public ResponseEntity<CourseDTO> getCourseById(@PathVariable Long id) {
         Course course = courseService.getCourseById(id);
-        return ResponseEntity.ok(course);
+        return ResponseEntity.ok(courseMapper.toDTO(course));
     }
 
     /**

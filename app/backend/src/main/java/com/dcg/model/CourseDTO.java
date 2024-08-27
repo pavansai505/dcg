@@ -1,5 +1,7 @@
 package com.dcg.model;
 
+import com.dcg.enums.CourseLevel;
+import com.dcg.mvc.badge.Badge;
 import com.dcg.mvc.user.User;
 import com.dcg.mvc.unit.Unit;
 import com.dcg.mvc.history.CourseActionHistory;
@@ -23,6 +25,10 @@ public class CourseDTO {
     private String courseCover;
     private double price;
     private String approvalStatus;
+    private Badge badge;
+    private CourseLevel courseLevel;
+    private List<String> tags;
+    private List<String> endGoals;
 
     private List<User> users; // List of User entities
     private Set<Unit> units; // Set of Unit entities

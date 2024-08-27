@@ -1,4 +1,5 @@
 import { User } from "../user/user";
+import { Badge } from "./badge";
 import { Lecture } from "./lecture";
 import { Unit } from "./unit";
 
@@ -18,4 +19,8 @@ export interface Course {
   approvalStatus: string;
   price: number;
   users:User[];
+  badge:Badge;
+  courseLevel:string;
+  tags:string[];
+  endGoals:string[]
 }

@@ -57,6 +57,12 @@
                       Add lessons
                     </a>
                   </li>
+                  <li [class.selectedPath]="isRouteActive('/instructor/dashboard/courses/badge/add')">
+                    <a [routerLink]="['courses/badge/add']" routerLinkActive="router-link-active" class="nav-link link-body-emphasis">
+                        <i class="bi bi-award pe-none me-2"></i>
+                      Add badge
+                    </a>
+                  </li>
                 </ul>
                 <hr>
                 <div class="dropdown">

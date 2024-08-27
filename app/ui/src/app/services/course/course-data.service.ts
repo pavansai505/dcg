@@ -80,6 +80,9 @@ export class CourseDataService {
    markLectureViewed(lectureId:number): Observable<any> {
     return this.http.post<any>(environment.apiBaseUrl+'lecture-progress/mark-viewed/'+lectureId,{});
   }
+   addBadge(badge:any): Observable<any> {
+    return this.http.post<any>(environment.apiBaseUrl+'badges',badge);
+  }
   
 
 }

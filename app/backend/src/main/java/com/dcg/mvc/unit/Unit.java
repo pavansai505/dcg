@@ -26,6 +26,8 @@ public class Unit extends BaseEntity {
 
     private Long unitId;
     private String unitTitle;
+    @Column(columnDefinition = "LONGTEXT")
+    private String description;
 
     @OneToMany(mappedBy = "unit", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
     @OrderBy("id ASC")

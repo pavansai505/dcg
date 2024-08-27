@@ -45,7 +45,7 @@ public class BadgeController {
      */
     @PostMapping
     public ResponseEntity<Badge> createBadge(@RequestBody CreateBadgeRequest request) {
-        Badge badge = badgeService.createBadge(request);
+        Badge badge = badgeService.createOrUpdateBadge(request);
         return new ResponseEntity<>(badge, HttpStatus.CREATED);
     }
 

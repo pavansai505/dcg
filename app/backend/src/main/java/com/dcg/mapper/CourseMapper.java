@@ -21,6 +21,10 @@ public class CourseMapper {
                 course.getCourseCover(),
                 course.getPrice(),
                 course.getApprovalStatus(),
+                course.getBadge(),
+                course.getCourseLevel(),
+                course.getTags(),
+                course.getEndGoals(),
                 course.getUser(), // Directly including User entities
                 course.getUnits(), // Directly including Unit entities
                 course.getHistories(), // Directly including CourseActionHistory entities

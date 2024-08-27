@@ -1,6 +1,7 @@
 package com.dcg.mvc.course;
 
 import com.dcg.common.BaseEntity;
+import com.dcg.enums.CourseLevel;
 import com.dcg.mvc.badge.Badge;
 import com.dcg.mvc.lectureProgress.LectureProgress;
 import com.dcg.mvc.history.CourseActionHistory;
@@ -30,7 +31,9 @@ public class Course extends BaseEntity {
 
     private String title;
     private String authorName;
+    @Column(columnDefinition = "LONGTEXT")
     private String description;
+    @Column(columnDefinition = "LONGTEXT")
     private String synopsis;
     private String courseCover;
     private double price;
@@ -56,6 +59,18 @@ public class Course extends BaseEntity {
     @JsonIgnoreProperties("course")
     private Badge badge;
 
+    @Enumerated(EnumType.STRING)
+    private CourseLevel courseLevel;
+
+    @ElementCollection
+    @CollectionTable(name = "course_tags", joinColumns = @JoinColumn(name = "course_id"))
+    @Column(name = "tag")
+    private List<String> tags = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(name = "course_end_goals", joinColumns = @JoinColumn(name = "course_id"))
+    @Column(name = "end_goal")
+    private List<String> endGoals = new ArrayList<>();
 
     @PrePersist
     private void generateCourseCode() {

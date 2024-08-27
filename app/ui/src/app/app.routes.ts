@@ -34,6 +34,7 @@ import { courseAuthGuard } from './guard/course-auth.guard';
 import { AboutComponent } from './components/details/about/about.component';
 import { ContactComponent } from './components/details/contact/contact.component';
 import { InstructorAddUnitsComponent } from './components/instructor/instructor-dashboard/instructor-add-units/instructor-add-units.component';
+import { InstructorAddBadgeComponent } from './components/instructor/instructor-dashboard/instructor-add-badge/instructor-add-badge.component';
 
 export const routes: Routes = [
   {
@@ -159,6 +160,9 @@ export const routes: Routes = [
       {
         path:'courses/lessons/add',
         component:InstructorAddLessonsComponent
+      },{
+        path:'courses/badge/add',
+        component:InstructorAddBadgeComponent
       }
     ],
     canActivate:[authInstructorGuard]

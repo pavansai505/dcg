@@ -3,6 +3,7 @@ package com.dcg.mvc.badge;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
@@ -23,4 +24,6 @@ public interface BadgeRepository extends JpaRepository<Badge, Long> {
      * @return A set of badges associated with the user.
      */
     Set<Badge> findBadgesByUsersId(Long userId);
+
+    Optional<Badge> findByCourseId(Long courseId);
 }

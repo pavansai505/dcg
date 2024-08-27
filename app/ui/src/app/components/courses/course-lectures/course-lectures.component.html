@@ -64,11 +64,12 @@
             *ngFor="let unit of keysArray; index as i; trackBy: trackByFn"
           >
             <button
-              class="btn btn-toggle d-inline-flex align-items-center rounded w-100 collapsed text-dark border-0"
+              class="btn d-inline-flex align-items-center rounded w-100  text-dark border-0 "
               data-bs-toggle="collapse"
               [attr.data-bs-target]="'#' + i + 'collapse'"
               aria-expanded="false"
               style="text-align: left; padding: 0.75rem 1rem"
+              [attr.aria-controls]="i+'collapse'"
             >
               <i class="bi bi-caret-right"></i> {{ unit }}
             </button>
@@ -169,6 +170,7 @@
                 answer is {{question.correctAnswer}}
               </ng-container>
             </ng-container> -->
+            <!--* quiz -->
             <div class="container mt-4">
               <ng-container
                 *ngFor="

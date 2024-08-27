@@ -9,5 +9,6 @@ export interface Unit {
   lastModifiedBy: number | null;
   course: Course; // Reference to the course
   unitTitle: string;
+  description:string;
   lectures: Lecture[]; // List of lectures in the unit
 }

@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
-
-<div class="container col-xxl-8 px-4 py-5">
+<!-- ! version 1 -->
+<!-- <div class="container col-xxl-8 px-4 py-5">
     <div class="row align-items-center g-5 py-5">
         <div class="col-lg-12 text-center">
             <h1 class="display-3 fw-bold  mb-4">{{course.title}}</h1>
@@ -13,19 +13,182 @@
         </div>
     </div>
 
-    <!-- Roadmap Section -->
+    
     <section class="roadmap-container mt-5">
         <h2 class="text-center mb-4">Course Roadmap</h2>
         <div class="roadmap-list">
             <ng-container *ngFor="let unit of course.units; let i = index">
                 <div class="roadmap-item">
                     <div class="roadmap-title">{{unit.unitTitle}}</div>
-                    <!-- Add a connector line for all but the last unit -->
+                  
                     <div class="roadmap-connector" *ngIf="i < course.units.length - 1"></div>
                 </div>
             </ng-container>
         </div>
     </section>
+</div> -->
+<!-- ! Version 2 -->
+<!-- <div class="container">
+  <div
+    class="p-5 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary"
+    id="bannerCourseInfo"
+  >
+    <div class="col-lg-6 px-0">
+      <h1 class="display-4 fst-italic fw-bolder">{{ course.title }}</h1>
+      <p class="lead my-3">{{ course.description }}</p>
+    </div>
+  </div>
 </div>
+
+<div class="container my-4">
+  <h3 class="fw-bold mb-3">End Goals</h3>
+  <ol class="list-group list-group-flush w-auto">
+    <li
+      class="list-group-item d-flex align-items-center py-2 px-3 border-0"
+      *ngFor="let endGoal of course.endGoals"
+    >
+      <i class="bi bi-check-circle me-2 text-success"></i>
+      {{ endGoal }}
+    </li>
+  </ol>
+</div>
+<div class="container my-4">
+  <h3 class="fw-bold mb-3">Tags</h3>
+  <div class="d-flex flex-wrap gap-2">
+    <span *ngFor="let tag of course.tags" class="badge tag-badge">
+      {{ tag }}
+    </span>
+  </div>
+</div> -->
+
+
+<div class="container my-5">
+    <!-- Course Overview -->
+    <div class="row mb-4">
+      <div class="col-lg-8">
+        <div class="bg-light p-4 rounded">
+            <h1 class="display-4 fw-bold">{{ course.title }}</h1>
+            <p class="lead fs-6">{{ course.description }}</p>
+            <p><strong>Author:</strong> {{ course.authorName }}</p>
+            <p><strong>Price:</strong> ${{ course.price.toFixed(2) }}</p>
+            <p><strong>Approval Status:</strong> {{ course.approvalStatus }}</p>
+            <p><strong>Course Level:</strong> {{ course.courseLevel }}</p>
+            
+            <!-- Button Group -->
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                <!-- Enroll Button -->
+                <button type="button" class="btn btn-primary btn-lg px-4 me-md-2 rounded-pill shadow" (click)="enrollCourse()" *ngIf="!isCourseRegistered">
+                  <i class="bi bi-check-circle me-2"></i> Enroll
+                </button>
+                
+                <!-- View Button -->
+                <button type="button" class="btn btn-outline-primary btn-lg px-4 rounded-pill border-2" *ngIf="isCourseRegistered" [routerLink]="['/courses/course/'+course.id+'/lectures']">
+                  <i class="bi bi-eye me-2"></i> View
+                </button>
+              </div>
+              
+          </div>
+        
+      </div>
+      <div class="col-lg-4">
+        <div class="bg-light p-4 rounded">
+          <h3 class="fw-bold mb-3">Course Cover</h3>
+          <img [src]="'https://www.picsum.photos/250'" alt="Course Cover" class="img-fluid rounded">
+        </div>
+      </div>
+    </div>
+  
+    <!-- Course Synopsis -->
+    <div class="row mb-4">
+      <div class="col">
+        <div class="bg-light p-4 rounded">
+          <h3 class="fw-bold mb-3">Course Synopsis</h3>
+          <p>{{ course.synopsis }}</p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Tags and End Goals -->
+    <div class="row mb-4">
+      <div class="col">
+        <div class="bg-light p-4 rounded">
+          <h3 class="fw-bold mb-3">Tags</h3>
+          <div class="d-flex flex-wrap gap-2">
+            <span *ngFor="let tag of course.tags" class="badge  text-light px-3 py-2 rounded-pill tag-badge">
+              {{ tag }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="bg-light p-4 rounded">
+          <h3 class="fw-bold mb-3">End Goals</h3>
+          <ul class="list-group list-group-flush">
+            <li *ngFor="let goal of course.endGoals" class="list-group-item">
+                <i class="bi bi-check-circle me-2 text-success"></i>
+              {{ goal }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row mb-4">
+        <div class="col">
+          <div class="bg-light p-4 rounded">
+            <h3 class="fw-bold mb-4">Units</h3>
+            <div class="row">
+              <div *ngFor="let unit of course.units" class="col-md-6 mb-3">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ unit.unitTitle }}</h5>
+                    <p class="card-text">{{ unit.description }}</p>
+                    <!-- Add more details as needed -->
+                  </div>
+                  <div class="card-footer text-muted">
+                    <!-- Optionally add footer information like creation date or author -->
+                    <small>Last updated: {{ unit.lastModifiedDate | date: 'short' }}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+  
+    <!-- Users -->
+    <div class="row mb-4">
+      <div class="col">
+        <div class="bg-light p-4 rounded">
+          <h3 class="fw-bold mb-3">Enrolled Users</h3>
+          <ul class="list-group list-group-flush">
+            <li *ngFor="let user of course.users" class="list-group-item">
+              {{ user.firstName }} <!-- Adjust according to user properties -->
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Badge -->
+    <div class="row mb-4">
+        <div class="col">
+          <div class="bg-light p-4 rounded">
+            <h3 class="fw-bold mb-3">Course Badge</h3>
+            <div class="d-flex align-items-center">
+              <img [src]="'https://picsum.photos/100'" alt="Course Badge" class="img-fluid rounded-circle me-3" style="width: 100px; height: 100px;" />
+              <div>
+                <h4 class="fw-bold">{{ course.badge.badgeName }}</h4>
+                <p>{{ course.badge.badgeDescription }}</p>
+                <p><strong>Acquired:</strong> {{ course.badge.acquired ? 'Yes' : 'No' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+  </div>
+  
 
 <app-footer></app-footer>

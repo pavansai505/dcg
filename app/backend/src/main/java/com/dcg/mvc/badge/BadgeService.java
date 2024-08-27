@@ -55,19 +55,26 @@ public class BadgeService {
      * @param request The request object containing badge details.
      * @return The created Badge entity.
      */
-    public Badge createBadge(CreateBadgeRequest request) {
+    public Badge createOrUpdateBadge(CreateBadgeRequest request) {
+        // Find the course by ID
         Course course = courseRepository.findById(request.getCourseId())
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
-        Badge badge = Badge.builder()
-                .badgeName(request.getBadgeName())
-                .badgeDescription(request.getBadgeDescription())
-                .badgeIcon(request.getBadgeIcon())
-                .course(course)
-                .build();
+        // Attempt to find an existing badge for this course
+        Badge badge = badgeRepository.findByCourseId(request.getCourseId())
+                .orElse(Badge.builder()
+                        .course(course)
+                        .build());
 
+        // Update or set the badge details
+        badge.setBadgeName(request.getBadgeName());
+        badge.setBadgeDescription(request.getBadgeDescription());
+        badge.setBadgeIcon(request.getBadgeIcon());
+
+        // Save and return the badge (this will either create or update)
         return badgeRepository.save(badge);
     }
+
 
     /**
      * Retrieves all badges for a specific course.
