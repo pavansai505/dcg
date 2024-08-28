@@ -5,6 +5,7 @@ import com.dcg.enums.CourseLevel;
 import com.dcg.mvc.badge.Badge;
 import com.dcg.mvc.lectureProgress.LectureProgress;
 import com.dcg.mvc.history.CourseActionHistory;
+import com.dcg.mvc.payment.Payment;
 import com.dcg.mvc.unit.Unit;
 import com.dcg.mvc.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -78,6 +79,9 @@ public class Course extends BaseEntity {
             this.courseCode = generateUniqueHashCode();
         }
     }
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Payment> payments = new ArrayList<>();
 
     private String generateUniqueHashCode() {
         try {
@@ -107,5 +111,14 @@ public class Course extends BaseEntity {
     public void removeUser(User user) {
         this.user.remove(user);
         user.getCourses().remove(this);
+    }
+    public void addPayment(Payment payment) {
+        this.payments.add(payment);
+        payment.setCourse(this); // Ensure bidirectional relationship is maintained
+    }
+
+    public void removePayment(Payment payment) {
+        this.payments.remove(payment);
+        payment.setCourse(null); // Ensure bidirectional relationship is maintained
     }
 }

@@ -56,6 +56,7 @@ export class PaymentService {
 
   // Method to verify the payment on the backend
   verifyPayment(paymentResponse: any, courseCode: string) {
+    paymentResponse['courseCode']=courseCode
     this.http
       .post(`${environment.apiBaseUrl}payment/verifyPayment`, paymentResponse)
       .subscribe({

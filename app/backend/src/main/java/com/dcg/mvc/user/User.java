@@ -4,7 +4,9 @@ import com.dcg.mvc.badge.Badge;
 import com.dcg.mvc.course.Course;
 import com.dcg.mvc.history.CourseActionHistory;
 import com.dcg.mvc.lectureProgress.LectureProgress;
+import com.dcg.mvc.payment.Payment;
 import com.dcg.mvc.role.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -75,6 +77,21 @@ public class User implements UserDetails, Principal {
 
     public String getFullName() {
         return firstName + " " + lastName;
+    }
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Payment> payments = new ArrayList<>();
+
+    // Existing methods...
+
+    public void addPayment(Payment payment) {
+        this.payments.add(payment);
+        payment.setUser(this); // Ensure bidirectional relationship is maintained
+    }
+
+    public void removePayment(Payment payment) {
+        this.payments.remove(payment);
+        payment.setUser(null); // Ensure bidirectional relationship is maintained
     }
 
     @Override
