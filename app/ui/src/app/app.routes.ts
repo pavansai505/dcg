@@ -35,6 +35,8 @@ import { AboutComponent } from './components/details/about/about.component';
 import { ContactComponent } from './components/details/contact/contact.component';
 import { InstructorAddUnitsComponent } from './components/instructor/instructor-dashboard/instructor-add-units/instructor-add-units.component';
 import { InstructorAddBadgeComponent } from './components/instructor/instructor-dashboard/instructor-add-badge/instructor-add-badge.component';
+import { CoursePaymentComponent } from './components/courses/course-payment/course-payment.component';
+import { coursePurchaseAuthGuard } from './guard/course-purchase-auth.guard';
 
 export const routes: Routes = [
   {
@@ -56,25 +58,36 @@ export const routes: Routes = [
   // * Courses
   {
     path: 'courses',
-    component:CourseHomeComponent
+    children: [
+      {
+        path: '',
+        component: CourseHomeComponent
+      },
+      {
+        path: 'home',
+        component: CourseHomeComponent
+      },
+      {
+        path: 'search',
+        component: CourseSearchComponent
+      },
+      {
+        path: 'course/info/:id',
+        component: CourseInfoComponent
+      },
+      {
+        path: 'course/:id/lectures',
+        component: CourseLecturesComponent,
+        canActivate: [authGuard, courseAuthGuard]
+      },
+      {
+        path: 'course/:courseCode/payment',
+        component: CoursePaymentComponent,
+        canActivate: [authGuard,coursePurchaseAuthGuard]
+      }
+    ]
   },
-  {
-    path: 'courses/home',
-    component: CourseHomeComponent,
-  },
-  {
-    path: 'courses/search',
-    component: CourseSearchComponent,
-  },
-  {
-    path: 'courses/course/info/:id',
-    component: CourseInfoComponent,
-  },
-  {
-    path: 'courses/course/:id/lectures',
-    component: CourseLecturesComponent,
-    canActivate:[authGuard,courseAuthGuard]
-  },
+  
   //? Authentication pages
   // * User authentication paths
   {

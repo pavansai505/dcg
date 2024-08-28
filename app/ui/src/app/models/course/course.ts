@@ -19,8 +19,9 @@ export interface Course {
   approvalStatus: string;
   price: number;
   users:User[];
-  badge:Badge;
+  badge?:Badge;
   courseLevel:string;
   tags:string[];
-  endGoals:string[]
+  endGoals:string[];
+  courseCode:string;
 }

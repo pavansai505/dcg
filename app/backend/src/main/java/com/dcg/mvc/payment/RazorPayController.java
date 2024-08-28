@@ -13,8 +13,7 @@ import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
 
-@RestController
-@RequestMapping("/payment")
+
 public class RazorPayController {
 
     private RazorpayClient client;

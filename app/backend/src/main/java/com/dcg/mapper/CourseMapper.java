@@ -25,11 +25,13 @@ public class CourseMapper {
                 course.getCourseLevel(),
                 course.getTags(),
                 course.getEndGoals(),
+                course.getCourseCode(),
                 course.getUser(), // Directly including User entities
                 course.getUnits(), // Directly including Unit entities
                 course.getHistories(), // Directly including CourseActionHistory entities
                 course.getCreatedDate(),
                 course.getLastModifiedDate()
+
         );
     }
 }

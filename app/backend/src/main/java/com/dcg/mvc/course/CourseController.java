@@ -141,6 +141,11 @@ public class CourseController {
         Course course = courseService.getCourseById(id);
         return ResponseEntity.ok(courseMapper.toDTO(course));
     }
+    @GetMapping("/get/v2/{courseCode}")
+    public ResponseEntity<CourseDTO> getCourseByCourseCode(@PathVariable String courseCode) {
+        Course course = courseService.getCourseByCourseCode(courseCode);
+        return ResponseEntity.ok(courseMapper.toDTO(course));
+    }
 
     /**
      * Endpoint to get courses by the logged-in user's ID, returning DTOs.

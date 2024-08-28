@@ -32,6 +32,9 @@ export class CourseDataService {
         }
       })
    }
+   getCourseByCourseCode=(code:string):Observable<any>=>{
+      return this.http.get<any>(environment.apiBaseUrl+"course/get/v2/"+code)
+   }
    getCoursesByUserId=(id:number):Observable<any>=>{
       return this.http.get<any>(environment.apiBaseUrl+"course/getByUserId/"+id,{
         headers:{

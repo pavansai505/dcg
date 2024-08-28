@@ -68,12 +68,17 @@ public class CourseService {
      * @param id The ID of the course.
      * @return The course with the specified ID or a placeholder if not found.
      */
+
     public Course getCourseById(Long id) {
         return courseRepository.findById(id).orElse(
                 Course.builder().title("No Course Found").build()
         );
     }
-
+    public Course getCourseByCourseCode(String courseCode) {
+        return courseRepository.findByCourseCode(courseCode).orElse(
+                Course.builder().title("No Course Found").build()
+        );
+    }
     /**
      * Retrieves the count of all courses.
      * @return The total number of courses.
@@ -114,10 +119,9 @@ public class CourseService {
      */
     @Transactional
     public Course registerUserToCourse(CourseRegister courseRegister, UserDetails principal) {
-        Long courseId = courseRegister.getCourseId();
-        Optional<Course> optionalCourse = courseRepository.findById(courseId);
+        String courseCode = courseRegister.getCourseCode();
+        Optional<Course> optionalCourse = courseRepository.findByCourseCode(courseCode);
         Optional<User> optionalUser = userRepository.findByEmail(principal.getUsername());
-
         if (optionalCourse.isPresent() && optionalUser.isPresent()) {
             Course course = optionalCourse.get();
             User user = optionalUser.get();
@@ -139,9 +143,15 @@ public class CourseService {
      */
     public boolean isUserRegisteredForCourse(CourseRegister courseRegister, UserDetails principal) {
         Long courseId = courseRegister.getCourseId();
-        Optional<Course> optionalCourse = courseRepository.findById(courseId);
-        Optional<User> optionalUser = userRepository.findByEmail(principal.getUsername());
+        Optional<Course> optionalCourse= courseRepository.findByCourseCode(courseRegister.getCourseCode());
+        if(courseRegister.getCourseCode()!=null){
+            optionalCourse = courseRepository.findByCourseCode(courseRegister.getCourseCode());
 
+        }else{
+            optionalCourse = courseRepository.findById(courseId);
+
+        }
+        Optional<User> optionalUser = userRepository.findByEmail(principal.getUsername());
         if (optionalCourse.isPresent() && optionalUser.isPresent()) {
             Course course = optionalCourse.get();
             User user = optionalUser.get();

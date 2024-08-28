@@ -10,5 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class RegistrationStatusResponse {
+    private Long courseId;
+    private String courseCode;
     private boolean isRegistered;
 }

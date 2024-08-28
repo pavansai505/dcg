@@ -1,3 +1,4 @@
 export default interface CourseRegister{
-    courseId:number
+    courseId:any
+    courseCode:string
 }

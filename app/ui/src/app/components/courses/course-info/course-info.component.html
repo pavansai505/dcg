@@ -77,7 +77,7 @@
             <!-- Button Group -->
             <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
                 <!-- Enroll Button -->
-                <button type="button" class="btn btn-primary btn-lg px-4 me-md-2 rounded-pill shadow" (click)="enrollCourse()" *ngIf="!isCourseRegistered">
+                <button type="button" class="btn btn-primary btn-lg px-4 me-md-2 rounded-pill shadow" (click)="enrollCourse()" routerLinkActive="router-link-active"  *ngIf="!isCourseRegistered">
                   <i class="bi bi-check-circle me-2"></i> Enroll
                 </button>
                 
@@ -179,9 +179,9 @@
             <div class="d-flex align-items-center">
               <img [src]="'https://picsum.photos/100'" alt="Course Badge" class="img-fluid rounded-circle me-3" style="width: 100px; height: 100px;" />
               <div>
-                <h4 class="fw-bold">{{ course.badge.badgeName }}</h4>
-                <p>{{ course.badge.badgeDescription }}</p>
-                <p><strong>Acquired:</strong> {{ course.badge.acquired ? 'Yes' : 'No' }}</p>
+                <h4 class="fw-bold">{{ course.badge?.badgeName }}</h4>
+                <p>{{ course.badge?.badgeDescription }}</p>
+                <p><strong>Acquired:</strong> {{ course.badge?.acquired ? 'Yes' : 'No' }}</p>
               </div>
             </div>
           </div>

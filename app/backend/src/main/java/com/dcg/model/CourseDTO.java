@@ -29,6 +29,7 @@ public class CourseDTO {
     private CourseLevel courseLevel;
     private List<String> tags;
     private List<String> endGoals;
+    private String courseCode;
 
     private List<User> users; // List of User entities
     private Set<Unit> units; // Set of Unit entities

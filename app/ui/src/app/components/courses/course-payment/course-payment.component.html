@@ -1,0 +1,32 @@
+<div class="container my-5">
+    <!-- Course Details Section -->
+    <div class="card border-0 rounded-3 shadow-lg overflow-hidden">
+        <div class="row g-0">
+            <div class="col-md-5">
+                <img [src]="course.courseCover || 'https://picsum.photos/600/400'" alt="{{ course.title }}" class="img-fluid h-100" style="object-fit: cover;">
+            </div>
+            <div class="col-md-7 d-flex flex-column justify-content-center p-4">
+                <h1 class="display-4 fw-bold mb-3 text-dark">{{ course.title }}</h1>
+                <p class="fs-5 mb-2 text-muted"><strong>Author:</strong> {{ course.authorName }}</p>
+                <p class="fs-6 mb-2 text-muted"><strong>Level:</strong> <span class="badge bg-warning">{{ course.courseLevel }}</span></p>
+                <p class="fs-6 mb-2 text-muted"><strong>Tags:</strong>
+                    <span *ngFor="let tag of course.tags" class="badge bg-info me-1">{{ tag }}</span>
+                </p>
+                <div class="mt-4">
+                    <p class="fs-5 text-muted mb-2"><strong>End Goals:</strong></p>
+                    <ul class="list-unstyled">
+                        <li *ngFor="let goal of course.endGoals" class="d-flex align-items-center mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i> {{ goal }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Payment Section -->
+    <div class="bg-dark text-light p-5 rounded mt-4 text-center">
+        <h3 class="mb-4">Secure Your Spot</h3>
+        <p class="fs-4 mb-4">Purchase the <strong>{{ course.title }}</strong> course for <strong>₹{{ course.price }}</strong>.</p>
+        <button class="btn btn-light btn-lg" (click)="initiatePayment()">Pay ₹{{ course.price }}</button>
+    </div>
+</div>

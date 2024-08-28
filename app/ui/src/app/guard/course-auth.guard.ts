@@ -10,7 +10,6 @@ export const courseAuthGuard: CanActivateFn = (route, state) => {
   
   // Extract course ID from the route parameters
   const courseId = route.paramMap.get('id');
-  console.log(courseId);
   
   
   if (!courseId) {
@@ -18,7 +17,7 @@ export const courseAuthGuard: CanActivateFn = (route, state) => {
     return of(false);
   }
 
-  return courseAccess.isCourseRegistered({ "courseId":+courseId }).pipe(
+  return courseAccess.isCourseRegistered({ "courseId":courseId } as CourseRegister).pipe(
     switchMap((data) => {
       console.log(data);
       
