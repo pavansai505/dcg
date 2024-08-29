@@ -26,7 +26,7 @@ public class EmailService {
                 "<p><a href='http://localhost:4200/auth/user/reset-password?token=" + token +
                 "' style='background-color: #007bff; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>Reset Password</a></p>" +
                 "<p style='font-size: 16px;'>If you did not request this change, please ignore this email.</p>" +
-                "<p style='font-size: 14px; color: #888;'>Thank you,<br>Your Company</p>" +
+                "<p style='font-size: 14px; color: #888;'>Thank you,<br>DCG</p>" +
                 "</div>" +
                 "</body>" +
                 "</html>";

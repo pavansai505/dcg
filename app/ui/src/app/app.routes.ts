@@ -41,11 +41,11 @@ import { coursePurchaseAuthGuard } from './guard/course-purchase-auth.guard';
 export const routes: Routes = [
   {
     path: '',
-    component: RoutesComponent,
+    component: CourseHomeComponent,
   },
   {
     path: 'home',
-    component: HomeComponent,
+    redirectTo:'courses',
   },
   //*  Details page
   {

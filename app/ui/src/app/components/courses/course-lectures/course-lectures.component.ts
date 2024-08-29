@@ -10,7 +10,7 @@ import { PointsListPipe } from '../../../pipes/points-list.pipe';
 @Component({
   selector: 'app-course-lectures',
   standalone: true,
-  imports: [CommonModule, SafeUrlPipe, PointsListPipe,RouterLink],
+  imports: [CommonModule, SafeUrlPipe, PointsListPipe, RouterLink],
   templateUrl: './course-lectures.component.html',
   styleUrl: './course-lectures.component.css',
 })
@@ -24,7 +24,7 @@ export class CourseLecturesComponent {
   https: any;
   lectures: Lecture[] = [];
   lectureStatuses: { [key: number]: boolean } = {};
-  completePercentage:string="0%"
+  completePercentage: string = '0%';
   constructor(
     private courseService: CourseDataService,
     private activatedRouter: ActivatedRoute,
@@ -37,11 +37,10 @@ export class CourseLecturesComponent {
       next: (value) => {
         this.setUnitMapping(value);
         this.setLessonSection();
-        this.setLessonProgress(value)
+        this.setLessonProgress(value);
       },
       error: (err) => console.error('Observable emitted an error: ' + err),
     });
-    
   }
   setUnitMapping(value: Course) {
     this.course = value;
@@ -82,29 +81,26 @@ export class CourseLecturesComponent {
     }
   }
 
-  setLessonProgress(course:Course | null){
-    
-    if(course==null) return 
-    var total=0;
-    var completed=0;
-   const lectureIds=course.units.flatMap((unit)=>unit.lectures.map((lecture:any)=>lecture.id))
-   lectureIds.forEach(lectureId => {
-     this.courseService.isLectureViewed(lectureId).subscribe(
-       {
-        next:(value)=>{
-          this.lectureStatuses[lectureId] = value.resultTrue
-          total+=1
-          if(value.resultTrue){
-            completed+=1
+  setLessonProgress(course: Course | null) {
+    if (course == null) return;
+    var total = 0;
+    var completed = 0;
+    const lectureIds = course.units.flatMap((unit) =>
+      unit.lectures.map((lecture: any) => lecture.id)
+    );
+    lectureIds.forEach((lectureId) => {
+      this.courseService.isLectureViewed(lectureId).subscribe({
+        next: (value) => {
+          this.lectureStatuses[lectureId] = value.resultTrue;
+          total += 1;
+          if (value.resultTrue) {
+            completed += 1;
           }
-          
-          this.completePercentage=Math.round((completed/total)*100)+"%"
-        }
-        
-       }
-     );
-   });
-   
+
+          this.completePercentage = Math.round((completed / total) * 100) + '%';
+        },
+      });
+    });
   }
 
   setLessonSection() {
@@ -129,8 +125,6 @@ export class CourseLecturesComponent {
 
   goToNext() {
     if (this.currentLecture) {
-      
-
       this.setCurrentUnitLecture(
         this.lectures[this.lectures.indexOf(this.currentLecture) + 1]
       );
@@ -148,7 +142,6 @@ export class CourseLecturesComponent {
   }
 
   setCurrentUnitLecture(lesson: Lecture) {
-   
     this.currentLecture = lesson;
     this.currentLectureVideoUrl =
       'https://www.youtube.com/embed/' + lesson.lessonVideo + '?rel=0';
@@ -180,15 +173,36 @@ export class CourseLecturesComponent {
     }
   }
 
-
-  markLectureViewed(lectureId:number){
-    if(!this.lectureStatuses[lectureId]){
+  markLectureViewed(lectureId: number) {
+    if (!this.lectureStatuses[lectureId]) {
       this.courseService.markLectureViewed(lectureId).subscribe({
-        next:(value)=>this.setLessonProgress(this.course)
-        
-      })
+        next: (value) => this.setLessonProgress(this.course),
+      });
     }
-    
   }
 
+  toggleCollapse(id: number): void {
+    const element = document.getElementById('collapseAnswer' + id);
+
+    if (element) {
+      if (element.classList.contains('show')) {
+        element.classList.remove('show');
+      } else {
+        element.classList.add('show');
+      }
+    }
+  }
+  toggleLectureCollapse(id: number): void {
+    const element = document.getElementById(id+'collapse');
+    const elementHead = document.getElementById('collapseHead'+id);
+    if (element) {
+      if (element.classList.contains('show')) {
+        elementHead?.setAttribute('aria-expanded','false')
+        element.classList.remove('show');
+      } else {
+        element.classList.add('show');
+        elementHead?.setAttribute('aria-expanded','true')
+      }
+    }
+  }
 }
