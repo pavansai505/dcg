@@ -1,11 +1,13 @@
 package com.dcg.mvc.user;
 
 import com.dcg.mvc.badge.Badge;
+import com.dcg.mvc.contest.Contest;
 import com.dcg.mvc.course.Course;
 import com.dcg.mvc.history.CourseActionHistory;
 import com.dcg.mvc.lectureProgress.LectureProgress;
 import com.dcg.mvc.payment.Payment;
 import com.dcg.mvc.role.Role;
+import com.dcg.mvc.score.Score;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -45,13 +47,17 @@ public class User implements UserDetails, Principal {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Role> roles;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("user")
+    @JsonIgnore
     private List<Course> courses = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("user")
+    @JsonIgnore
     private List<LectureProgress> lectureProgresses = new ArrayList<>();
 
     @ManyToMany
@@ -81,6 +87,22 @@ public class User implements UserDetails, Principal {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Payment> payments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("createdBy")
+    @JsonIgnore
+    private List<Contest> createdContests = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "participants")
+    @JsonIgnoreProperties("participants")
+    @JsonIgnore
+    private List<Contest> contests = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
+    @JsonIgnore
+    private List<Score> scores; // Scores achieved by the user in various quizzes
+
 
     // Existing methods...
 

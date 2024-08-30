@@ -1,4 +1,10 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CourseDataService } from '../../../services/course/course-data.service';
 import { Course } from '../../../models/course/course';
@@ -6,16 +12,26 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../../utilities/navbar/navbar.component';
 import { TruncateStringSizePipe } from '../../../pipes/truncate-string-size.pipe';
 import { CourseCardComponent } from '../../utilities/course-card/course-card.component';
-import { CrewComponent } from "../../utilities/crew/crew.component";
-import { FooterComponent } from "../../utilities/footer/footer.component";
+import { CrewComponent } from '../../utilities/crew/crew.component';
+import { FooterComponent } from '../../utilities/footer/footer.component';
+import { ContestService } from '../../../services/contest/contest.service';
+import { Contest } from '../../../models/course/contest';
 
 @Component({
   selector: 'app-course-home',
   standalone: true,
-  imports: [RouterLink, CommonModule, NavbarComponent, TruncateStringSizePipe, CourseCardComponent, CrewComponent, FooterComponent],
+  imports: [
+    RouterLink,
+    CommonModule,
+    NavbarComponent,
+    TruncateStringSizePipe,
+    CourseCardComponent,
+    CrewComponent,
+    FooterComponent,
+  ],
   templateUrl: './course-home.component.html',
   styleUrls: ['./course-home.component.css'],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class CourseHomeComponent implements OnInit {
   courses: Course[] = [];
@@ -24,15 +40,16 @@ export class CourseHomeComponent implements OnInit {
   itemsPerPage: number = 8;
   totalPages: number = 0;
   pages: number[] = [];
+  contest:Contest[]=[]
 
   swiperConfig: any = {
     slidesPerView: 'auto',
     spaceBetween: 20,
     breakpoints: {
       992: {
-        spaceBetween: 20
-      }
-    }
+        spaceBetween: 20,
+      },
+    },
   };
   @ViewChild('courses') coursesSection!: ElementRef;
 
@@ -44,16 +61,28 @@ export class CourseHomeComponent implements OnInit {
     }
   }
 
-  constructor(private router: Router, private courseService: CourseDataService) {}
+  constructor(
+    private router: Router,
+    private courseService: CourseDataService,
+    private contestService:ContestService
+  ) {}
 
   ngOnInit() {
+    this.contestService.getValidContests().subscribe({
+      next: (value) => {
+        this.contest = value;
+        
+      },
+      error: (err) => console.error('Observable emitted an error: ' + err),
+      complete: () => {},
+    })
     this.courseService.getCourses().subscribe({
       next: (value) => {
         this.courses = value;
         this.updatePagination();
       },
       error: (err) => console.error('Observable emitted an error: ' + err),
-      complete: () => {}
+      complete: () => {},
     });
   }
 

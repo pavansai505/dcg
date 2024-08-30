@@ -62,28 +62,5 @@ p {
   margin: 0 0 1rem 0;
 }
 
-/* Links */
-a {
-  color: #007bff; /* Primary link color */
-  text-decoration: none;
-}
 
-a:hover {
-  text-decoration: underline;
-}
 
-/* Buttons */
-button {
-  font-family: 'Arial', 'Helvetica', sans-serif; /* Consistent with body text */
-  font-weight: bold;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}

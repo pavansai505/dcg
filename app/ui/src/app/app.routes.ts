@@ -37,197 +37,273 @@ import { InstructorAddUnitsComponent } from './components/instructor/instructor-
 import { InstructorAddBadgeComponent } from './components/instructor/instructor-dashboard/instructor-add-badge/instructor-add-badge.component';
 import { CoursePaymentComponent } from './components/courses/course-payment/course-payment.component';
 import { coursePurchaseAuthGuard } from './guard/course-purchase-auth.guard';
+import { titleGuardGuard } from './guard/title-guard.guard'; // Import your guard here
 
 export const routes: Routes = [
+  // Home route
   {
     path: '',
     component: CourseHomeComponent,
+    data: { title: 'Home' },
+    canActivate: [titleGuardGuard]
   },
   {
     path: 'home',
-    redirectTo:'courses',
+    redirectTo: 'courses',
+    pathMatch: 'full'
   },
-  //*  Details page
+
+  // Details page
   {
-    path:'about',
-    component:AboutComponent
-  },{
-    path:'contact',
-    component:ContactComponent
+    path: 'about',
+    component: AboutComponent,
+    data: { title: 'About Us' },
+    canActivate: [titleGuardGuard]
   },
-  // * Courses
+  {
+    path: 'contact',
+    component: ContactComponent,
+    data: { title: 'Contact Us' },
+    canActivate: [titleGuardGuard]
+  },
+
+  // Courses
   {
     path: 'courses',
     children: [
       {
         path: '',
-        component: CourseHomeComponent
+        component: CourseHomeComponent,
+        data: { title: 'Courses' },
+        canActivate: [titleGuardGuard]
       },
       {
         path: 'home',
-        component: CourseHomeComponent
+        component: CourseHomeComponent,
+        data: { title: 'Courses' },
+        canActivate: [titleGuardGuard]
       },
       {
         path: 'search',
-        component: CourseSearchComponent
+        component: CourseSearchComponent,
+        data: { title: 'Course Search' },
+        canActivate: [titleGuardGuard]
       },
       {
         path: 'course/info/:id',
-        component: CourseInfoComponent
+        component: CourseInfoComponent,
+        data: { title: 'Course Details' },
+        canActivate: [titleGuardGuard]
       },
       {
         path: 'course/:id/lectures',
         component: CourseLecturesComponent,
-        canActivate: [authGuard, courseAuthGuard]
+        data: { title: 'Course Lectures' },
+        canActivate: [authGuard, courseAuthGuard, titleGuardGuard]
       },
       {
         path: 'course/:courseCode/payment',
         component: CoursePaymentComponent,
-        canActivate: [authGuard,coursePurchaseAuthGuard]
+        data: { title: 'Course Payment' },
+        canActivate: [authGuard, coursePurchaseAuthGuard, titleGuardGuard]
       }
     ]
   },
-  
-  //? Authentication pages
-  // * User authentication paths
+
+  // Authentication pages
+  // User authentication paths
   {
     path: 'auth/user/signin',
     component: SigninComponent,
+    data: { title: 'User Sign In' },
+    canActivate: [titleGuardGuard]
   },
   {
     path: 'auth/user/signup',
     component: SignupComponent,
+    data: { title: 'User Sign Up' },
+    canActivate: [titleGuardGuard]
   },
   {
     path: 'auth/user/forgot-password',
     component: ForgotPasswordComponent,
+    data: { title: 'Forgot Password' },
+    canActivate: [titleGuardGuard]
   },
   {
     path: 'auth/user/reset-password',
     component: ResetPasswordComponent,
+    data: { title: 'Reset Password' },
+    canActivate: [titleGuardGuard]
   },
-  // * Admin authentication paths
+
+  // Admin authentication paths
   {
     path: 'auth/admin/signin',
     component: AdminSigninComponent,
+    data: { title: 'Admin Sign In' },
+    canActivate: [titleGuardGuard]
   },
-  // * User pages
+
+  // User pages
   {
     path: 'user/dashboard',
     component: UserDashboardComponent,
+    canActivate: [authGuard, titleGuardGuard],
     children: [
       {
         path: '',
         redirectTo: 'profile',
-        pathMatch: 'full',
+        pathMatch: 'full'
       },
       {
         path: 'profile',
         component: UserProfileComponent,
+        data: { title: 'User Profile' },
+        canActivate: [titleGuardGuard]
       },
       {
         path: 'courses',
         component: UserCoursesViewComponent,
+        data: { title: 'My Courses' },
+        canActivate: [titleGuardGuard]
       },
       {
-        path:'**',
-        redirectTo:'profile'
+        path: '**',
+        redirectTo: 'profile'
       }
-    ],
+    ]
   },
-  // * Instructor pages
+
+  // Instructor pages
   {
     path: 'instructor/dashboard',
     component: InstructorDashboardComponent,
+    canActivate: [authInstructorGuard, titleGuardGuard],
     children: [
       {
         path: '',
         redirectTo: 'profile',
-        pathMatch: 'full',
+        pathMatch: 'full'
       },
       {
         path: 'profile',
         component: InstructorProfileComponent,
+        data: { title: 'Instructor Profile' },
+        canActivate: [titleGuardGuard]
       },
       {
         path: 'stats',
         component: InstructorCheckStatsComponent,
+        data: { title: 'Instructor Stats' },
+        canActivate: [titleGuardGuard]
       },
       {
         path: 'courses',
         component: InstructorMyCoursesComponent,
+        data: { title: 'My Courses' },
+        canActivate: [titleGuardGuard]
       },
       {
         path: 'courses/modify',
         component: InstructorModifyCourseComponent,
+        data: { title: 'Modify Course' },
+        canActivate: [titleGuardGuard]
       },
       {
         path: 'courses/add',
         component: InstructorAddCourseComponent,
+        data: { title: 'Add New Course' },
+        canActivate: [titleGuardGuard]
       },
       {
-        path:'courses/units/add',
-        component:InstructorAddUnitsComponent
-      }
-      ,
+        path: 'courses/units/add',
+        component: InstructorAddUnitsComponent,
+        data: { title: 'Add Course Units' },
+        canActivate: [titleGuardGuard]
+      },
       {
-        path:'courses/lessons/add',
-        component:InstructorAddLessonsComponent
-      },{
-        path:'courses/badge/add',
-        component:InstructorAddBadgeComponent
+        path: 'courses/lessons/add',
+        component: InstructorAddLessonsComponent,
+        data: { title: 'Add Course Lessons' },
+        canActivate: [titleGuardGuard]
+      },
+      {
+        path: 'courses/badge/add',
+        component: InstructorAddBadgeComponent,
+        data: { title: 'Add Course Badge' },
+        canActivate: [titleGuardGuard]
       }
-    ],
-    canActivate:[authInstructorGuard]
+    ]
   },
-  // * Admin pages
+
+  // Admin pages
   {
     path: 'admin/dashboard',
     component: AdminDashboardComponent,
+    canActivate: [authAdminGuard, titleGuardGuard],
     children: [
       {
         path: '',
         redirectTo: 'profile',
-        pathMatch: 'full',
+        pathMatch: 'full'
       },
       {
         path: 'profile',
         component: AdminProfileComponent,
+        data: { title: 'Admin Profile' },
+        canActivate: [titleGuardGuard]
       },
       {
         path: 'stats',
         component: AdminStatsComponent,
+        data: { title: 'Admin Stats' },
+        canActivate: [titleGuardGuard]
       },
       {
         path: 'courses',
         component: AdminCoursesViewComponent,
+        data: { title: 'All Courses' },
+        canActivate: [titleGuardGuard]
       },
       {
         path: 'courses/approved',
         component: AdminCoursesViewComponent,
+        data: { title: 'Approved Courses' },
+        canActivate: [titleGuardGuard]
       },
       {
         path: 'courses/pending',
         component: AdminPendingCoursesViewComponent,
+        data: { title: 'Pending Courses' },
+        canActivate: [titleGuardGuard]
       },
       {
         path: 'courses/rejected',
         component: AdminRejectedCoursesViewComponent,
+        data: { title: 'Rejected Courses' },
+        canActivate: [titleGuardGuard]
       }
-    ],
-    canActivate:[authAdminGuard]
+    ]
   },
   {
-    path:'admin/stats',
-    component:AdminStatsComponent
+    path: 'admin/stats',
+    component: AdminStatsComponent,
+    data: { title: 'Admin Stats' },
+    canActivate: [titleGuardGuard]
   },
-  // ! Miscellanious
+
+  // Miscellaneous
   {
     path: 'routes',
     component: RoutesComponent,
+    data: { title: 'Routes' },
+    canActivate: [titleGuardGuard]
   },
   {
     path: '**',
     component: NotfoundComponent,
-  },
+    data: { title: 'Page Not Found' },
+    canActivate: [titleGuardGuard]
+  }
 ];
