@@ -46,12 +46,11 @@ public class ContestService {
                 .description(request.getDescription())
                 .status(request.getStatus())
                 .maxParticipants(request.getMaxParticipants())
-                .createdBy(createdBy)
+                .createdByUser(createdBy)
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
                 .quiz(quiz)
                 .build();
-
         // Save the contest
         return contestRepository.save(contest);
     }
@@ -89,4 +88,15 @@ public class ContestService {
         contestRepository.save(contest);
         userRepository.save(user);
     }
+    @Transactional
+    public boolean isUserRegisteredForContest(Long contestId, String username) {
+        Contest contest = contestRepository.findById(contestId)
+                .orElseThrow(() -> new RuntimeException("Contest not found"));
+
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+       return contest.getParticipants().contains(user);
+    }
+
 }

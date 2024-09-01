@@ -1,0 +1,41 @@
+/* leaderboard.component.css */
+.table thead th {
+    background-color: #343a40; /* Dark background for the header */
+    color: #ffffff; /* White text color */
+  }
+  
+  .table tbody tr:nth-child(1) {
+    background-color: #007bff; /* Blue for 1st place */
+    color: #ffffff; /* White text color */
+  }
+  
+  .table tbody tr:nth-child(2) {
+    background-color: #6c757d; /* Gray for 2nd place */
+    color: #ffffff; /* White text color */
+  }
+  
+  .table tbody tr:nth-child(3) {
+    background-color: #28a745; /* Green for 3rd place */
+    color: #ffffff; /* White text color */
+  }
+  
+  .table tbody tr:nth-child(n + 4) {
+    background-color: #f9f9f9; /* Light gray background for other rows */
+  }
+  
+  .table tbody tr:hover {
+    background-color: #e9ecef; /* Light background on hover */
+  }
+  
+  .table td, .table th {
+    padding: 1rem; /* Padding for cells */
+  }
+  
+  .table-bordered {
+    border: 1px solid #dee2e6; /* Border color for the table */
+  }
+  
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9; /* Alternate row background */
+  }
+  

@@ -12,5 +12,6 @@ export interface Quiz {
 
 export interface Score {
   user: User;
-  score: number;
+  scoreValue: number;
+  createdDate:Date
 }

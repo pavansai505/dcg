@@ -1,5 +1,6 @@
 package com.dcg.mvc.contest.controller;
 
+import com.dcg.model.CustomResponse;
 import com.dcg.mvc.contest.Contest;
 import com.dcg.mvc.contest.ContestService;
 import com.dcg.mvc.contest.dto.CreateContestRequest;
@@ -52,5 +53,10 @@ public class ContestController {
     @PostMapping("/{contestId}/register")
     public void registerForContest(@PathVariable Long contestId,Authentication authentication) {
         contestService.registerUserForContest(contestId, ((UserDetails) authentication.getPrincipal()).getUsername());
+    }
+    @GetMapping("/{contestId}/is-user-registered")
+    public CustomResponse isUserRegisteredForContest(@PathVariable Long contestId, Authentication authentication) {
+        return CustomResponse.builder().isResultTrue(contestService.isUserRegisteredForContest(contestId, ((UserDetails) authentication.getPrincipal()).getUsername())
+    ).build();
     }
 }

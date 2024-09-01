@@ -96,7 +96,6 @@ export class CourseLecturesComponent {
           if (value.resultTrue) {
             completed += 1;
           }
-
           this.completePercentage = Math.round((completed / total) * 100) + '%';
         },
       });

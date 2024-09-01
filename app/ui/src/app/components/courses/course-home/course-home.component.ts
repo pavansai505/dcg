@@ -3,6 +3,7 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   ElementRef,
   OnInit,
+  TrackByFunction,
   ViewChild,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
@@ -28,6 +29,7 @@ import { Contest } from '../../../models/course/contest';
     CourseCardComponent,
     CrewComponent,
     FooterComponent,
+    
   ],
   templateUrl: './course-home.component.html',
   styleUrls: ['./course-home.component.css'],
@@ -40,7 +42,8 @@ export class CourseHomeComponent implements OnInit {
   itemsPerPage: number = 8;
   totalPages: number = 0;
   pages: number[] = [];
-  contest:Contest[]=[]
+  contests:Contest[]=[]
+  trackByFn!: TrackByFunction<Contest>;
 
   swiperConfig: any = {
     slidesPerView: 'auto',
@@ -68,9 +71,9 @@ export class CourseHomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.contestService.getValidContests().subscribe({
+    this.contestService.getContests().subscribe({
       next: (value) => {
-        this.contest = value;
+        this.contests = value;
         
       },
       error: (err) => console.error('Observable emitted an error: ' + err),
@@ -122,4 +125,6 @@ export class CourseHomeComponent implements OnInit {
   changePageToSearch() {
     this.router.navigate(['/courses/search']);
   }
+
+  
 }

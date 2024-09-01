@@ -38,6 +38,11 @@ import { InstructorAddBadgeComponent } from './components/instructor/instructor-
 import { CoursePaymentComponent } from './components/courses/course-payment/course-payment.component';
 import { coursePurchaseAuthGuard } from './guard/course-purchase-auth.guard';
 import { titleGuardGuard } from './guard/title-guard.guard'; // Import your guard here
+import { ContestsComponent } from './components/contests/contests/contests.component';
+import { ContestsInfoComponent } from './components/contests/contests-info/contests-info.component';
+import { ContestsQuizComponent } from './components/contests/contests-quiz/contests-quiz.component';
+import { ContestsLeaderboardComponent } from './components/contests/contests-leaderboard/contests-leaderboard.component';
+import { contestGuardGuard } from './guard/contest-guard.guard';
 
 export const routes: Routes = [
   // Home route
@@ -293,6 +298,36 @@ export const routes: Routes = [
     canActivate: [titleGuardGuard]
   },
 
+  // Contests
+  {
+    path:'contests',
+    children:[
+      {
+      path:'',
+      component:ContestsComponent,
+      data:{title:'Contests'},
+      canActivate:[titleGuardGuard]
+    },
+      {
+      path:':id/info',
+      component:ContestsInfoComponent,
+      data:{title:'Contest info'},
+      canActivate:[titleGuardGuard]
+    },
+      {
+      path:':id/quiz',
+      component:ContestsQuizComponent,
+      data:{title:'Quiz'},
+      canActivate:[titleGuardGuard]
+    },
+      {
+      path:':id/leaderboard',
+      component:ContestsLeaderboardComponent,
+      data:{title:'Leaderboard'},
+      canActivate:[titleGuardGuard]
+    }
+  ]
+  },
   // Miscellaneous
   {
     path: 'routes',

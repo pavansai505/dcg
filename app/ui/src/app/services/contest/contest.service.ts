@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environments';
 import { Observable } from 'rxjs';
 import { CreateContestRequest } from '../../models/course/CreateContestRequest';
+import { ScoreCheckResponse } from '../../models/contest/scoreCheckResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -30,4 +31,12 @@ export class ContestService {
   registerToContests(id:number): Observable<any> {
     return this.http.post<any>(this.apiBaseUrl + id+"/register",{});
   }
+  isUserRegisteredToContest(id:number): Observable<any> {
+    return this.http.get<any>(this.apiBaseUrl + id+"/is-user-registered");
+  }
+
+  
+
+
+
 }

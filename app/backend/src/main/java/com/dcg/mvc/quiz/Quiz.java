@@ -4,6 +4,7 @@ import com.dcg.common.BaseEntity;
 import com.dcg.mvc.lecture.Lecture;
 import com.dcg.mvc.question.Question;
 import com.dcg.mvc.score.Score;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,6 +32,7 @@ public class Quiz extends BaseEntity {
     private List<Question> questions; // List of questions with options and correct answers
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Score> scores=new ArrayList<>(); // List of scores for each user
 
 }

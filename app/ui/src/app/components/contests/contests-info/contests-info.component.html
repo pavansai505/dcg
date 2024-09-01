@@ -1,0 +1,55 @@
+<app-navbar></app-navbar>
+<div class="container shadow-lg">
+  <div class="px-4 py-5 my-5 text-center">
+    <i class="bi bi-braces fs-1"></i>
+    <h1 class="display-5 fw-bold text-body-emphasis">{{ contest.title }}</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">
+       {{contest.description}}
+      </p>
+      <p class="lead mb-4">
+       {{contest.startDate | date:'short'}} to {{contest.endDate | date:'short'}}
+      </p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <button type="button" class="btn btn-success btn-lg px-4 gap-3"  style="background-color: #00b300;" *ngIf="!isRegistered" (click)="enrollToContest()">
+          Enroll
+        </button>
+        <button type="button" class="btn btn-success btn-lg px-4 gap-3 disabled" style="background-color: #00b300;" *ngIf="isRegistered && !isBetween">
+          Enrolled
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-lg px-4" *ngIf="isRegistered && isBetween" (click)="startContest()">
+          Start
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- leaderboard.component.html -->
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">Leaderboard</h2>
+  <div *ngIf="scores.length > 0; else noScores" class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Rank</th>
+          <th scope="col">User</th>
+          <th scope="col">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let score of scores; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ score.user?.fullName || 'Unknown User' }}</td>
+          <td>{{ score.scoreValue }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noScores>
+    <p class="text-center text-muted">No scores available.</p>
+  </ng-template>
+</div>
+
+
+
+<app-footer></app-footer>

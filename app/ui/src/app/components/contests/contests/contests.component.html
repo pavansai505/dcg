@@ -1,0 +1,36 @@
+<app-navbar></app-navbar>
+<div class="container min-vh-100 p-5">
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1">
+    <div
+      class="col py-3 centerIt"
+      *ngFor="let contest of contests; let i = index"
+    >
+      <div class="card shadow" style="width: 20rem;" [routerLink]="[contest.id+'/info']" routerLinkActive="router-link-active" >
+        <div class="card-body">
+          <h5 class="card-title my-0"><i class="bi bi-trophy"></i>{{" "}}{{ contest.createdByUser.fullName }}  <span class="float-end">{{ contest.startDate | date  }}</span></h5>
+          <small class="">
+            {{calculateDaysAgo(contest.createdDate)}}
+          </small>
+          <p class="card-text fw-bold fs-5 my-3">
+            {{contest.title}}
+          </p>
+          <div class="progress mb-3" role="progressbar" style="height: 7px;">
+            <div class="progress-bar" [style.width]="getProgressWidth(contest)" ></div>
+          </div>
+          <p class="card-text">
+            <span class="fw-bold">Slots left : </span
+            >{{ contest.maxParticipants - contest.participants.length }}
+          </p>
+         
+          <!-- <a
+            [routerLink]="['info']"
+            routerLinkActive="router-link-active"
+            class="btn contestBtn btn-sm"
+            >Enter</a
+          > -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

@@ -12,4 +12,5 @@ export interface User {
   courses: Course[]; // Courses the user is enrolled in
   createdDate: string; // Use ISO 8601 date format string
   lastModifiedDate: string | null; // Use ISO 8601 date format string or null
+  fullName:String;
 }

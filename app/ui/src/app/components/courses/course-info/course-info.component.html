@@ -147,7 +147,7 @@
                   </div>
                   <div class="card-footer text-muted">
                     <!-- Optionally add footer information like creation date or author -->
-                    <small>Last updated: {{ unit.lastModifiedDate | date: 'short' }}</small>
+                    <small>Last updated: {{ (unit.lastModifiedDate?(unit.lastModifiedDate | date):(unit.createdDate | date) )}}</small>
                   </div>
                 </div>
               </div>

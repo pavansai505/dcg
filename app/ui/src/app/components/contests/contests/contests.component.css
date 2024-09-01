@@ -1,0 +1,32 @@
+.card {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: linear-gradient(45deg, #ff0077, #5a32a3);
+    z-index: -1;
+    border-radius: 8px; /* Adjust to match the card's border-radius */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card-content {
+    position: relative;
+    z-index: 1;
+    background-color: white; /* Ensure the card's background is solid */
+    border-radius: 5px; /* Match this to the card's border-radius */
+    padding: 15px;
+}
+

@@ -59,16 +59,15 @@ transform: rotate(90deg);
     padding: 0.5rem 1rem; /* Button padding */
     font-size: 0.875rem; /* Button font size */
     z-index: 1; /* Ensure the button is on top */
-    background-color: #007bff; /* Blue background for the button */
-    color: #ffffff; /* White text color for the button */
-    border: none; /* Remove default button border */
+    
     border-radius: 4px; /* Rounded corners for the button */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s ease; /* Smooth transition for hover effect */
   }
   
   .copy-btn:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: white; /* Darker blue on hover */
+    color: black;
   }
   
  

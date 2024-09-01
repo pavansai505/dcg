@@ -26,3 +26,45 @@ swiper-container {
    .carousel-control-next-icon {
      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
    }
+
+   .carousel-inner {
+    position: relative;
+    width: 100%;
+    height: 500px; /* Adjust based on your design needs */
+  }
+  
+  .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure images cover the container */
+  }
+  
+  .carousel-caption {
+    bottom: 20%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); /* Adds shadow for better readability */
+  }
+  
+  .carousel-caption h5 {
+    font-size: 2rem; /* Adjust based on your design needs */
+    font-weight: bold;
+  }
+  
+  .carousel-caption p {
+    font-size: 1.2rem; /* Adjust based on your design needs */
+  }
+  
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    border-radius: 50%; /* Round icons */
+  }
+  
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 5%; /* Adjust the width of the control buttons */
+  }
+  

@@ -1,11 +1,14 @@
 package com.dcg.mvc.contest;
 
+import com.dcg.common.BaseEntity;
 import com.dcg.mvc.quiz.Quiz;
 import com.dcg.mvc.score.Score; // Import Score entity
 import com.dcg.mvc.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,12 +17,10 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Contest {
+@SuperBuilder
+public class Contest extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
 
     private String title;
 
@@ -35,8 +36,8 @@ public class Contest {
     private int maxParticipants;
 
     @ManyToOne
-    @JoinColumn(name = "created_by")
-    private User createdBy;
+    @JoinColumn(name = "created_by_user")
+    private User createdByUser;
 
     @ManyToMany
     @JoinTable(

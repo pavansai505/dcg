@@ -10,6 +10,8 @@ export interface Contest {
     startDate: string;  // ISO date string
     endDate: string;    // ISO date string
     createdByUser: User;
-    quiz: Quiz;     // Optional, if a quiz is associated
+    createdDate:string;
+    quiz: Quiz;   
+    participants:User[]  // Optional, if a quiz is associated
     // List of scores and other related data
 }
