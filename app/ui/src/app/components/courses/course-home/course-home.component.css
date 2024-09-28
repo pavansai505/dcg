@@ -20,23 +20,35 @@ swiper-container {
   }
 
   .carousel-control-prev-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
-   }
-   
-   .carousel-control-next-icon {
-     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
-   }
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M11.354 1.354a.5.5 0 0 1 0 .707L5.207 8l6.147 6.146a.5.5 0 0 1-.708.708l-6.5-6.5a.5.5 0 0 1 0-.708l6.5-6.5a.5.5 0 0 1 .708 0z'/%3E%3C/svg%3E") !important;
+    background-size: 24px 24px;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5); /* Adding a slight background for better visibility */
+    border-radius: 50%; /* Making it a circle */
+  }
+  
+  .carousel-control-next-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 14.854a.5.5 0 0 1 0-.708L10.793 8 4.646 1.854a.5.5 0 0 1 .708-.708l6.5 6.5a.5.5 0 0 1 0 .708l-6.5 6.5a.5.5 0 0 1-.708 0z'/%3E%3C/svg%3E") !important;
+    background-size: 24px 24px;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5); /* Adding a slight background for better visibility */
+    border-radius: 50%; /* Making it a circle */
+  }
+  
 
    .carousel-inner {
     position: relative;
     width: 100%;
-    height: 500px; /* Adjust based on your design needs */
+    
   }
   
   .carousel-item img {
     width: 100%;
     height: 100%;
     object-fit: cover; /* Ensure images cover the container */
+
   }
   
   .carousel-caption {
@@ -68,3 +80,4 @@ swiper-container {
     width: 5%; /* Adjust the width of the control buttons */
   }
   
+

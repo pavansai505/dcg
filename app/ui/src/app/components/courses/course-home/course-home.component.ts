@@ -17,6 +17,9 @@ import { CrewComponent } from '../../utilities/crew/crew.component';
 import { FooterComponent } from '../../utilities/footer/footer.component';
 import { ContestService } from '../../../services/contest/contest.service';
 import { Contest } from '../../../models/course/contest';
+import Swiper from 'swiper';
+import { SwiperOptions } from 'swiper/types';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-course-home',
@@ -29,7 +32,6 @@ import { Contest } from '../../../models/course/contest';
     CourseCardComponent,
     CrewComponent,
     FooterComponent,
-    
   ],
   templateUrl: './course-home.component.html',
   styleUrls: ['./course-home.component.css'],
@@ -42,9 +44,11 @@ export class CourseHomeComponent implements OnInit {
   itemsPerPage: number = 8;
   totalPages: number = 0;
   pages: number[] = [];
-  contests:Contest[]=[]
+  contests: Contest[] = [];
   trackByFn!: TrackByFunction<Contest>;
+  swiperEl:any=null
 
+  @ViewChild('swiperContainer') swiperContainer!: ElementRef;
   swiperConfig: any = {
     slidesPerView: 'auto',
     spaceBetween: 20,
@@ -54,6 +58,7 @@ export class CourseHomeComponent implements OnInit {
       },
     },
   };
+
   @ViewChild('courses') coursesSection!: ElementRef;
 
   // Function to scroll to the specified section
@@ -67,64 +72,98 @@ export class CourseHomeComponent implements OnInit {
   constructor(
     private router: Router,
     private courseService: CourseDataService,
-    private contestService:ContestService
+    private contestService: ContestService
   ) {}
 
   ngOnInit() {
-    this.contestService.getContests().subscribe({
-      next: (value) => {
-        this.contests = value;
-        
-      },
-      error: (err) => console.error('Observable emitted an error: ' + err),
-      complete: () => {},
-    })
-    this.courseService.getCourses().subscribe({
-      next: (value) => {
-        this.courses = value;
-        this.updatePagination();
+    forkJoin({
+      contests: this.contestService.getContests(),
+      courses: this.courseService.getCourses()
+    }).subscribe({
+      next: ({ contests, courses }) => {
+        this.contests = contests;  // Set contests from the response
+        this.courses = courses;    // Set courses from the response
       },
       error: (err) => console.error('Observable emitted an error: ' + err),
       complete: () => {},
     });
   }
+  // ngAfterViewInit() {
+  //   const swiperEl = this.swiperContainer.nativeElement;
 
-  updatePagination() {
-    this.totalPages = Math.ceil(this.courses.length / this.itemsPerPage);
-    this.paginateCourses();
+  //   // Initialize Swiper with configuration
+  //   // const swiper = new Swiper(swiperEl, );
+  //   // console.log(swiperEl);
+
+  //   // console.log(swiper);
+  //   Object.assign(swiperEl,{
+  //     slidesPerView: 4,
+  //     spaceBetween: 10,
+  //     pagination: {
+  //       el: '.swiper-pagination',
+  //       clickable: true,
+  //     },
+  //     navigation: {
+  //       nextEl: '.swiper-button-next',
+  //       prevEl: '.swiper-button-prev',
+  //     },
+  //     breakpoints: {
+  //       640: {
+  //         slidesPerView: 2,
+  //         spaceBetween: 20,
+  //       },
+  //       768: {
+  //         slidesPerView: 4,
+  //         spaceBetween: 40,
+  //       },
+  //       1024: {
+  //         slidesPerView: 5,
+  //         spaceBetween: 50,
+  //       },
+  //     },
+  //   })
+  //   swiperEl.Initialize()
+  // }
+  ngAfterViewInit() {
+    this.callCardSwiper();
   }
 
-  paginateCourses() {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedCourses = this.courses.slice(startIndex, endIndex);
-    this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
-  }
+  callCardSwiper() {
+     this.swiperEl = this.swiperContainer.nativeElement;
 
-  previousPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.paginateCourses();
-    }
-  }
+    // Initialize Swiper with configuration
+    Object.assign(this.swiperEl, {
+      slidesPerView: 4,
+      spaceBetween: 10,
+    
+      
+      autoplay: {
+        delay: 3000, // Adjust the delay as needed
+        disableOnInteraction: false,
+      },
 
-  nextPage() {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.paginateCourses();
-    }
-  }
-
-  goToPage(page: number) {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-      this.paginateCourses();
-    }
+     
+      breakpoints: {
+        640: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 40,
+        },
+        1024: {
+          slidesPerView:4,
+          spaceBetween: 50,
+        },
+      },
+    
+      
+    });
+    
   }
 
   changePageToSearch() {
     this.router.navigate(['/courses/search']);
   }
-
-  
 }

@@ -1,6 +1,6 @@
-package com.dcg.model;
+package com.dcg.mvc.course;
 
-import com.dcg.enums.CourseLevel;
+import com.dcg.constants.enums.CourseLevel;
 import com.dcg.mvc.badge.Badge;
 import com.dcg.mvc.user.User;
 import com.dcg.mvc.unit.Unit;

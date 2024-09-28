@@ -2,9 +2,9 @@
 
 <!-- * Main -->
 <main>
-    <!-- * Banner or Hero -->
-    <!-- Hero Section for E-Learning Platform -->
-<!-- <div class="container col-xxl-8 px-4 py-5 ">
+  <!-- * Banner or Hero -->
+  <!-- Hero Section for E-Learning Platform -->
+  <!-- <div class="container col-xxl-8 px-4 py-5 ">
   <div class="row flex-lg-row-reverse align-items-center justify-content-around g-5 py-5">
     <div class="col-10 col-sm-8 col-lg-6 ">
       <img src="assets/img/mainPage.jpg" loading="lazy" class="d-block mx-lg-auto img-fluid rounded shadow-sm" alt="E-Learning Platform Preview" width="700" height="500" loading="lazy">
@@ -22,50 +22,71 @@
 
   <!-- * Carousel -->
   <div class="container mt-4">
-    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-      <div class="carousel-indicators">
-        <button *ngFor="let contest of contests; let i = index"
-                type="button"
-                [attr.data-bs-slide-to]="i"
-                [class.active]="i === 0"
-                aria-current="true"
-                [attr.aria-label]="'Slide ' + (i + 1)"></button>
-      </div>
+    <div
+      id="carouselExampleCaptions"
+      class="carousel slide"
+      data-bs-ride="carousel"
+      data-bs-interval="3000"
+    >
+      <!-- <div class="carousel-indicators">
+        <button
+          *ngFor="let contest of contests; let i = index"
+          type="button"
+          [attr.data-bs-slide-to]="i"
+          [class.active]="i === 0"
+          aria-current="true"
+          [attr.aria-label]="'Slide ' + (i + 1)"
+        ></button>
+      </div> -->
       <div class="carousel-inner">
-        <div *ngFor="let contest of contests; let i = index; trackBy: trackByFn"
-             class="carousel-item"
-             [class.active]="i === 0">
-          <img [src]="'https://picsum.photos/1600/600?random='+i" class="d-block w-100" [alt]="contest.title">
+        <div
+          *ngFor="let contest of contests; let i = index; trackBy: trackByFn"
+          class="carousel-item"
+          [class.active]="i === 0"
+        >
+          <img
+            [src]="'https://picsum.photos/1600/600?random=' + i"
+            class="d-block w-100"
+            [alt]="contest.title"
+          />
           <div class="carousel-caption d-none d-md-block">
-            <h5>{{contest.title}}</h5>
-            <p>{{contest.description}}</p>
+            <h5>{{ contest.title }}</h5>
+            <p>{{ contest.description }}</p>
           </div>
         </div>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="prev"
+      >
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
       </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="next"
+      >
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
     </div>
   </div>
-  
-
-
 
   <!-- * Courses -->
   <div class="container my-5" id="courses">
     <div class="p-5 text-center bg-body-tertiary rounded-3">
       <h1 class="text-body-emphasis">Courses</h1>
       <p class="lead">
-        Discover a diverse range of courses designed to enhance your skills and advance your career. From beginner to advanced levels, our platform offers something for everyone. Start your learning journey today!
+        Discover a diverse range of courses designed to enhance your skills and
+        advance your career. From beginner to advanced levels, our platform
+        offers something for everyone. Start your learning journey today!
       </p>
-      
     </div>
-<!-- ! Pagination -->
+    <!-- ! Pagination -->
     <!-- <div class="album py-5 bg-body-tertiary">
       <div class="container">
         <div
@@ -77,26 +98,39 @@
         </div>
       </div>
     </div> -->
-    <div class="album py-5 bg-body-tertiary">
+
+    <!-- <div class="album py-5 bg-body-tertiary">
       <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+        <div
+          class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3"
+        >
           <div class="col" *ngFor="let course of paginatedCourses">
             <app-course-card [course]="course"></app-course-card>
           </div>
         </div>
-    
-        <!-- Pagination controls -->
+
         <nav aria-label="Page navigation">
           <ul class="pagination centerIt mt-5">
-            <li class="page-item" [ngClass]="{'disabled': currentPage === 1}">
-              <a class="page-link" (click)="previousPage()" aria-label="Previous">
+            <li class="page-item" [ngClass]="{ disabled: currentPage === 1 }">
+              <a
+                class="page-link"
+                (click)="previousPage()"
+                aria-label="Previous"
+              >
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
-            <li class="page-item" *ngFor="let page of pages" [ngClass]="{'active': page === currentPage}">
+            <li
+              class="page-item"
+              *ngFor="let page of pages"
+              [ngClass]="{ active: page === currentPage }"
+            >
               <a class="page-link" (click)="goToPage(page)">{{ page }}</a>
             </li>
-            <li class="page-item" [ngClass]="{'disabled': currentPage === totalPages}">
+            <li
+              class="page-item"
+              [ngClass]="{ disabled: currentPage === totalPages }"
+            >
               <a class="page-link" (click)="nextPage()" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
               </a>
@@ -104,15 +138,37 @@
           </ul>
         </nav>
       </div>
+    </div> -->
+    <div class="album py-5 bg-body-tertiary">
+      <div class="container text-center">
+      
+        <div class="row">
+          <div class="col col-1 centerIt">
+            <div class="btn" (click)="swiperEl.swiper.slidePrev()">
+              <i class="bi bi-caret-left courseSwiperControls fs-2"></i>
+            </div>
+          </div>
+          <div class="col col-10">
+            <swiper-container #swiperContainer keyboard="true" autoplay="true">
+              <ng-container *ngFor="let course of courses">
+                <swiper-slide>
+                  <app-course-card [course]="course"></app-course-card>
+                </swiper-slide>
+              </ng-container>
+            </swiper-container>
+          </div>
+          <div class="col col-1 centerIt">
+            <div class="btn" (click)="swiperEl.swiper.slideNext()">
+              <i class="bi bi-caret-right fs-2 courseSwiperControls"></i>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    
   </div>
+
   <!-- * teachers -->
   <app-crew></app-crew>
-
-
-
-
 
   <!-- * Testimonials -->
   <div class="container px-4 py-5" id="featured-3">
@@ -131,13 +187,14 @@
         <swiper-slide>
           <div class="feature">
             <div
-              class="feature-icon d-inline-flex align-items-center justify-content-center  bg-gradient fs-2 mb-3"
+              class="feature-icon d-inline-flex align-items-center justify-content-center bg-gradient fs-2 mb-3"
             >
               <i class="bi bi-book"></i>
             </div>
             <h3 class="fs-2 text-body-emphasis">Diverse Course Catalog</h3>
             <p>
-              Explore a wide range of subjects and skills with our extensive library of courses, from technology to arts.
+              Explore a wide range of subjects and skills with our extensive
+              library of courses, from technology to arts.
             </p>
             <a href="#" class="icon-link">
               Learn More
@@ -145,7 +202,7 @@
             </a>
           </div>
         </swiper-slide>
-  
+
         <swiper-slide>
           <div class="feature">
             <div
@@ -155,7 +212,8 @@
             </div>
             <h3 class="fs-2 text-body-emphasis">Flexible Learning</h3>
             <p>
-              Learn at your own pace with our self-paced courses and flexible scheduling options.
+              Learn at your own pace with our self-paced courses and flexible
+              scheduling options.
             </p>
             <a href="#" class="icon-link">
               Explore Options
@@ -163,17 +221,18 @@
             </a>
           </div>
         </swiper-slide>
-  
+
         <swiper-slide>
           <div class="feature">
             <div
-              class="feature-icon d-inline-flex align-items-center justify-content-center  bg-gradient fs-2 mb-3"
+              class="feature-icon d-inline-flex align-items-center justify-content-center bg-gradient fs-2 mb-3"
             >
               <i class="bi bi-person-check"></i>
             </div>
             <h3 class="fs-2 text-body-emphasis">Expert Instructors</h3>
             <p>
-              Learn from industry professionals and experienced educators who are passionate about teaching.
+              Learn from industry professionals and experienced educators who
+              are passionate about teaching.
             </p>
             <a href="#" class="icon-link">
               Meet Our Instructors
@@ -181,17 +240,18 @@
             </a>
           </div>
         </swiper-slide>
-  
+
         <swiper-slide>
           <div class="feature">
             <div
-              class="feature-icon d-inline-flex align-items-center justify-content-center  bg-gradient fs-2 mb-3"
+              class="feature-icon d-inline-flex align-items-center justify-content-center bg-gradient fs-2 mb-3"
             >
               <i class="bi bi-award"></i>
             </div>
             <h3 class="fs-2 text-body-emphasis">Certification Programs</h3>
             <p>
-              Earn recognized certificates upon course completion to boost your resume and career prospects.
+              Earn recognized certificates upon course completion to boost your
+              resume and career prospects.
             </p>
             <a href="#" class="icon-link">
               See Certifications
@@ -202,8 +262,6 @@
       </swiper-container>
     </div>
   </div>
-  
-  
 </main>
 <!-- * Footer -->
 <app-footer></app-footer>

@@ -1,5 +1,7 @@
-package com.dcg.model;
+package com.dcg.mvc.user;
 
+import com.dcg.mvc.role.RoleDTO;
+import com.dcg.mvc.course.CourseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

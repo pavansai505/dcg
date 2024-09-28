@@ -1,9 +1,8 @@
-package com.dcg.mapper;
+package com.dcg.mvc.user;
 
-import com.dcg.mvc.user.UserDTO;
+import com.dcg.mvc.course.CourseMapper;
 import com.dcg.mvc.role.RoleDTO;
 import com.dcg.mvc.course.CourseDTO;
-import com.dcg.mvc.user.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

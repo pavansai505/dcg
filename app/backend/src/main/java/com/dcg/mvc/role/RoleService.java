@@ -1,7 +1,6 @@
 package com.dcg.mvc.role;
 
 import com.dcg.constants.UserRole;
-import com.dcg.model.Promote;
 import com.dcg.mvc.user.User;
 import com.dcg.mvc.user.UserRepository;
 import lombok.RequiredArgsConstructor;

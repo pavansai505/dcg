@@ -1,4 +1,4 @@
-package com.dcg.model;
+package com.dcg.mvc.course;
 
 import lombok.Data;
 

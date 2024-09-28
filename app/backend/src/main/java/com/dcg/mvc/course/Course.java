@@ -1,9 +1,8 @@
 package com.dcg.mvc.course;
 
 import com.dcg.common.BaseEntity;
-import com.dcg.enums.CourseLevel;
+import com.dcg.constants.enums.CourseLevel;
 import com.dcg.mvc.badge.Badge;
-import com.dcg.mvc.lectureProgress.LectureProgress;
 import com.dcg.mvc.history.CourseActionHistory;
 import com.dcg.mvc.payment.Payment;
 import com.dcg.mvc.unit.Unit;

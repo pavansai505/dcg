@@ -1,6 +1,5 @@
-package com.dcg.model;
+package com.dcg.mvc.role;
 
-import com.dcg.constants.Roles;
 import com.dcg.constants.UserRole;
 import lombok.Builder;
 import lombok.Data;

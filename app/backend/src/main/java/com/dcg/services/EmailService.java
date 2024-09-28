@@ -2,22 +2,60 @@ package com.dcg.services;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.CompletableFuture;
+
 @Service
+@EnableAsync // Enable asynchronous processing
 public class EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendPasswordChangeEmail(String to, String token) {
+    @Async // Run this method asynchronously
+    public CompletableFuture<Void> sendPasswordChangeEmail(String to, String token) {
         String subject = "Password Change Request";
+        String text = createPasswordChangeEmailBody(token);
 
-        // HTML content for the email
-        String text = "<html>" +
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(text, true);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        return CompletableFuture.completedFuture(null);
+    }
+
+    @Async // Run this method asynchronously
+    public CompletableFuture<Void> sendPaymentDetailsEmail(String to, String paymentId, String orderId, double amount, String status) {
+        String subject = "Payment Confirmation";
+        String text = createPaymentDetailsEmailBody(paymentId, orderId, amount, status);
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(text, true);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        return CompletableFuture.completedFuture(null);
+    }
+
+    private String createPasswordChangeEmailBody(String token) {
+        // HTML content for password change email
+        return "<html>" +
                 "<body style='font-family: Arial, sans-serif;'>" +
                 "<div style='max-width: 600px; margin: auto; padding: 20px;'>" +
                 "<h2 style='color: #333;'>Password Change Request</h2>" +
@@ -30,28 +68,11 @@ public class EmailService {
                 "</div>" +
                 "</body>" +
                 "</html>";
-
-        try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(text, true); // Set the email content as HTML
-
-            mailSender.send(message);
-        } catch (MessagingException e) {
-            // Handle exception (e.g., log it)
-            e.printStackTrace();
-        }
     }
 
-    // New method to send payment details email
-    public void sendPaymentDetailsEmail(String to, String paymentId, String orderId, double amount, String status) {
-        String subject = "Payment Confirmation";
-
-        // HTML content for the email
-        String text = "<html>" +
+    private String createPaymentDetailsEmailBody(String paymentId, String orderId, double amount, String status) {
+        // HTML content for payment details email
+        return "<html>" +
                 "<body style='font-family: Arial, sans-serif;'>" +
                 "<div style='max-width: 600px; margin: auto; padding: 20px;'>" +
                 "<h2 style='color: #333;'>Payment Confirmation</h2>" +
@@ -80,19 +101,5 @@ public class EmailService {
                 "</div>" +
                 "</body>" +
                 "</html>";
-
-        try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(text, true); // Set the email content as HTML
-
-            mailSender.send(message);
-        } catch (MessagingException e) {
-            // Handle exception (e.g., log it)
-            e.printStackTrace();
-        }
     }
 }

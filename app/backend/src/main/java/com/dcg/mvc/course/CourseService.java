@@ -1,10 +1,7 @@
 package com.dcg.mvc.course;
 
 import com.dcg.constants.CourseStatus;
-import com.dcg.model.CourseRegister;
-import com.dcg.mvc.lecture.Lecture;
 import com.dcg.mvc.lecture.LectureRepository;
-import com.dcg.mvc.unit.Unit;
 import com.dcg.mvc.user.User;
 import com.dcg.mvc.user.UserRepository;
 import jakarta.transaction.Transactional;

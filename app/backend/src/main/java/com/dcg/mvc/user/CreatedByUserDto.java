@@ -1,4 +1,4 @@
-package com.dcg.mvc.user.dto;
+package com.dcg.mvc.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

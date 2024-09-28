@@ -1,8 +1,5 @@
 package com.dcg.mvc.contest;
 
-import com.dcg.mvc.contest.Contest;
-import com.dcg.mvc.contest.ContestRepository;
-import com.dcg.mvc.contest.dto.CreateContestRequest;
 import com.dcg.mvc.quiz.Quiz;
 import com.dcg.mvc.quiz.QuizRepository;
 import com.dcg.mvc.user.User;
@@ -12,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ContestService {

@@ -1,16 +1,15 @@
 package com.dcg.mvc.contest.controller;
 
-import com.dcg.model.CustomResponse;
+import com.dcg.response.CustomResponse;
 import com.dcg.mvc.contest.Contest;
 import com.dcg.mvc.contest.ContestService;
-import com.dcg.mvc.contest.dto.CreateContestRequest;
+import com.dcg.mvc.contest.CreateContestRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;

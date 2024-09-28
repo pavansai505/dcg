@@ -2,7 +2,7 @@ package com.dcg.service;
 
 
 import com.dcg.constants.CourseStatus;
-import com.dcg.model.CourseRegister;
+import com.dcg.mvc.course.CourseRegister;
 import com.dcg.mvc.course.Course;
 import com.dcg.mvc.course.CourseRepository;
 import com.dcg.mvc.course.CourseService;

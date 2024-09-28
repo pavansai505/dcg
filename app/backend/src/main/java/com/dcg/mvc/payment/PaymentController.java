@@ -1,6 +1,6 @@
 package com.dcg.mvc.payment;
 
-import com.dcg.model.CustomResponse;
+import com.dcg.response.CustomResponse;
 import com.dcg.mvc.course.Course;
 import com.dcg.mvc.course.CourseRepository;
 import com.dcg.mvc.user.User;

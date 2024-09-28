@@ -1,6 +1,5 @@
 package com.dcg.mvc.badge;
 
-import com.dcg.model.CreateBadgeRequest;
 import com.dcg.mvc.user.User;
 import com.dcg.mvc.user.UserRepository;
 import com.dcg.mvc.course.Course;
@@ -10,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.Set;
 
 @Service

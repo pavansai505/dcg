@@ -1,6 +1,5 @@
 package com.dcg.mvc.role;
 
-import com.dcg.model.Promote;
 import jakarta.servlet.ServletException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

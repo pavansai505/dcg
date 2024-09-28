@@ -1,6 +1,6 @@
 package com.dcg.mvc.lectureProgress;
 
-import com.dcg.model.CustomResponse;
+import com.dcg.response.CustomResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;

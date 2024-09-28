@@ -1,4 +1,4 @@
-package com.dcg.model;
+package com.dcg.mvc.badge;
 
 import lombok.Getter;
 import lombok.Setter;

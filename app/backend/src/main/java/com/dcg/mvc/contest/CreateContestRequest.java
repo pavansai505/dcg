@@ -1,4 +1,4 @@
-package com.dcg.mvc.contest.dto;
+package com.dcg.mvc.contest;
 
 import com.dcg.mvc.question.Question;
 import lombok.AllArgsConstructor;

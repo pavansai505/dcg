@@ -1,7 +1,5 @@
-package com.dcg.mapper;
+package com.dcg.mvc.course;
 
-import com.dcg.mvc.course.CourseDTO;
-import com.dcg.mvc.course.Course;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -10,9 +10,7 @@
   font-weight: 700;
 }
 
-.text-primary {
-  color: #007bff !important;
-}
+
 
 /* Introduction Paragraph */
 .lead {
@@ -34,6 +32,13 @@
 
 .contact-item i {
   font-size: 1.25rem;
+}
+.contact-item{
+  transition: all 0.2s linear;
+}
+.contact-item:hover{
+  border: 1px solid black;
+  transform: scale(1.03);
 }
 
 /* Icon Colors */

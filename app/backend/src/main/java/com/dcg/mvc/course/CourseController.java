@@ -1,8 +1,5 @@
 package com.dcg.mvc.course;
 
-import com.dcg.mapper.CourseMapper;
-import com.dcg.model.CourseDTO;
-import com.dcg.model.CourseRegister;
 import com.dcg.model.RegistrationStatusResponse;
 import com.dcg.mvc.lecture.Lecture;
 import com.dcg.mvc.unit.Unit;
@@ -10,7 +7,6 @@ import com.dcg.mvc.unit.UnitService;
 import com.dcg.mvc.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;

@@ -4,19 +4,22 @@ import com.dcg.constants.Roles;
 import com.dcg.mvc.course.Course;
 import com.dcg.mvc.role.RoleRepository;
 import com.dcg.security.JwtTokenCreation;
+import com.dcg.exception.CustomUserExceptions.UserNotFoundException;
+import com.dcg.exception.CustomUserExceptions.UserAlreadyExistsException;
+import com.dcg.exception.CustomUserExceptions.RoleNotFoundException;
+import com.dcg.exception.CustomUserExceptions.AuthenticationFailedException;
 import jakarta.servlet.ServletException;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,25 +36,26 @@ public class UserService {
     /**
      * Creates a new user account, saves it, and returns an authentication token.
      * @param user The user details for registration.
-     * @return The authentication token.
      * @throws ServletException If a servlet error occurs.
      * @throws IOException If an I/O error occurs.
      */
     public void createAccount(User user) throws ServletException, IOException {
+        // Check if user already exists
+        if (userExists(user.getEmail())) {
+            throw new UserAlreadyExistsException("User already exists with email: " + user.getEmail());
+        }
+
         // Encrypt the password and set the user's roles
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        user.setRoles(List.of(roleRepository.findByName(Roles.ROLE_USER).orElseThrow(() -> new RuntimeException("Role not found"))));
         userRepository.save(
                 User.builder()
                         .firstName(user.getFirstName())
                         .lastName(user.getLastName())
                         .email(user.getEmail())
                         .password(passwordEncoder.encode(user.getPassword()))
-                        .roles(List.of(roleRepository.findByName(Roles.ROLE_USER).orElseThrow(() -> new RuntimeException("Role not found"))))
+                        .roles(List.of(roleRepository.findByName(Roles.ROLE_USER)
+                                .orElseThrow(() -> new RoleNotFoundException("Role not found"))))
                         .build()
         );
-
-
     }
 
     /**
@@ -62,14 +66,18 @@ public class UserService {
      * @throws IOException If an I/O error occurs.
      */
     public String userLogin(User user) throws ServletException, IOException {
-        Authentication auth = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        user.getEmail(),
-                        user.getPassword()
-                ));
+        try {
+            Authentication auth = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            user.getEmail(),
+                            user.getPassword()
+                    ));
 
-        logger.debug("Authentication details: {}", auth);
-        return jwtTokenCreation.createToken((User) auth.getPrincipal());
+            logger.debug("Authentication details: {}", auth);
+            return jwtTokenCreation.createToken((User) auth.getPrincipal());
+        } catch (Exception e) {
+            throw new AuthenticationFailedException("Authentication failed for email: " + user.getEmail());
+        }
     }
 
     /**
@@ -78,7 +86,8 @@ public class UserService {
      * @return The user details.
      */
     public User getMyDetails(String username) {
-        return userRepository.findByEmail(username).orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepository.findByEmail(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + username));
     }
 
     /**
@@ -89,7 +98,7 @@ public class UserService {
     public String getUsername(User user) {
         return userRepository.findByEmail(user.getEmail())
                 .map(User::getFullName)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + user.getEmail()));
     }
 
     /**
@@ -108,7 +117,7 @@ public class UserService {
     public List<Course> getRegisteredCourses(String username) {
         return userRepository.findByEmail(username)
                 .map(User::getCourses)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + username));
     }
 
     /**
@@ -128,7 +137,7 @@ public class UserService {
      */
     public User changePassword(String username, String password) {
         User user = userRepository.findByEmail(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + username));
         user.setPassword(passwordEncoder.encode(password));
         return userRepository.save(user);
     }

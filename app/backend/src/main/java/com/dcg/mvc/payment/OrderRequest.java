@@ -1,9 +1,7 @@
-package com.dcg.model;
+package com.dcg.mvc.payment;
 
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.math.BigInteger;
 

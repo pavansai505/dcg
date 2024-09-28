@@ -1,4 +1,4 @@
-package com.dcg.model;
+package com.dcg.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

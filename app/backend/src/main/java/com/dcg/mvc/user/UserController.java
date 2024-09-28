@@ -1,9 +1,9 @@
 package com.dcg.mvc.user;
 
 import com.dcg.handlers.password.ForgotPasswordHandler;
-import com.dcg.mapper.UserMapper;
 import com.dcg.model.*;
 import com.dcg.mvc.course.Course;
+import com.dcg.response.CustomResponse;
 import com.dcg.response.TokenResponse;
 import com.dcg.services.EmailService;
 import jakarta.servlet.ServletException;

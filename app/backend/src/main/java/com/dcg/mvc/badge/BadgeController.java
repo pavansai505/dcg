@@ -1,6 +1,5 @@
 package com.dcg.mvc.badge;
 
-import com.dcg.model.CreateBadgeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.dcg.enums;
+package com.dcg.constants.enums;
 
 public enum CourseLevel {
     BEGINNER,

@@ -13,14 +13,14 @@ export class TokenService {
 
   getToken = (): string => {
     if (this.isBrowser) {
-      return window.sessionStorage.getItem("jwt") || "";
+      return window.localStorage.getItem("jwt") || "";
     }
     return "";
   }
 
   setToken(key: string, value: any): void {
     if (this.isBrowser) {
-      window.sessionStorage.setItem(key, value);
+      window.localStorage.setItem(key, value);
     }
   }
 }
