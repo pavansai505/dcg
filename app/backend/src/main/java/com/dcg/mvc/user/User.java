@@ -115,6 +115,7 @@ public class User implements UserDetails, Principal {
     )
     @JsonIgnoreProperties("users")
     @Column(nullable = true) // This allows the column to be null in the database
+    @JsonIgnore
     private Set<Coupon> couponsUsed = new HashSet<>(); // Initialize to an empty set
 
 

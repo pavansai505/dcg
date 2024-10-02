@@ -53,7 +53,7 @@ public class PaymentController {
     }
 
     @PostMapping("/verifyPayment")
-    public ResponseEntity<CustomResponse> verifyPayment(@RequestBody Map<String, String> data, Authentication authentication) {
+    public ResponseEntity<Payment> verifyPayment(@RequestBody Map<String, String> data, Authentication authentication) {
         String razorpayOrderId = data.get("razorpay_order_id");
         String razorpayPaymentId = data.get("razorpay_payment_id");
         String razorpaySignature = data.get("razorpay_signature");
@@ -81,7 +81,7 @@ public class PaymentController {
                         .build();
 
                 // Save payment and update user and course
-                paymentRepository.save(payment);
+
                 user.addPayment(payment);
                 course.addPayment(payment);
                 userRepository.save(user);
@@ -89,14 +89,14 @@ public class PaymentController {
 
                 // Send payment details email
                 emailService.sendPaymentDetailsEmail(user.getEmail(), razorpayPaymentId, razorpayOrderId, payment.getAmount(), "Successful");
-                return ResponseEntity.ok(CustomResponse.builder().message("Payment successful!").build());
+                return ResponseEntity.ok(paymentRepository.save(payment));
             } else {
-                return ResponseEntity.ok(CustomResponse.builder().message("Payment failed due to invalid signature!").build());
+                return ResponseEntity.ok(null);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(CustomResponse.builder().message("Payment verification failed!").build());
+                    .body(null);
         }
     }
 

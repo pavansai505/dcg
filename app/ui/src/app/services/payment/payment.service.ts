@@ -5,6 +5,7 @@ import { error } from 'console';
 import { CourseDataService } from '../course/course-data.service';
 import CourseRegister from '../../models/course/courseRegister';
 import { Router } from '@angular/router';
+import { CouponService } from '../coupon/coupon.service';
 // Ensure your environment files contain your API base URL and Razorpay key ID.
 
 declare var Razorpay: any;
@@ -17,9 +18,10 @@ export class PaymentService {
     private http: HttpClient,
     private courseService: CourseDataService,
     private router: Router,
-    private zone: NgZone
+    private zone: NgZone,
+    private couponService: CouponService
   ) {}
-
+  coupon: string = '';
   // Method to create an order in the backend
   createOrder(amount: number) {
     return this.http.post(`${environment.apiBaseUrl}payment/createOrder`, {
@@ -28,7 +30,15 @@ export class PaymentService {
   }
 
   // Method to initiate the Razorpay payment process
-  initiatePayment(orderId: string, amount: number, courseCode: string) {
+  initiatePayment(
+    orderId: string,
+    amount: number,
+    courseCode: string,
+    coupon: string
+  ) {
+    if (coupon) {
+      this.coupon = coupon;
+    }
     const options = {
       key: environment.razorpayKeyId, // Replace with your Razorpay Key ID
       amount: amount * 100, // Amount in the smallest currency unit (paise for INR)
@@ -56,11 +66,28 @@ export class PaymentService {
 
   // Method to verify the payment on the backend
   verifyPayment(paymentResponse: any, courseCode: string) {
-    paymentResponse['courseCode']=courseCode
+    paymentResponse['courseCode'] = courseCode;
     this.http
       .post(`${environment.apiBaseUrl}payment/verifyPayment`, paymentResponse)
       .subscribe({
         next: (data) => {
+          console.log(data, this.coupon);
+          this.couponService.applyCoupon(this.coupon, data).subscribe({
+            next: (response) => {
+              // Handle successful coupon application
+              console.log('Coupon applied successfully:', response);
+              // You can update the UI or state to reflect the discount
+            },
+            error: (err) => {
+              // Handle errors, such as invalid coupon or server issues
+              console.error('Error applying coupon:', err);
+              // Optionally, show an error message to the user
+            },
+            complete: () => {
+              console.log('Coupon application process completed.');
+            },
+          });
+
           this.courseService
             .registerToCourse({ courseCode: courseCode } as CourseRegister)
             .subscribe({

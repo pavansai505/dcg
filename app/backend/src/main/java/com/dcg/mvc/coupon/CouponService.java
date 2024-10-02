@@ -1,6 +1,10 @@
 package com.dcg.mvc.coupon;
 
+import com.dcg.mvc.payment.Payment;
+import com.dcg.mvc.payment.PaymentRepository;
 import com.dcg.mvc.user.User;
+import com.dcg.mvc.user.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +14,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CouponService {
 
     private final CouponRepository couponRepository;
+    private final PaymentRepository paymentRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    public CouponService(CouponRepository couponRepository) {
-        this.couponRepository = couponRepository;
-    }
+
 
     // Create a new coupon
     public Coupon createCoupon(Coupon coupon) {
@@ -84,14 +88,38 @@ public class CouponService {
     }
 
     // Increment usage count (when a coupon is used)
-    public void useCoupon(Coupon coupon) {
-        if (coupon.getTotalUses() > 0) {
-            coupon.setTotalUses(coupon.getTotalUses() - 1);
-            couponRepository.save(coupon);
-        } else {
+    public void useCoupon(ApplyCouponRequest applyCouponRequest, String username) {
+        // Fetch coupon, user, and payment
+        Coupon coupon = couponRepository.findByCode(applyCouponRequest.getCouponCode())
+                .orElseThrow(() -> new RuntimeException("Coupon not found"));
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Payment payment = paymentRepository.findById(applyCouponRequest.getPaymentId())
+                .orElseThrow(() -> new RuntimeException("Payment not found"));
+
+        // Validate coupon
+        if (!coupon.isValid()) {
+            throw new RuntimeException("Coupon is not valid");
+        }
+        if (coupon.getTotalUses() <= 0) {
             throw new RuntimeException("Coupon usage limit reached");
         }
+
+        // Apply coupon to payment
+        coupon.decrementUses();
+        payment.setCoupon(coupon);
+        user.getCouponsUsed().add(coupon);
+        coupon.getUsers().add(user);
+        coupon.getPayments().add(payment);
+        double discount = payment.getAmount() * coupon.getPercentage() / 100;
+        payment.setAmount(Math.round((payment.getAmount() - discount) * 100.0) / 100.0);
+
+        // Save changes
+        couponRepository.save(coupon);
+        paymentRepository.save(payment);
+        userRepository.save(user);
     }
+
 
     // Get all valid coupons
     public List<Coupon> getValidCoupons() {

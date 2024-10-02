@@ -1,8 +1,11 @@
 package com.dcg.mvc.coupon;
 
+import com.dcg.response.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -94,5 +97,11 @@ public class CouponController {
     public ResponseEntity<List<Coupon>> getValidCoupons() {
         List<Coupon> validCoupons = couponService.getValidCoupons();
         return ResponseEntity.ok(validCoupons);
+    }
+    @PostMapping("/apply")
+    public ResponseEntity<CustomResponse> applyCoupon(@RequestBody ApplyCouponRequest applyCouponRequest, Authentication authentication) {
+
+    couponService.useCoupon(applyCouponRequest, authentication.getName());
+    return ResponseEntity.ok(CustomResponse.builder().message("Coupon applied.").build());
     }
 }
