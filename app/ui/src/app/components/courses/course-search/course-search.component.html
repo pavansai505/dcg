@@ -1,13 +1,19 @@
 <app-course-navbar (searchInputCall)="searchInputCall($event)"></app-course-navbar>
 <div class="container-fluid my-5">
-  <div class="p-5 text-center bg-body-tertiary rounded-3">
-    <h1 class="text-body-emphasis">Basic jumbotron</h1>
+  <div class="p-5 text-center bg-body-tertiary rounded-3 mb-5"> <!-- Added mb-5 for bottom margin -->
+    <h1 class="text-body-emphasis">Master E-Commerce Today</h1>
     <p class="lead">
-      This is a simple Bootstrap jumbotron that sits within a
-      <code>.container</code>, recreated with built-in utility classes.
+      Discover our range of e-commerce courses designed to elevate your skills and boost your career.
     </p>
+    <blockquote class="blockquote mt-4 text-secondary">
+      <p class="mb-4">-- {{quote}} --</p>
+    </blockquote>
   </div>
 </div>
+
+
+
+
 <main class="container">
   <div class="row mb-3 gy-3">
     <div class="col col-md-3 col-12">
@@ -24,7 +30,7 @@
         <hr />
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item" (click)="reset()">
-            <a  class="nav-link active" aria-current="page">
+            <a class="nav-link active" aria-current="page">
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#home"></use>
               </svg>
@@ -32,47 +38,63 @@
             </a>
           </li>
           <li (click)="sortByPrice(1)">
-            <a  class="nav-link link-body-emphasis">
-              <svg class="bi pe-none me-2" width="16" height="16">
-                <use xlink:href="#speedometer2"></use>
-              </svg>
+            <a class="nav-link link-body-emphasis">
+              <i class="bi bi-sort-numeric-up-alt"></i>
               Price : Low to High
             </a>
           </li>
           <li (click)="sortByPrice(-1)">
-            <a  class="nav-link link-body-emphasis" >
-              <svg class="bi pe-none me-2" width="16" height="16">
-                <use xlink:href="#table"></use>
-              </svg>
+            <a class="nav-link link-body-emphasis">
+              <i class="bi bi-sort-numeric-up-alt"></i>
               Price : High to Low
             </a>
           </li>
-          <li>
-            <a  class="nav-link link-body-emphasis">
-              <svg class="bi pe-none me-2" width="16" height="16">
-                <use xlink:href="#grid"></use>
-              </svg>
-              Products
+          <li >
+            <a class="nav-link link-body-emphasis">
+              <i class="bi bi-funnel"></i>
+              Price Range: {{minPrice}} - {{maxPrice}}
             </a>
+           <div class="text-center">
+            <input  type="range" min="0" max="1000" [(ngModel)]="maxPrice" (change)="filterByPriceRange()" class="w-75 form-range" />
+           </div>
           </li>
+        
+          <!-- Course Level Filter -->
           <li>
-            <a  class="nav-link link-body-emphasis">
-              <svg class="bi pe-none me-2" width="16" height="16">
-                <use xlink:href="#people-circle"></use>
-              </svg>
-              Customers
+            <a class="nav-link link-body-emphasis">
+              <i class="bi bi-book"></i>
+              Course Level
             </a>
+            <select class="form-select form-select-sm border-0" (change)="filterByCourseLevel($event)">
+              <option value="">All Levels</option>
+              <option value="BEGINNER">Beginner</option>
+              <option value="INTERMEDIATE">Intermediate</option>
+              <option value="ADVANCED">Advanced</option>
+            </select>
           </li>
+          
         </ul>
         <hr />
-        
       </div>
     </div>
     <div class="col col-md-9 col-12">
       <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          <div class="col" *ngFor="let course of courses">
+        <div
+          class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-3 mb-5"
+          infiniteScroll
+          [infiniteScrollDistance]="2"
+          [infiniteScrollThrottle]="300"
+          (scrolled)="onScroll()"
+        >
+          <div class="col" *ngFor="let course of displayedCourses">
             <app-course-card [course]="course"></app-course-card>
+          </div>
+        </div>
+        <div class="row mb-5" *ngIf="isLoading">
+          <div class="col-12 text-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
           </div>
         </div>
       </div>

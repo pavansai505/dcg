@@ -1,4 +1,5 @@
 package com.dcg.services;
+
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,24 @@ public class EmailService {
     public CompletableFuture<Void> sendPaymentDetailsEmail(String to, String paymentId, String orderId, double amount, String status) {
         String subject = "Payment Confirmation";
         String text = createPaymentDetailsEmailBody(paymentId, orderId, amount, status);
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(text, true);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        return CompletableFuture.completedFuture(null);
+    }
+
+    @Async // Run this method asynchronously
+    public CompletableFuture<Void> sendNewsletterSubscriptionEmail(String name, String to) {
+        String subject = "Thank You for Subscribing!";
+        String text = createNewsletterSubscriptionEmailBody(name);
 
         try {
             MimeMessage message = mailSender.createMimeMessage();
@@ -102,4 +121,55 @@ public class EmailService {
                 "</body>" +
                 "</html>";
     }
+
+    private String createNewsletterSubscriptionEmailBody(String name) {
+        // HTML content for newsletter subscription email
+        return "<html>" +
+                "<body style='font-family: Arial, sans-serif;'>" +
+                "<div style='max-width: 600px; margin: auto; padding: 20px;'>" +
+                "<h2 style='color: #333;'>Thank You for Subscribing!</h2>" +
+                "<p style='font-size: 16px;'>Hello " + name + ",</p>" +
+                "<p style='font-size: 16px;'>Thank you for subscribing to our newsletter! We're excited to have you on board.</p>" +
+                "<p style='font-size: 16px;'>Stay tuned for updates, news, and exclusive offers.</p>" +
+                "<p style='font-size: 14px; color: #888;'>Best regards,<br>DeepCodecGuru</p>" +
+                "</div>" +
+                "</body>" +
+                "</html>";
+    }
+    @Async // Run this method asynchronously
+    public CompletableFuture<Void> sendCouponEmail(String to, String couponCode, double discountPercentage) {
+        String subject = "Exclusive Coupon Code Just for You!";
+        String text = createCouponEmailBody(couponCode, discountPercentage);
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(text, true);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        return CompletableFuture.completedFuture(null);
+    }
+
+    private String createCouponEmailBody(String couponCode, double discountPercentage) {
+        return "<html>" +
+                "<body style='font-family: Arial, sans-serif;'>" +
+                "<div style='max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px;'>" +
+                "<h2 style='color: #333;'>🎉 Special Offer Just for You!</h2>" +
+                "<p style='font-size: 16px;'>Hello,</p>" +
+                "<p style='font-size: 16px;'>We're excited to share an exclusive coupon code that gives you <strong>" +
+                discountPercentage + "% off</strong> on your next purchase!</p>" +
+                "<h3 style='color: #007bff;'>Your Coupon Code:</h3>" +
+                "<h2 style='background-color: #007bff; color: #fff; padding: 10px; text-align: center;'>" + couponCode + "</h2>" +
+                "<p style='font-size: 16px;'>Use this code at checkout to enjoy your discount.</p>" +
+                "<p style='font-size: 16px;'>Hurry, this offer is valid for a limited time only!</p>" +
+                "<p style='font-size: 14px; color: #888;'>Thank you,<br>DeepCodecGuru</p>" +
+                "</div>" +
+                "</body>" +
+                "</html>";
+    }
+
 }

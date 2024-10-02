@@ -21,7 +21,6 @@ export class InstructorAddCourseComponent {
   constructor(private courseService: CourseDataService) {
     this.courseForm = new FormGroup({
       title: new FormControl('', Validators.required),
-      authorName: new FormControl('', Validators.required),
       synopsis: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
       price:new FormControl(0,Validators.required)

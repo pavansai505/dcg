@@ -36,7 +36,6 @@ export class CourseInfoComponent implements OnDestroy {
     // Subscribe to route parameters to handle route changes
     this.routeSub = this.activatedRouter.params.subscribe(params => {
       const id = Number(params['id']);
-      console.log('Course ID:', id); // Debugging step
       this.loadCourse(id); // Load course data whenever route changes
     });
   }

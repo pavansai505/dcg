@@ -1,6 +1,9 @@
 package com.dcg.mvc.course;
 
 import com.dcg.constants.CourseStatus;
+import com.dcg.exception.CustomUserExceptions;
+import com.dcg.mvc.history.CourseActionHistory;
+import com.dcg.mvc.history.CourseActionHistoryRepository;
 import com.dcg.mvc.lecture.LectureRepository;
 import com.dcg.mvc.user.User;
 import com.dcg.mvc.user.UserRepository;
@@ -21,6 +24,7 @@ public class CourseService {
     private final CourseRepository courseRepository;
     private final LectureRepository lectureRepository;
     private final UserRepository userRepository;
+    private final CourseActionHistoryRepository courseActionHistoryRepository;
 
     /**
      * Adds a single course and sets its created by and approval status.
@@ -31,6 +35,7 @@ public class CourseService {
     public Course addCourse(Course course, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         course.setCreatedBy(user.getId());
+        course.setAuthorName(user.getFullName());
         course.setApprovalStatus(CourseStatus.PENDING);
         return courseRepository.save(course);
     }
@@ -46,6 +51,7 @@ public class CourseService {
         List<Course> savedCourses = new ArrayList<>();
         for (Course course : courses) {
             course.setCreatedBy(user.getId());
+            course.setAuthorName(user.getFullName());
             course.setApprovalStatus(CourseStatus.PENDING);
             savedCourses.add(courseRepository.save(course));
         }
@@ -124,6 +130,9 @@ public class CourseService {
             User user = optionalUser.get();
             if (!user.getCourses().contains(course)) {
                 user.addCourse(course);
+                courseActionHistoryRepository.save(
+                        CourseActionHistory.builder().user(user).course(course).build()
+                );
                 userRepository.save(user);
             }
             return course;
@@ -156,4 +165,23 @@ public class CourseService {
         }
         return false;
     }
+
+    public CourseActionHistory updateCourseHistoryCompletionPercentage(CourseActionHistory courseActionHistory,String username){
+        Course course=courseRepository.findById(courseActionHistory.getCourse().getId()).get();
+        User user=userRepository.findByEmail(username).get();
+        CourseActionHistory courseActionHistoryData=courseActionHistoryRepository.findByUserAndCourse(user,course);
+
+        courseActionHistoryData.setPercentageCompleted(courseActionHistory.getPercentageCompleted());
+
+        return courseActionHistoryRepository.save(courseActionHistoryData);
+
+
+    }
+
+    public CourseActionHistory getCourseActionHistory(Long courseId,String username){
+        Course course=courseRepository.findById(courseId).get();
+        User user=userRepository.findByEmail(username).get();
+        return courseActionHistoryRepository.findByUserAndCourse(user,course);
+    }
+
 }

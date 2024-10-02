@@ -27,8 +27,10 @@ public class CourseMapper {
                 course.getUser(), // Directly including User entities
                 course.getUnits(), // Directly including Unit entities
                 course.getHistories(), // Directly including CourseActionHistory entities
+                course.getCreatedBy(),
                 course.getCreatedDate(),
                 course.getLastModifiedDate()
+
 
         );
     }

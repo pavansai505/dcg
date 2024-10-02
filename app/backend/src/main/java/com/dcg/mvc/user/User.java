@@ -2,6 +2,7 @@ package com.dcg.mvc.user;
 
 import com.dcg.mvc.badge.Badge;
 import com.dcg.mvc.contest.Contest;
+import com.dcg.mvc.coupon.Coupon;
 import com.dcg.mvc.course.Course;
 import com.dcg.mvc.history.CourseActionHistory;
 import com.dcg.mvc.lectureProgress.LectureProgress;
@@ -70,7 +71,7 @@ public class User implements UserDetails, Principal {
     private Set<Badge> badges = new HashSet<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("user")
+    @JsonIgnore
     private List<CourseActionHistory> histories = new ArrayList<>();
 
     @CreatedDate
@@ -102,6 +103,19 @@ public class User implements UserDetails, Principal {
     @JsonIgnoreProperties("user")
     @JsonIgnore
     private List<Score> scores; // Scores achieved by the user in various quizzes
+
+    @Column(name = "subscribe_to_email", nullable = false, columnDefinition = "boolean default false") // New field
+    private boolean subscribeToEmail = false; // Default value set to false
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_coupon",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "coupon_id")
+    )
+    @JsonIgnoreProperties("users")
+    @Column(nullable = true) // This allows the column to be null in the database
+    private Set<Coupon> couponsUsed = new HashSet<>(); // Initialize to an empty set
 
 
     // Existing methods...

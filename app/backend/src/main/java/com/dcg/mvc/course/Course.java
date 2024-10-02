@@ -43,6 +43,7 @@ public class Course extends BaseEntity {
     private List<User> user = new ArrayList<>();
 
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<CourseActionHistory> histories = new ArrayList<>();
 
     @JsonIgnoreProperties("course")

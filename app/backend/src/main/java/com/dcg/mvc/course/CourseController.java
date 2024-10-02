@@ -1,6 +1,7 @@
 package com.dcg.mvc.course;
 
 import com.dcg.model.RegistrationStatusResponse;
+import com.dcg.mvc.history.CourseActionHistory;
 import com.dcg.mvc.lecture.Lecture;
 import com.dcg.mvc.unit.Unit;
 import com.dcg.mvc.unit.UnitService;
@@ -122,9 +123,13 @@ public class CourseController {
      * @return The list of all courses.
      */
     @GetMapping("/get")
-    public ResponseEntity<List<Course>> getCourses() {
+    public ResponseEntity<List<CourseDTO>> getCourses() {
         List<Course> courses = courseService.getAllCourses();
-        return ResponseEntity.ok(courses);
+        // Convert List<Course> to List<CourseDTO>
+        List<CourseDTO> courseDTOs = courses.stream()
+                .map(courseMapper::toDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(courseDTOs);
     }
 
     /**
@@ -167,9 +172,13 @@ public class CourseController {
      * @return The list of courses for the specified user.
      */
     @GetMapping("/getByUserId/{id}")
-    public ResponseEntity<List<Course>> getCoursesByUserId(@PathVariable Long id) {
+    public ResponseEntity<List<CourseDTO>> getCoursesByUserId(@PathVariable Long id) {
         List<Course> courses = courseService.getCoursesByUserId(id);
-        return ResponseEntity.ok(courses);
+        List<CourseDTO> courseDTOs = courses.stream()
+                .map(courseMapper::toDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(courseDTOs);
     }
 
     /**
@@ -222,5 +231,15 @@ public class CourseController {
         Map<String, String> map = new HashMap<>();
         map.put("Message", "Success");
         return ResponseEntity.ok(map);
+    }
+
+
+    @PutMapping("/updateCourseHistory/completionPercentage")
+    public ResponseEntity<CourseActionHistory> updateCourseHistory(@RequestBody CourseActionHistory courseActionHistory,Authentication authentication){
+        return ResponseEntity.ok(courseService.updateCourseHistoryCompletionPercentage(courseActionHistory,((UserDetails) authentication.getPrincipal()).getUsername()));
+    }
+    @GetMapping("/courseActionHistory/{id}")
+    public ResponseEntity<CourseActionHistory> getCourseHistory(@PathVariable Long id,Authentication authentication){
+        return ResponseEntity.ok(courseService.getCourseActionHistory(id,((UserDetails) authentication.getPrincipal()).getUsername()));
     }
 }

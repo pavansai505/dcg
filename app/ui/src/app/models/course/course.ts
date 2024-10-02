@@ -1,5 +1,6 @@
 import { User } from "../user/user";
 import { Badge } from "./badge";
+import { CourseActionHistory } from "./courseActionHistory";
 import { Lecture } from "./lecture";
 import { Unit } from "./unit";
 
@@ -24,4 +25,5 @@ export interface Course {
   tags:string[];
   endGoals:string[];
   courseCode:string;
+  histories:CourseActionHistory[]
 }

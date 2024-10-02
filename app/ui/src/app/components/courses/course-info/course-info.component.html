@@ -69,9 +69,9 @@
         <div class="bg-light p-4 rounded">
             <h1 class="display-4 fw-bold">{{ course.title }}</h1>
             <p class="lead fs-6">{{ course.description }}</p>
-            <p><strong>Author:</strong> {{ course.authorName }}</p>
+            <p><strong>Author:</strong><a class="text-decoration-none" [routerLink]="['/instructor/'+course.createdBy+'/info']" routerLinkActive="router-link-active" > {{ course.authorName }}</a></p>
             <p><strong>Price:</strong> ${{ course.price.toFixed(2) }}</p>
-            <p><strong>Approval Status:</strong> {{ course.approvalStatus }}</p>
+            <!-- <p><strong>Approval Status:</strong> {{ course.approvalStatus }}</p> -->
             <p><strong>Course Level:</strong> {{ course.courseLevel }}</p>
             
             <!-- Button Group -->

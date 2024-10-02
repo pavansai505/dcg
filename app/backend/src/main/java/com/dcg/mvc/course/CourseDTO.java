@@ -35,6 +35,7 @@ public class CourseDTO {
     private Set<Unit> units; // Set of Unit entities
     private List<CourseActionHistory> histories; // List of CourseActionHistory entities
 
+    private Long createdBy;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
 }

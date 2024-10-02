@@ -1,4 +1,4 @@
-package com.dcg.mvc.contest.controller;
+package com.dcg.mvc.contest;
 
 import com.dcg.response.CustomResponse;
 import com.dcg.mvc.contest.Contest;

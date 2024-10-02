@@ -2,7 +2,11 @@ package com.dcg.mvc.user;
 
 import com.dcg.handlers.password.ForgotPasswordHandler;
 import com.dcg.model.*;
+import com.dcg.mvc.coupon.Coupon;
+import com.dcg.mvc.coupon.CouponService;
 import com.dcg.mvc.course.Course;
+import com.dcg.mvc.course.CourseDTO;
+import com.dcg.mvc.course.CourseMapper;
 import com.dcg.response.CustomResponse;
 import com.dcg.response.TokenResponse;
 import com.dcg.services.EmailService;
@@ -17,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("user")
@@ -27,6 +32,8 @@ public class UserController {
     private final ForgotPasswordHandler forgotPasswordHandler;
     private final EmailService emailService;
     private final UserMapper userMapper;
+    private final CourseMapper courseMapper;
+    private final CouponService couponService;
 
     /**
      * Register a new user and return an authentication token.
@@ -71,22 +78,29 @@ public class UserController {
      * @param authentication The current user's authentication details.
      * @return The user's details.
      */
+
     @GetMapping("/getMyDetails")
     public ResponseEntity<UserDTO> getMyDetails(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return ResponseEntity.ok(userMapper.convertToDTO(userService.getMyDetails(user.getUsername())));
+        return ResponseEntity.ok(UserMapper.convertToDTO(userService.getMyDetails(user.getUsername())));
     }
-
+    @GetMapping("/getById/{id}")
+        public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+            return ResponseEntity.ok(UserMapper.convertToDTO(userService.getUserById(id)));
+        }
     /**
      * Get the courses registered by the currently authenticated user.
      * @param authentication The current user's authentication details.
      * @return The list of registered courses.
      */
     @GetMapping("/registered-courses")
-    public ResponseEntity<List<Course>> getRegisteredCourses(Authentication authentication) {
+    public ResponseEntity<List<CourseDTO>> getRegisteredCourses(Authentication authentication) {
         String username = ((UserDetails) authentication.getPrincipal()).getUsername();
         List<Course> courses = userService.getRegisteredCourses(username);
-        return ResponseEntity.ok(courses);
+        List<CourseDTO> courseDTOs = courses.stream()
+                .map(courseMapper::toDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(courseDTOs);
     }
 
     /**
@@ -132,5 +146,12 @@ public class UserController {
         String username = ((UserDetails) authentication.getPrincipal()).getUsername();
         userService.changePassword(username, resetPassword.getPassword());
         return ResponseEntity.ok(CustomResponse.builder().message("Password changed successfully").build());
+    }
+    @PutMapping("/subscribe-to-email")
+    public ResponseEntity<CustomResponse> subscribeToEmail(Authentication authentication) {
+        String username = ((UserDetails) authentication.getPrincipal()).getUsername();
+
+        userService.subscribeToNewsLetter(username);
+        return ResponseEntity.ok(CustomResponse.builder().message("Subscription changed successfully").build());
     }
 }

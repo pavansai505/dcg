@@ -1,6 +1,7 @@
 package com.dcg.mvc.payment;
 
 import com.dcg.common.BaseEntity;
+import com.dcg.mvc.coupon.Coupon;
 import com.dcg.mvc.course.Course;
 import com.dcg.mvc.user.User;
 import jakarta.persistence.*;
@@ -40,6 +41,10 @@ public class Payment extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", nullable = false)
     private Course course; // Course being purchased
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "coupon_id", nullable = true) // Allow the coupon_id column to be nullable in the database
+    private Coupon coupon; // Coupon applied in the payment, if any
 
 
 

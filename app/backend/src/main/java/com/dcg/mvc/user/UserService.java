@@ -1,6 +1,8 @@
 package com.dcg.mvc.user;
 
 import com.dcg.constants.Roles;
+import com.dcg.mvc.coupon.Coupon;
+import com.dcg.mvc.coupon.CouponService;
 import com.dcg.mvc.course.Course;
 import com.dcg.mvc.role.RoleRepository;
 import com.dcg.security.JwtTokenCreation;
@@ -8,6 +10,7 @@ import com.dcg.exception.CustomUserExceptions.UserNotFoundException;
 import com.dcg.exception.CustomUserExceptions.UserAlreadyExistsException;
 import com.dcg.exception.CustomUserExceptions.RoleNotFoundException;
 import com.dcg.exception.CustomUserExceptions.AuthenticationFailedException;
+import com.dcg.services.EmailService;
 import jakarta.servlet.ServletException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -32,6 +35,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenCreation jwtTokenCreation;
+    private final EmailService emailService;
+    private final CouponService couponService;
 
     /**
      * Creates a new user account, saves it, and returns an authentication token.
@@ -85,11 +90,15 @@ public class UserService {
      * @param username The username of the user.
      * @return The user details.
      */
+
     public User getMyDetails(String username) {
         return userRepository.findByEmail(username)
                 .orElseThrow(() -> new UserNotFoundException("User not found with email: " + username));
     }
-
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
+    }
     /**
      * Retrieves the full name of the user.
      * @param user The user for which to get the full name.
@@ -140,5 +149,17 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("User not found with email: " + username));
         user.setPassword(passwordEncoder.encode(password));
         return userRepository.save(user);
+    }
+
+    public void subscribeToNewsLetter(String username){
+        User user=userRepository.findByEmail(username).get();
+        user.setSubscribeToEmail(!user.isSubscribeToEmail());
+        if(user.isSubscribeToEmail()){
+            Coupon coupon=couponService.findCouponByCode("SAVE20").get();
+            emailService.sendNewsletterSubscriptionEmail(user.getFullName(),username);
+            emailService.sendCouponEmail(username,coupon.getCode(),coupon.getPercentage());
+        }
+        userRepository.save(user);
+
     }
 }

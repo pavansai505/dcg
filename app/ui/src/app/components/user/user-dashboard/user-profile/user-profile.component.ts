@@ -14,9 +14,20 @@ export class UserProfileComponent {
     userService.getMyDetails().subscribe({
       next:(val)=>{
         this.user=val
+        console.log(val);
+        
       },
       error:(err)=>{},
       complete:()=>{}
+    })
+  }
+
+  toggleSubscription(){
+    this.userService.emailSubscriptionToggle().subscribe({
+      next:(val)=>{console.log(val);
+      },
+      error:(err)=>{console.log(err);
+      }
     })
   }
 }

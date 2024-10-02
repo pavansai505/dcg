@@ -22,6 +22,7 @@ public class UserMapper {
         dto.setDateOfBirth(user.getDateOfBirth());
         dto.setCreatedDate(user.getCreatedDate());
         dto.setLastModifiedDate(user.getLastModifiedDate());
+        dto.setSubscribeToEmail(user.isSubscribeToEmail());
 
         // Convert roles
         List<RoleDTO> roles = user.getRoles().stream()

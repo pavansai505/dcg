@@ -8,6 +8,7 @@ import CourseRegister from '../../models/course/courseRegister';
 import { Lecture } from '../../models/course/lecture';
 import { environment } from '../../../environments/environments';
 import { Unit } from '../../models/course/unit';
+import { CourseActionHistory } from '../../models/course/courseActionHistory';
 
 @Injectable({
   providedIn: 'root'
@@ -85,6 +86,11 @@ export class CourseDataService {
   }
    addBadge(badge:any): Observable<any> {
     return this.http.post<any>(environment.apiBaseUrl+'badges',badge);
+  }
+
+
+   getCourseHistory(id:number): Observable<CourseActionHistory> {
+    return this.http.get<CourseActionHistory>(environment.apiBaseUrl+'course/courseActionHistory/'+id);
   }
   
 

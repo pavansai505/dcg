@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TokenService } from '../token/token.service';
 import { environment } from '../../../environments/environments';
+import { User } from '../../models/user/user';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,15 @@ export class UserDetailsService {
     
    }
    
-  getMyDetails=():Observable<any>=>{
-    return this.http.get<any>(environment.apiBaseUrl+"user/getMyDetails",{
+  getMyDetails=():Observable<User>=>{
+    return this.http.get<User>(environment.apiBaseUrl+"user/getMyDetails",{
+      headers:{
+        'Authorization':'Bearer '+this.token.getToken()
+      }
+    })
+ }
+  getUserById=(id:number):Observable<any>=>{
+    return this.http.get<any>(environment.apiBaseUrl+"user/getById/"+id,{
       headers:{
         'Authorization':'Bearer '+this.token.getToken()
       }
@@ -24,4 +32,8 @@ export class UserDetailsService {
   getRegisteredCourses=():Observable<any>=>{
     return this.http.get<any>(environment.apiBaseUrl+"user/registered-courses")
  }
+  emailSubscriptionToggle=():Observable<any>=>{
+    return this.http.put<any>(environment.apiBaseUrl+"user/subscribe-to-email",{})
+ }
+
 }

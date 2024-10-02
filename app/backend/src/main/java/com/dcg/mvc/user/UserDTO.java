@@ -1,5 +1,6 @@
 package com.dcg.mvc.user;
 
+import com.dcg.mvc.history.CourseActionHistory;
 import com.dcg.mvc.role.RoleDTO;
 import com.dcg.mvc.course.CourseDTO;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 @Component
 @Data
@@ -25,4 +27,5 @@ public class UserDTO {
     private LocalDateTime lastModifiedDate;
     private List<RoleDTO> roles;
     private List<CourseDTO> courses;
+    private boolean subscribeToEmail;
 }

@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { SigninComponent } from './components/auth/user/signin/signin.component';
 import { SignupComponent } from './components/auth/user/signup/signup.component';
@@ -43,6 +42,7 @@ import { ContestsInfoComponent } from './components/contests/contests-info/conte
 import { ContestsQuizComponent } from './components/contests/contests-quiz/contests-quiz.component';
 import { ContestsLeaderboardComponent } from './components/contests/contests-leaderboard/contests-leaderboard.component';
 import { contestGuardGuard } from './guard/contest-guard.guard';
+import { InstructorInfoComponent } from './components/instructor/instructor-info/instructor-info.component';
 
 export const routes: Routes = [
   // Home route
@@ -181,6 +181,12 @@ export const routes: Routes = [
   },
 
   // Instructor pages
+  {
+    path: 'instructor/:id/info',
+    component: InstructorInfoComponent,
+    data: { title: 'Instructor info' },
+    canActivate: [titleGuardGuard]
+  },
   {
     path: 'instructor/dashboard',
     component: InstructorDashboardComponent,
