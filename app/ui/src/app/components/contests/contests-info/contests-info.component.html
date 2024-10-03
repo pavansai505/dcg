@@ -39,7 +39,7 @@
       <tbody>
         <tr *ngFor="let score of scores; let i = index">
           <td>{{ i + 1 }}</td>
-          <td>{{ score.user?.fullName || 'Unknown User' }}</td>
+          <td>{{ score.user.fullName || 'Unknown User' }}</td>
           <td>{{ score.scoreValue }}</td>
         </tr>
       </tbody>

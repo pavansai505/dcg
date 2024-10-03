@@ -2,6 +2,7 @@ package com.dcg.mvc.course;
 
 import com.dcg.constants.enums.CourseLevel;
 import com.dcg.mvc.badge.Badge;
+import com.dcg.mvc.quiz.Quiz;
 import com.dcg.mvc.user.User;
 import com.dcg.mvc.unit.Unit;
 import com.dcg.mvc.history.CourseActionHistory;
@@ -38,4 +39,5 @@ public class CourseDTO {
     private Long createdBy;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
+    private Quiz quiz;
 }

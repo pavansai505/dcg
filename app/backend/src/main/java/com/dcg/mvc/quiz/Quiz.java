@@ -1,6 +1,7 @@
 package com.dcg.mvc.quiz;
 
 import com.dcg.common.BaseEntity;
+import com.dcg.mvc.course.Course;
 import com.dcg.mvc.lecture.Lecture;
 import com.dcg.mvc.question.Question;
 import com.dcg.mvc.score.Score;
@@ -34,5 +35,9 @@ public class Quiz extends BaseEntity {
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Score> scores=new ArrayList<>(); // List of scores for each user
+    @OneToOne
+    @JoinColumn(name = "course_id", nullable = true, unique = true)
+    @JsonIgnoreProperties("quiz")
+    private Course course; // Reference to the Course
 
 }

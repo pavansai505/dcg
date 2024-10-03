@@ -5,6 +5,7 @@ import com.dcg.constants.enums.CourseLevel;
 import com.dcg.mvc.badge.Badge;
 import com.dcg.mvc.history.CourseActionHistory;
 import com.dcg.mvc.payment.Payment;
+import com.dcg.mvc.quiz.Quiz;
 import com.dcg.mvc.unit.Unit;
 import com.dcg.mvc.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -82,6 +83,9 @@ public class Course extends BaseEntity {
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Payment> payments = new ArrayList<>();
+    @OneToOne(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
+    @JsonIgnoreProperties("course")
+    private Quiz quiz; // One-to-one relationship with Quiz
 
     private String generateUniqueHashCode() {
         try {

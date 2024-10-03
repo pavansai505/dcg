@@ -11,4 +11,5 @@ public class CreateBadgeRequest {
     private String badgeName;
     private String badgeDescription;
     private String badgeIcon;
+
 }

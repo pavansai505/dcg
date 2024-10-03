@@ -104,4 +104,9 @@ public class CouponController {
     couponService.useCoupon(applyCouponRequest, authentication.getName());
     return ResponseEntity.ok(CustomResponse.builder().message("Coupon applied.").build());
     }
+
+    @PutMapping("/use") // Use POST method to apply a coupon
+    public ResponseEntity<CouponResponse> useCoupon(@RequestParam String code) {
+        return ResponseEntity.ok(couponService.useCoupon(code));
+    }
 }

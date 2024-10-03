@@ -20,4 +20,7 @@ export class CouponService {
       couponCode:code,paymentId:data.id
     });
   }
+  useCoupon(code:string): Observable<any> {
+    return this.http.put<any>(this.apiBaseUrl +'use?code='+code,{code:code});
+  }
 }

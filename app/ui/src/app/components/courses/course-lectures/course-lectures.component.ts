@@ -97,9 +97,11 @@ export class CourseLecturesComponent {
             completed += 1;
           }
           this.completePercentage = Math.round((completed / total) * 100) + '%';
+          
         },
       });
     });
+    this.courseService.setCourseHistory(course.id,this.completePercentage).subscribe();
   }
 
   setLessonSection() {

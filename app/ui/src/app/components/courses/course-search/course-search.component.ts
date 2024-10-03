@@ -102,6 +102,7 @@ export class CourseSearchComponent {
     this.displayedCourses = [];
     this.searchResults = false;
     this.loadMoreCourses();
+    this.maxPrice=10000
     this.router.navigate(['/courses/search']); // Reset the URL
   }
 
@@ -197,6 +198,6 @@ export class CourseSearchComponent {
     }
 
     // Apply price range filtering
-    this.filterByPriceRange();
+    // this.filterByPriceRange();
   }
 }

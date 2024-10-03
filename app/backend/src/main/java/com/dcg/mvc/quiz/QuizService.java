@@ -1,5 +1,7 @@
 package com.dcg.mvc.quiz;
 
+import com.dcg.mvc.course.Course;
+import com.dcg.mvc.course.CourseRepository;
 import com.dcg.mvc.lecture.Lecture;
 import com.dcg.mvc.lecture.LectureRepository;
 import com.dcg.mvc.question.Question;
@@ -16,6 +18,9 @@ public class QuizService {
 
     @Autowired
     private LectureRepository lectureRepository;
+
+    @Autowired
+    private CourseRepository courseRepository;
 
     public Quiz createQuizForLecture(Long lectureId, List<Question> questions) {
         // Fetch the Lecture by its ID
@@ -39,4 +44,27 @@ public class QuizService {
 
         return quiz;
     }
+    public Quiz createQuizForCourse(Long courseId, List<Question> questions) {
+        // Fetch the Course by its ID
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new RuntimeException("Course not found with id: " + courseId));
+
+        // Create the Quiz
+        Quiz quiz = Quiz.builder()
+                .course(course) // Set the association with the Course
+                .questions(questions)
+                .build();
+
+        // Save the Quiz
+        quizRepository.save(quiz);
+
+        // Add the Quiz to the Course's associated quiz
+        course.setQuiz(quiz); // Ensure bidirectional relationship is maintained
+
+        // Save the updated Course
+        courseRepository.save(course);
+
+        return quiz;
+    }
+
 }

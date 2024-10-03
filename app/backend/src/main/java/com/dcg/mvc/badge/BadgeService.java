@@ -54,9 +54,14 @@ public class BadgeService {
      * @return The created Badge entity.
      */
     public Badge createOrUpdateBadge(CreateBadgeRequest request) {
+        Course course;
         // Find the course by ID
-        Course course = courseRepository.findById(request.getCourseId())
-                .orElseThrow(() -> new RuntimeException("Course not found"));
+        if(request.getCourseId()!=null){
+             course = courseRepository.findById(request.getCourseId())
+                    .orElse(null);
+        }else{
+            course=null;
+        }
 
         // Attempt to find an existing badge for this course
         Badge badge = badgeRepository.findByCourseId(request.getCourseId())
@@ -80,7 +85,7 @@ public class BadgeService {
      * @param courseId The ID of the course.
      * @return A set of badges associated with the course.
      */
-    public Set<Badge> getBadgesByCourseId(Long courseId) {
+    public Badge getBadgesByCourseId(Long courseId) {
         return badgeRepository.findBadgesByCourseId(courseId);
     }
 
@@ -89,26 +94,27 @@ public class BadgeService {
      *
      * @param courseId The ID of the course for which badges should be awarded.
      */
-    public void awardBadgesByCourseId(Long courseId) {
+    public Badge awardBadgesByCourseId(Long courseId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName(); // Get the currently authenticated username
 
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Set<Badge> badges = badgeRepository.findBadgesByCourseId(courseId);
-
-        for (Badge badge : badges) {
+        Badge badge = badgeRepository.findBadgesByCourseId(courseId);
+        System.out.println(badge.getUsers().contains(user));
             // Check if the badge is already acquired by the user
             if (!badge.getUsers().contains(user)) {
                 badge.addUser(user); // Assuming Badge has an addUser method
                 badge.acquireBadge(); // Optionally mark the badge as acquired
+                System.out.println(badge);
                 badgeRepository.save(badge);
 
                 // Optionally update the user's badge list
                 user.getBadges().add(badge);
                 userRepository.save(user);
             }
-        }
+            return badge;
+
     }
 }

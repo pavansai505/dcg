@@ -19,4 +19,9 @@ public class QuizController {
         Quiz createdQuiz = quizService.createQuizForLecture(lectureId, questions);
         return ResponseEntity.ok(createdQuiz);
     }
+    @PostMapping("add/course/{courseId}")
+    public ResponseEntity<Quiz> createQuizForCourse(@PathVariable Long courseId, @RequestBody List<Question> questions) {
+        Quiz createdQuiz = quizService.createQuizForCourse(courseId, questions);
+        return ResponseEntity.ok(createdQuiz);
+    }
 }

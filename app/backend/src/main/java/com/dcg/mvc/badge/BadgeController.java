@@ -42,12 +42,17 @@ public class BadgeController {
      * @param request The request object containing badge details.
      * @return ResponseEntity containing the created Badge entity.
      */
+
     @PostMapping
     public ResponseEntity<Badge> createBadge(@RequestBody CreateBadgeRequest request) {
         Badge badge = badgeService.createOrUpdateBadge(request);
         return new ResponseEntity<>(badge, HttpStatus.CREATED);
     }
-
+    @PutMapping("/assign/{courseId}")
+    public ResponseEntity<Badge> assignBadge(@PathVariable Long courseId) {
+        Badge badge1 = badgeService.awardBadgesByCourseId(courseId);
+        return new ResponseEntity<>(badge1, HttpStatus.OK);
+    }
     /**
      * Retrieves all badges for a specific course.
      *
@@ -55,9 +60,9 @@ public class BadgeController {
      * @return ResponseEntity containing a set of badges for the course.
      */
     @GetMapping("/course/{courseId}")
-    public ResponseEntity<Set<Badge>> getBadgesByCourseId(@PathVariable Long courseId) {
-        Set<Badge> badges = badgeService.getBadgesByCourseId(courseId);
-        return new ResponseEntity<>(badges, HttpStatus.OK);
+    public ResponseEntity<Badge> getBadgesByCourseId(@PathVariable Long courseId) {
+        Badge badge = badgeService.getBadgesByCourseId(courseId);
+        return new ResponseEntity<>(badge, HttpStatus.OK);
     }
 
     /**
@@ -67,8 +72,7 @@ public class BadgeController {
      * @return ResponseEntity with no content.
      */
     @PostMapping("/award/course/{courseId}")
-    public ResponseEntity<Void> awardBadgesByCourseId(@PathVariable Long courseId) {
-        badgeService.awardBadgesByCourseId(courseId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Badge> awardBadgesByCourseId(@PathVariable Long courseId) {
+        return new ResponseEntity<>(badgeService.awardBadgesByCourseId(courseId),HttpStatus.OK);
     }
 }

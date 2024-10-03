@@ -170,12 +170,8 @@ public class CourseService {
         Course course=courseRepository.findById(courseActionHistory.getCourse().getId()).get();
         User user=userRepository.findByEmail(username).get();
         CourseActionHistory courseActionHistoryData=courseActionHistoryRepository.findByUserAndCourse(user,course);
-
         courseActionHistoryData.setPercentageCompleted(courseActionHistory.getPercentageCompleted());
-
         return courseActionHistoryRepository.save(courseActionHistoryData);
-
-
     }
 
     public CourseActionHistory getCourseActionHistory(Long courseId,String username){

@@ -43,6 +43,7 @@ import { ContestsQuizComponent } from './components/contests/contests-quiz/conte
 import { ContestsLeaderboardComponent } from './components/contests/contests-leaderboard/contests-leaderboard.component';
 import { contestGuardGuard } from './guard/contest-guard.guard';
 import { InstructorInfoComponent } from './components/instructor/instructor-info/instructor-info.component';
+import { CourseQuizComponent } from './components/courses/course-quiz/course-quiz.component';
 
 export const routes: Routes = [
   // Home route
@@ -111,6 +112,12 @@ export const routes: Routes = [
         component: CoursePaymentComponent,
         data: { title: 'Course Payment' },
         canActivate: [authGuard, coursePurchaseAuthGuard, titleGuardGuard]
+      },
+      {
+        path:':id/quiz',
+        component:CourseQuizComponent,
+        data:{title:'Quiz'},
+        canActivate:[titleGuardGuard]
       }
     ]
   },

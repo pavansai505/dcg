@@ -72,21 +72,23 @@ export class PaymentService {
       .subscribe({
         next: (data) => {
           console.log(data, this.coupon);
-          this.couponService.applyCoupon(this.coupon, data).subscribe({
-            next: (response) => {
-              // Handle successful coupon application
-              console.log('Coupon applied successfully:', response);
-              // You can update the UI or state to reflect the discount
-            },
-            error: (err) => {
-              // Handle errors, such as invalid coupon or server issues
-              console.error('Error applying coupon:', err);
-              // Optionally, show an error message to the user
-            },
-            complete: () => {
-              console.log('Coupon application process completed.');
-            },
-          });
+          if(this.coupon){
+            this.couponService.applyCoupon(this.coupon, data).subscribe({
+              next: (response) => {
+                // Handle successful coupon application
+                console.log('Coupon applied successfully:', response);
+                // You can update the UI or state to reflect the discount
+              },
+              error: (err) => {
+                // Handle errors, such as invalid coupon or server issues
+                console.error('Error applying coupon:', err);
+                // Optionally, show an error message to the user
+              },
+              complete: () => {
+                console.log('Coupon application process completed.');
+              },
+            });
+          }
 
           this.courseService
             .registerToCourse({ courseCode: courseCode } as CourseRegister)

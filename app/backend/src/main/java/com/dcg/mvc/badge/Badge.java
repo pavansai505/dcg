@@ -11,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -24,6 +25,9 @@ public class Badge extends BaseEntity {
     private String badgeName;
     private String badgeDescription;
     private String badgeIcon;
+    @Column(columnDefinition = "VARCHAR(36) DEFAULT ''") // Use VARCHAR for string type with default empty string
+    private String badgeCode; // Nullable by default
+
 
     @OneToOne
     @JoinColumn(name = "course_id", unique = true)
@@ -39,6 +43,7 @@ public class Badge extends BaseEntity {
     @PrePersist
     private void setDefaultAcquiredStatus() {
         this.acquired = false;
+        this.badgeCode = UUID.randomUUID().toString();
     }
 
     public void acquireBadge() {

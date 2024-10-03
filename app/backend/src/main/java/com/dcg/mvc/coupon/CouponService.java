@@ -7,6 +7,7 @@ import com.dcg.mvc.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -131,5 +132,22 @@ public class CouponService {
     // Get coupons used by a specific user
     public Set<Coupon> getCouponsByUser(User user) {
         return user.getCouponsUsed();
+    }
+
+    @Transactional
+    public CouponResponse useCoupon(String code){
+        Optional<Coupon> coupon = couponRepository.findByCode(code);
+                if(!coupon.isPresent()){
+                    return CouponResponse.builder().message("Invalid coupon code.").isValid(false).build();
+                }
+        Coupon coupon1=coupon.get();
+        if(coupon1.isValid()){
+
+            coupon1.decrementUses();
+            couponRepository.save(coupon1);
+            return CouponResponse.builder().message("Coupon success").isValid(true).build();
+        }else{
+            return CouponResponse.builder().message("Coupon invalid").isValid(false).build();
+        }
     }
 }

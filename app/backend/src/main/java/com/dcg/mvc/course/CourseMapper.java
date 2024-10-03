@@ -29,7 +29,8 @@ public class CourseMapper {
                 course.getHistories(), // Directly including CourseActionHistory entities
                 course.getCreatedBy(),
                 course.getCreatedDate(),
-                course.getLastModifiedDate()
+                course.getLastModifiedDate(),
+                course.getQuiz()
 
 
         );

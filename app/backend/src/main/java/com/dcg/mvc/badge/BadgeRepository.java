@@ -15,7 +15,7 @@ public interface BadgeRepository extends JpaRepository<Badge, Long> {
      * @param courseId The ID of the course.
      * @return A set of badges associated with the course.
      */
-    Set<Badge> findBadgesByCourseId(Long courseId);
+    Badge findBadgesByCourseId(Long courseId);
 
     /**
      * Finds all badges associated with a specific user.
