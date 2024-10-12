@@ -35,5 +35,8 @@ export class UserDetailsService {
   emailSubscriptionToggle=():Observable<any>=>{
     return this.http.put<any>(environment.apiBaseUrl+"user/subscribe-to-email",{})
  }
+  updateUser=(user:User):Observable<any>=>{
+    return this.http.put<any>(environment.apiBaseUrl+"user/update",user)
+ }
 
 }

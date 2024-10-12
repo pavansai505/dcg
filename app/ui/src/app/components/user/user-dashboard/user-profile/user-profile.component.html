@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col col-lg-8 col-12">
-      <div class="row row-cols-1 py-5 px-3 gy-2">
+      <!-- <div class="row row-cols-1 py-5 px-3 gy-2">
         <div class="col">
           <span class="h6">Fullname : {{user.fullName}}</span>
         </div>
@@ -42,21 +42,7 @@
             [value]="user.lastName"
           />
         </div>
-          <!-- <div class="col">
-            <label for="exampleFormControlInput1" class="form-label"
-              >Password</label
-            >
-            <div class="input-group mb-3">
-              <input
-                type="password"
-                class="form-control"
-                placeholder="Change password"
-                aria-label="Recipient's username"
-                aria-describedby="basic-addon2"
-              />
-              <span class="input-group-text" id="basic-addon2">change</span>
-            </div>
-          </div> -->
+         
         <div class="col">
           <div class="btn btn-primary">Save</div>
         </div>
@@ -66,7 +52,62 @@
             <label class="form-check-label" for="flexSwitchCheckChecked">Subscribe to newsletter.</label>
           </div>
         </div>
-      </div>
+      </div> -->
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="row row-cols-1 py-5 px-3 gy-2">
+          <div class="col">
+            <span class="h6">Fullname : {{ user.fullName }}</span>
+          </div>
+          <div class="col">
+            <label for="email" class="form-label">Email address</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="name@example.com"
+              formControlName="email"
+              [disabled]="true"
+            />
+          </div>
+          <div class="col">
+            <label for="firstName" class="form-label">First Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="firstName"
+              placeholder="Enter your first name"
+              formControlName="firstName" 
+            />
+          </div>
+          <div class="col">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="lastName"
+              placeholder="Enter your last name"
+              formControlName="lastName" 
+            />
+          </div>
+          <div class="col">
+            <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Save</button> <!-- Submit button -->
+          </div>
+          <div class="col">
+            <div class="form-check form-switch" *ngIf="!user.subscribeToEmail">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckChecked"
+                [checked]="user.subscribeToEmail"
+                (click)="toggleSubscription()"
+              />
+              <label class="form-check-label" for="flexSwitchCheckChecked">Subscribe to newsletter.</label>
+            </div>
+          </div>
+        </div>
+      </form>
+      
     </div>
     <div class="col col-lg-4 col-12  centerIt ">
       <div class="container position-relative  centerIt">

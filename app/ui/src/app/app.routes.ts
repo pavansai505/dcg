@@ -214,7 +214,7 @@ export const routes: Routes = [
       },
       {
         path: 'profile',
-        component: InstructorProfileComponent,
+        component: UserProfileComponent,
         data: { title: 'Instructor Profile' },
         canActivate: [titleGuardGuard]
       },
@@ -276,7 +276,7 @@ export const routes: Routes = [
       },
       {
         path: 'profile',
-        component: AdminProfileComponent,
+        component: UserProfileComponent,
         data: { title: 'Admin Profile' },
         canActivate: [titleGuardGuard]
       },

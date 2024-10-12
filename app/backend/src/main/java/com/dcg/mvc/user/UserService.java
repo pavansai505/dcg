@@ -1,6 +1,7 @@
 package com.dcg.mvc.user;
 
 import com.dcg.constants.Roles;
+import com.dcg.exception.ResourceNotFoundException;
 import com.dcg.mvc.coupon.Coupon;
 import com.dcg.mvc.coupon.CouponService;
 import com.dcg.mvc.course.Course;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -162,4 +164,19 @@ public class UserService {
         userRepository.save(user);
 
     }
+
+    public User updateUser(User user) {
+        Optional<User> optionalUser = userRepository.findById(user.getId());
+
+        if (optionalUser.isPresent()) {
+            User existingUser = optionalUser.get();
+            existingUser.setFirstName(user.getFirstName());
+            existingUser.setEmail(user.getEmail());
+            existingUser.setLastName(user.getLastName());
+            return userRepository.save(existingUser);
+        } else {
+            throw new UserNotFoundException("User not found with id: " + user.getId());
+        }
+    }
+
 }

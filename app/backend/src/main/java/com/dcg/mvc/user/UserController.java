@@ -1,5 +1,6 @@
 package com.dcg.mvc.user;
 
+import com.dcg.exception.CustomUserExceptions;
 import com.dcg.handlers.password.ForgotPasswordHandler;
 import com.dcg.model.*;
 import com.dcg.mvc.coupon.Coupon;
@@ -154,4 +155,16 @@ public class UserController {
         userService.subscribeToNewsLetter(username);
         return ResponseEntity.ok(CustomResponse.builder().message("Subscription changed successfully").build());
     }
+
+    @PutMapping("/update") // PUT request to update user by ID
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
+        try {
+            User updatedUser = userService.updateUser(user);
+            return new ResponseEntity<>(updatedUser, HttpStatus.OK); // Return the updated user with 200 OK
+        } catch (CustomUserExceptions.UserNotFoundException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); // Return 404 if user not found
+        }
+    }
+
+
 }
