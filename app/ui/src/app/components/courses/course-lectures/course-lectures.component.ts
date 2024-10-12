@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { SafeUrlPipe } from '../../../pipes/safe-url.pipe';
 import { Lecture } from '../../../models/course/lecture';
 import { PointsListPipe } from '../../../pipes/points-list.pipe';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-course-lectures',
@@ -81,27 +82,72 @@ export class CourseLecturesComponent {
     }
   }
 
+  // setLessonProgress(course: Course | null) {
+  //   if (course == null) return;
+  //   var total = 0;
+  //   var completed = 0;
+  //   const lectureIds = course.units.flatMap((unit) =>
+  //     unit.lectures.map((lecture: any) => lecture.id)
+  //   );
+  //   lectureIds.forEach((lectureId) => {
+
+  //     this.courseService.isLectureViewed(lectureId).subscribe({
+  //       next: (value) => {
+  //         this.lectureStatuses[lectureId] = value.resultTrue;
+  //         total += 1;
+  //         if (value.resultTrue) {
+  //           completed += 1;
+
+  //         }
+  //         this.completePercentage = Math.round((completed / total) * 100) + '%';
+  //       },
+  //       error:(err)=>{console.log(err);
+  //       },
+  //       complete:()=>{
+  //       }
+  //     });
+  //   });
+
+  // }
+
   setLessonProgress(course: Course | null) {
     if (course == null) return;
-    var total = 0;
-    var completed = 0;
+
     const lectureIds = course.units.flatMap((unit) =>
       unit.lectures.map((lecture: any) => lecture.id)
     );
-    lectureIds.forEach((lectureId) => {
-      this.courseService.isLectureViewed(lectureId).subscribe({
-        next: (value) => {
+
+    // Create an array of observables for each lecture's viewed status
+    const lectureStatusObservables = lectureIds.map((lectureId) =>
+      this.courseService.isLectureViewed(lectureId)
+    );
+
+    // Use forkJoin to wait for all observables to complete
+    forkJoin(lectureStatusObservables).subscribe({
+      next: (results) => {
+        let total = results.length;
+        let completed = 0;
+
+        results.forEach((value, index) => {
+          const lectureId = lectureIds[index];
           this.lectureStatuses[lectureId] = value.resultTrue;
-          total += 1;
           if (value.resultTrue) {
             completed += 1;
           }
-          this.completePercentage = Math.round((completed / total) * 100) + '%';
-          
-        },
-      });
+        });
+
+        // Calculate completion percentage
+        this.completePercentage = Math.round((completed / total) * 100) + '%';
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('All lecture views processed.');
+        // This line will run after all HTTP calls are completed
+        this.courseService.setCourseHistory(course.id,this.completePercentage).subscribe();
+      },
     });
-    this.courseService.setCourseHistory(course.id,this.completePercentage).subscribe();
   }
 
   setLessonSection() {
@@ -194,15 +240,15 @@ export class CourseLecturesComponent {
     }
   }
   toggleLectureCollapse(id: number): void {
-    const element = document.getElementById(id+'collapse');
-    const elementHead = document.getElementById('collapseHead'+id);
+    const element = document.getElementById(id + 'collapse');
+    const elementHead = document.getElementById('collapseHead' + id);
     if (element) {
       if (element.classList.contains('show')) {
-        elementHead?.setAttribute('aria-expanded','false')
+        elementHead?.setAttribute('aria-expanded', 'false');
         element.classList.remove('show');
       } else {
         element.classList.add('show');
-        elementHead?.setAttribute('aria-expanded','true')
+        elementHead?.setAttribute('aria-expanded', 'true');
       }
     }
   }

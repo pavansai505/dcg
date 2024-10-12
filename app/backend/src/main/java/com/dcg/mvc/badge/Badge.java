@@ -31,7 +31,7 @@ public class Badge extends BaseEntity {
 
     @OneToOne
     @JoinColumn(name = "course_id", unique = true)
-    @JsonIgnore
+//    @JsonIgnore
     private Course course;
 
     @ManyToMany(mappedBy = "badges")

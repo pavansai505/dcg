@@ -17,8 +17,7 @@ export class UserProfileComponent {
     userService.getMyDetails().subscribe({
       next:(val)=>{
         this.user=val
-        console.log(val);
-        
+        console.log(val); 
       },
       error:(err)=>{},
       complete:()=>{}

@@ -1,6 +1,6 @@
 import { Inject, inject, Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environments';
+import { environment } from '../../../environments/environment';
 import { error } from 'console';
 import { CourseDataService } from '../course/course-data.service';
 import CourseRegister from '../../models/course/courseRegister';

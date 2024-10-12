@@ -12,8 +12,13 @@ import { CommonModule } from '@angular/common';
 })
 export class NavbarComponent {
   isUserLoggedIn:boolean=false
+  isInstructorLoggedIn:boolean=false
+  isAdminLoggedIn:boolean=false
+  profileDropDownShow:boolean=false
   constructor(private router:Router,private accessControl:AccessControlService){
     this.isUserLoggedIn=accessControl.isUser;
+    this.isAdminLoggedIn=accessControl.isAdmin
+    this.isInstructorLoggedIn=accessControl.isInstructor
   }
 
 changePageToSearch(){

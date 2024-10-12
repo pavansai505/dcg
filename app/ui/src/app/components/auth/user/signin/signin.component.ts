@@ -42,7 +42,7 @@ export class SigninComponent {
         this.tokenService.setToken('jwt', value.token);
         this.tokenService.setToken('username', value.username);
         this.accessControl.refreshAccessControl();
-      },
+    },
       error: (err) => console.error('Observable emitted an error: ' + err),
       complete: () => {
         if (this.redirectURL) {

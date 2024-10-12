@@ -29,8 +29,8 @@ export class CourseQuizComponent {
   ) {}
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
-      const id = Number(params['id']);
-      this.courseService.getCourseById(id).subscribe({
+      const id = (params['id']);
+      this.courseService.getCourseByCourseCode(id).subscribe({
         next: (data) => {
           this.course = data;
         },

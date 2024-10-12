@@ -58,27 +58,38 @@ public class ApplicationConfig {
         return new BCryptPasswordEncoder();
     }
     @Bean
-    public CorsFilter corsFilter() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        final CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
-        config.setAllowedHeaders(Arrays.asList(
-                HttpHeaders.ORIGIN,
-                HttpHeaders.CONTENT_TYPE,
-                HttpHeaders.ACCEPT,
-                HttpHeaders.AUTHORIZATION
-        ));
-        config.setAllowedMethods(Arrays.asList(
-                "GET",
-                "POST",
-                "DELETE",
-                "PUT",
-                "PATCH"
-        ));
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
+public CorsFilter corsFilter() {
+    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    final CorsConfiguration config = new CorsConfiguration();
+    
+    config.setAllowCredentials(true);
+    
+    // Allow your production frontend URL
+    config.setAllowedOrigins(Arrays.asList(
+        "http://157.173.219.134:4200",   // Production frontend
+        "http://localhost:4200"          // Development frontend (optional)
+    ));
+    
+    config.setAllowedHeaders(Arrays.asList(
+        HttpHeaders.ORIGIN,
+        HttpHeaders.CONTENT_TYPE,
+        HttpHeaders.ACCEPT,
+        HttpHeaders.AUTHORIZATION
+    ));
+    
+    config.setAllowedMethods(Arrays.asList(
+        "GET",
+        "POST",
+        "DELETE",
+        "PUT",
+        "PATCH"
+    ));
+    
+    // Apply CORS settings to all endpoints
+    source.registerCorsConfiguration("/**", config);
+    
+    return new CorsFilter(source);
+}
 
-    }
 
 }

@@ -6,7 +6,7 @@ import { Course } from '../../models/course/course';
 import CourseApproval from '../../models/course/courseApproval';
 import CourseRegister from '../../models/course/courseRegister';
 import { Lecture } from '../../models/course/lecture';
-import { environment } from '../../../environments/environments';
+import { environment } from '../../../environments/environment';
 import { Unit } from '../../models/course/unit';
 import { CourseActionHistory } from '../../models/course/courseActionHistory';
 
@@ -92,21 +92,20 @@ export class CourseDataService {
    getCourseHistory(id:number): Observable<CourseActionHistory> {
     return this.http.get<CourseActionHistory>(environment.apiBaseUrl+'course/courseActionHistory/'+id);
   }
+   getCourseHistoryByCode(code:string): Observable<CourseActionHistory> {
+    return this.http.get<CourseActionHistory>(environment.apiBaseUrl+'course/courseActionHistory/'+code+'/code');
+  }
    awardCourseBadge(id:number): Observable<CourseActionHistory> {
     return this.http.post<CourseActionHistory>(environment.apiBaseUrl+'badges/award/course/'+id,{});
   }
    setCourseHistory(id:number,percentageCompleted:string): Observable<any> {
     console.log({
-      "course":{
-        "id":id
-      },
-      "percentageCompleted":Number(percentageCompleted.split("%")[0])
+      "courseId":id,
+      "percentage":Number(percentageCompleted.split("%")[0])
     });
     return this.http.put<any>(environment.apiBaseUrl+'course/updateCourseHistory/completionPercentage',{
-      "course":{
-        "id":id
-      },
-      "percentageCompleted":Number(percentageCompleted.split("%")[0])
+      "courseId":id,
+      "percentage":Number(percentageCompleted.split("%")[0])
     });
    
     

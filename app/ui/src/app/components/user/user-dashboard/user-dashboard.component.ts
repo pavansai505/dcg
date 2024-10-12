@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavbarComponent } from '../../utilities/navbar/navbar.component';
 import { FooterComponent } from '../../utilities/footer/footer.component';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { TokenService } from '../../../services/token/token.service';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -11,8 +12,11 @@ import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/route
   styleUrl: './user-dashboard.component.css'
 })
 export class UserDashboardComponent {
-  constructor(private router:Router,private activatedRouter:ActivatedRoute){
+  constructor(private router:Router,private activatedRouter:ActivatedRoute,private token:TokenService){
     
+  }
+  signOut(){
+    this.token.removeToken("jwt")
   }
   
 }

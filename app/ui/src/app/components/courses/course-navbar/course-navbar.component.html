@@ -97,7 +97,7 @@
           <button type="button" class="btn btn-warning" [routerLink]="['/auth/user/signup']" routerLinkActive="router-link-active">Sign-up</button>
         </div>
         <div class="text-end" *ngIf="isUserLoggedIn">
-          <a
+          <!-- <a
           [routerLink]="['/user/dashboard']"
             href="#"
             class="d-block link-body-emphasis text-decoration-none "
@@ -111,7 +111,59 @@
               height="32"
               class="rounded-circle"
             />
-          </a>
+          </a> -->
+          <div class="dropdown">
+            <a
+              class="dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              
+            >
+              <img
+                src="https://github.com/mdo.png"
+                alt="mdo"
+                width="32"
+                height="32"
+                class="rounded-circle"
+              />
+            </a>
+            <ul class="dropdown-menu" >
+              <li>
+                <a
+                  [routerLink]="['/user/dashboard']"
+                  routerLinkActive="router-link-active"
+                  class="dropdown-item"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Profile
+                </a>
+              </li>
+              <li *ngIf="isInstructorLoggedIn">
+                <a
+                  [routerLink]="['/instructor/dashboard']"
+                  routerLinkActive="router-link-active"
+                  class="dropdown-item"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Instructor profile
+                </a>
+              </li>
+              <li *ngIf="isAdminLoggedIn">
+                <a
+                  [routerLink]="['/admin/dashboard']"
+                  routerLinkActive="router-link-active"
+                  class="dropdown-item"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Admin profile
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

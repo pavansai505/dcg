@@ -53,7 +53,7 @@
     <div
       class="col-lg-3 col-12 col order-lg-1 order-2 bg-body-light min-vh-100"
     >
-      <div class="flex-shrink-0 px-3 py-3 shadow sticky-top">
+      <div class="flex-shrink-0 px-3 py-3 shadow">
         <div
           class="progress my-3"
           role="progressbar"
@@ -102,6 +102,18 @@
               </ul>
             </div>
           </li>
+          <li
+            class="pb-1 list-group-item"
+            style="border: 1px solid #ddd; border-radius: 0.5rem"
+          >
+          <button
+          class="btn d-inline-flex align-items-center rounded w-100 text-dark border-0 "
+          [routerLink]="['/courses/'+course?.courseCode+'/quiz']" routerLinkActive="router-link-active" 
+          *ngIf="completePercentage=='100%'"
+        >
+        <i class="bi bi-check-circle me-2"></i>Quiz
+        </button>
+            </li>
         </ul>
       </div>
     </div>

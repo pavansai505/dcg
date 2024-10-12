@@ -4,7 +4,7 @@ import { UserCredentials } from '../../models/auth/userCredentials';
 import { UserRegistration } from '../../models/auth/userRegistration';
 import { Observable } from 'rxjs';
 import ForgotPassword from '../../models/auth/forgotPasswordRequest';
-import { environment } from '../../../environments/environments';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

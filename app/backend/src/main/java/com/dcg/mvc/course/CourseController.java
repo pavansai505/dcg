@@ -2,6 +2,7 @@ package com.dcg.mvc.course;
 
 import com.dcg.model.RegistrationStatusResponse;
 import com.dcg.mvc.history.CourseActionHistory;
+import com.dcg.mvc.history.HistoryUpdate;
 import com.dcg.mvc.lecture.Lecture;
 import com.dcg.mvc.unit.Unit;
 import com.dcg.mvc.unit.UnitService;
@@ -235,11 +236,16 @@ public class CourseController {
 
 
     @PutMapping("/updateCourseHistory/completionPercentage")
-    public ResponseEntity<CourseActionHistory> updateCourseHistory(@RequestBody CourseActionHistory courseActionHistory,Authentication authentication){
-        return ResponseEntity.ok(courseService.updateCourseHistoryCompletionPercentage(courseActionHistory,((UserDetails) authentication.getPrincipal()).getUsername()));
+    public ResponseEntity<CourseActionHistory> updateCourseHistory(@RequestBody HistoryUpdate historyUpdate
+            , Authentication authentication){
+        return ResponseEntity.ok(courseService.updateCourseHistoryCompletionPercentage(historyUpdate,((UserDetails) authentication.getPrincipal()).getUsername()));
     }
     @GetMapping("/courseActionHistory/{id}")
     public ResponseEntity<CourseActionHistory> getCourseHistory(@PathVariable Long id,Authentication authentication){
         return ResponseEntity.ok(courseService.getCourseActionHistory(id,((UserDetails) authentication.getPrincipal()).getUsername()));
+    }
+    @GetMapping("/courseActionHistory/{code}/code")
+    public ResponseEntity<CourseActionHistory> getCourseHistory(@PathVariable String code,Authentication authentication){
+        return ResponseEntity.ok(courseService.getCourseActionHistoryByCode(code,((UserDetails) authentication.getPrincipal()).getUsername()));
     }
 }

@@ -1,11 +1,9 @@
-<div class="container my-5">
+<div class="container-fluid min-vh-100 centerIt bg-body-subtle ">
     <!-- Course Details Section -->
-    <div class="card border-0 rounded-3 shadow-lg overflow-hidden">
+    <div class="card border rounded-3 shadow-lg overflow-hidden shadow w-75 border border-dark border-1">
         <div class="row g-0">
-            <div class="col-md-5">
-                <img [src]="course.courseCover || 'https://picsum.photos/600/400'" alt="{{ course.title }}" class="img-fluid h-100" style="object-fit: cover;">
-            </div>
-            <div class="col-md-7 d-flex flex-column justify-content-center p-4">
+            
+            <div class="col-md-7 d-flex flex-column justify-content-center  p-4">
                 <h1 class="display-4 fw-bold mb-3 text-dark">{{ course.title }}</h1>
                 <p class="fs-5 mb-2 text-muted"><strong>Author:</strong> {{ course.authorName }}</p>
                 <p class="fs-6 mb-2 text-muted"><strong>Level:</strong> <span class="badge bg-warning">{{ course.courseLevel }}</span></p>
@@ -21,31 +19,36 @@
                     </ul>
                 </div>
             </div>
+            <div class="col-md-5 p-3">
+                <img [src]="course.courseCover || 'https://picsum.photos/600/400'" alt="{{ course.title }}" class="img-fluid h-100" style="object-fit: cover;">
+            </div>
+        </div>
+        <hr >
+        <div class="row  p-4 rounded  text-center d-flex justify-content-center ">
+            <h3 class="mb-4">Secure Your Spot</h3>
+            <p class="fs-4 mb-4">Purchase the <strong>{{ course.title }}</strong> course for <strong>₹{{ course.price }}</strong>.</p>
+            
+            <!-- Coupon Code Input -->
+            <!-- <div class="mb-4">
+                <input type="text" [(ngModel)]="couponCode" placeholder="Enter Coupon Code" class="form-control d-inline w-50"  />
+                <button class="btn btn-info ms-2" style=" color: white;" (click)="applyCoupon()">Apply Coupon</button>
+                <div *ngIf="couponError" class="text-danger mt-2" style="font-size: 0.9rem;">
+                    {{ couponError }}
+                </div>
+            </div> -->
+            
+            <button class="btn mb-4 w-50" (click)="initiatePayment()" style="background-color: #4caf50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 1.2rem;">
+               Pay  <span *ngIf="!isDiscountApplied">₹{{ course.price }}</span>
+                <span *ngIf="isDiscountApplied" style="text-decoration: line-through; color: white;">₹{{ course.price }}</span>
+                <span *ngIf="isDiscountApplied" style="color: #ffd700;"> ₹{{ discountPrice }}</span>
+            </button>
+            
+            
+            
         </div>
     </div>
     <!-- Payment Section -->
-    <div class="bg-dark text-light p-5 rounded mt-4 text-center">
-        <h3 class="mb-4">Secure Your Spot</h3>
-        <p class="fs-4 mb-4">Purchase the <strong>{{ course.title }}</strong> course for <strong>₹{{ course.price }}</strong>.</p>
-        
-        <!-- Coupon Code Input -->
-        <div class="mb-4">
-            <input type="text" [(ngModel)]="couponCode" placeholder="Enter Coupon Code" class="form-control d-inline w-50"  />
-            <button class="btn btn-info ms-2" style=" color: white;" (click)="applyCoupon()">Apply Coupon</button>
-            <div *ngIf="couponError" class="text-danger mt-2" style="font-size: 0.9rem;">
-                {{ couponError }}
-            </div>
-        </div>
-        
-        <button class="btn" (click)="initiatePayment()" style="background-color: #4caf50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 1.2rem;">
-           Pay  <span *ngIf="!isDiscountApplied">₹{{ course.price }}</span>
-            <span *ngIf="isDiscountApplied" style="text-decoration: line-through; color: white;">₹{{ course.price }}</span>
-            <span *ngIf="isDiscountApplied" style="color: #ffd700;"> ₹{{ discountPrice }}</span>
-        </button>
-        
-        
-        
-    </div>
+    
     
     
 </div>

@@ -1,5 +1,5 @@
 import { User } from "../user/user";
-import { Badge } from "./badge";
+import { Badge } from "../badge/badge";
 import { CourseActionHistory } from "./courseActionHistory";
 import { Lecture } from "./lecture";
 import { Quiz } from "./quiz";

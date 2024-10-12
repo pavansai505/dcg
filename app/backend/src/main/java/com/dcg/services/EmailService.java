@@ -116,7 +116,7 @@ public class EmailService {
                 "</tr>" +
                 "</table>" +
                 "<p style='font-size: 16px;'>If you have any questions regarding this payment, please contact us.</p>" +
-                "<p style='font-size: 14px; color: #888;'>Thank you,<br>Your Company</p>" +
+                "<p style='font-size: 14px; color: #888;'>Thank you,<br>DCG</p>" +
                 "</div>" +
                 "</body>" +
                 "</html>";

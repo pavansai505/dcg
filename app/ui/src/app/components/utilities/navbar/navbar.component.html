@@ -1,4 +1,3 @@
-
 <header class="p-3 text-bg-light">
   <div class="container-fluid px-4 py-0">
     <div
@@ -101,7 +100,12 @@
             >Home</a
           >
         </li>
-        <li><a [routerLink]="['/courses/search']" class="nav-link px-2 text-dark">Courses</a></li><li>
+        <li>
+          <a [routerLink]="['/courses/search']" class="nav-link px-2 text-dark"
+            >Courses</a
+          >
+        </li>
+        <li>
           <a [routerLink]="['/contests']" class="nav-link px-2 text-dark"
             >Contests</a
           >
@@ -114,7 +118,7 @@
             >Contact Us</a
           >
         </li>
-        
+
         <li>
           <a
             [routerLink]="['/about']"
@@ -129,7 +133,11 @@
         role="search"
         (click)="changePageToSearch()"
       >
-        <button class="btn btn-light border border-1 border-dark w-100 text-start">Search...</button>
+        <button
+          class="btn btn-light border border-1 border-dark w-100 text-start"
+        >
+          Search...
+        </button>
       </div>
       <div class="text-end" *ngIf="!isUserLoggedIn">
         <button
@@ -150,7 +158,7 @@
         </button>
       </div>
       <div class="text-end" *ngIf="isUserLoggedIn">
-        <a
+        <!-- <a
           [routerLink]="['/user/dashboard']"
           routerLinkActive="router-link-active"
           class="d-block link-body-emphasis text-decoration-none"
@@ -164,7 +172,59 @@
             height="32"
             class="rounded-circle"
           />
-        </a>
+        </a> -->
+        <div class="dropdown">
+          <a
+            class="dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            
+          >
+            <img
+              src="https://github.com/mdo.png"
+              alt="mdo"
+              width="32"
+              height="32"
+              class="rounded-circle"
+            />
+          </a>
+          <ul class="dropdown-menu" >
+            <li>
+              <a
+                [routerLink]="['/user/dashboard']"
+                routerLinkActive="router-link-active"
+                class="dropdown-item"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Profile
+              </a>
+            </li>
+            <li *ngIf="isInstructorLoggedIn">
+              <a
+                [routerLink]="['/instructor/dashboard']"
+                routerLinkActive="router-link-active"
+                class="dropdown-item"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Instructor profile
+              </a>
+            </li>
+            <li *ngIf="isAdminLoggedIn">
+              <a
+                [routerLink]="['/admin/dashboard']"
+                routerLinkActive="router-link-active"
+                class="dropdown-item"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Admin profile
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

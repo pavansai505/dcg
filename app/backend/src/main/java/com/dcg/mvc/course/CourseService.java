@@ -1,9 +1,10 @@
 package com.dcg.mvc.course;
 
 import com.dcg.constants.CourseStatus;
-import com.dcg.exception.CustomUserExceptions;
+import com.dcg.exception.ResourceNotFoundException;
 import com.dcg.mvc.history.CourseActionHistory;
 import com.dcg.mvc.history.CourseActionHistoryRepository;
+import com.dcg.mvc.history.HistoryUpdate;
 import com.dcg.mvc.lecture.LectureRepository;
 import com.dcg.mvc.user.User;
 import com.dcg.mvc.user.UserRepository;
@@ -71,17 +72,18 @@ public class CourseService {
      * @param id The ID of the course.
      * @return The course with the specified ID or a placeholder if not found.
      */
-
     public Course getCourseById(Long id) {
         return courseRepository.findById(id).orElse(
                 Course.builder().title("No Course Found").build()
         );
     }
+
     public Course getCourseByCourseCode(String courseCode) {
         return courseRepository.findByCourseCode(courseCode).orElse(
                 Course.builder().title("No Course Found").build()
         );
     }
+
     /**
      * Retrieves the count of all courses.
      * @return The total number of courses.
@@ -110,7 +112,7 @@ public class CourseService {
             existingCourse.setApprovalStatus(course.getApprovalStatus());
             courseRepository.save(existingCourse);
         } else {
-            throw new IllegalArgumentException("Course not found");
+            throw new ResourceNotFoundException("Course not found");
         }
     }
 
@@ -125,6 +127,7 @@ public class CourseService {
         String courseCode = courseRegister.getCourseCode();
         Optional<Course> optionalCourse = courseRepository.findByCourseCode(courseCode);
         Optional<User> optionalUser = userRepository.findByEmail(principal.getUsername());
+
         if (optionalCourse.isPresent() && optionalUser.isPresent()) {
             Course course = optionalCourse.get();
             User user = optionalUser.get();
@@ -137,7 +140,7 @@ public class CourseService {
             }
             return course;
         } else {
-            throw new IllegalArgumentException("Course or User not found");
+            throw new ResourceNotFoundException("Course or User not found");
         }
     }
 
@@ -149,35 +152,54 @@ public class CourseService {
      */
     public boolean isUserRegisteredForCourse(CourseRegister courseRegister, UserDetails principal) {
         Long courseId = courseRegister.getCourseId();
-        Optional<Course> optionalCourse= courseRepository.findByCourseCode(courseRegister.getCourseCode());
-        if(courseRegister.getCourseCode()!=null){
-            optionalCourse = courseRepository.findByCourseCode(courseRegister.getCourseCode());
+        Optional<Course> optionalCourse = Optional.ofNullable(courseRegister.getCourseCode() != null ?
+                courseRepository.findByCourseCode(courseRegister.getCourseCode()) :
+                courseRepository.findById(courseId)).orElse(Optional.empty());
 
-        }else{
-            optionalCourse = courseRepository.findById(courseId);
-
-        }
         Optional<User> optionalUser = userRepository.findByEmail(principal.getUsername());
+
         if (optionalCourse.isPresent() && optionalUser.isPresent()) {
             Course course = optionalCourse.get();
             User user = optionalUser.get();
-            return user.getCourses().contains(course);
+            return user.getCourses().contains(course) || course.getCreatedBy().equals(user.getId()) || user.getRoles().contains("ROLE_ADMIN");
         }
         return false;
     }
 
-    public CourseActionHistory updateCourseHistoryCompletionPercentage(CourseActionHistory courseActionHistory,String username){
-        Course course=courseRepository.findById(courseActionHistory.getCourse().getId()).get();
-        User user=userRepository.findByEmail(username).get();
-        CourseActionHistory courseActionHistoryData=courseActionHistoryRepository.findByUserAndCourse(user,course);
-        courseActionHistoryData.setPercentageCompleted(courseActionHistory.getPercentageCompleted());
+    public CourseActionHistory updateCourseHistoryCompletionPercentage(HistoryUpdate historyUpdate, String username) {
+        Course course = courseRepository.findById(historyUpdate.getCourseId())
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
+
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        CourseActionHistory courseActionHistoryData = courseActionHistoryRepository.findByUserAndCourse(user, course)
+                .orElseThrow(() -> new ResourceNotFoundException("Course action history not found for user and course"));
+
+        courseActionHistoryData.setPercentageCompleted(historyUpdate.getPercentage());
         return courseActionHistoryRepository.save(courseActionHistoryData);
     }
 
-    public CourseActionHistory getCourseActionHistory(Long courseId,String username){
-        Course course=courseRepository.findById(courseId).get();
-        User user=userRepository.findByEmail(username).get();
-        return courseActionHistoryRepository.findByUserAndCourse(user,course);
+    public CourseActionHistory getCourseActionHistory(Long courseId, String username) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
+
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        return courseActionHistoryRepository.findByUserAndCourse(user, course)
+                .orElseThrow(() -> new ResourceNotFoundException("Course action history not found for user and course"));
+    }
+
+    public CourseActionHistory getCourseActionHistoryByCode(String courseCode, String username) {
+        Course course = courseRepository.findByCourseCode(courseCode)
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found with code: " + courseCode));
+
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + username));
+
+        return courseActionHistoryRepository.findByUserAndCourse(user, course)
+                .orElseThrow(() -> new ResourceNotFoundException("Course action history not found for user and course"));
     }
 
 }

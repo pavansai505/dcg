@@ -44,6 +44,8 @@ import { ContestsLeaderboardComponent } from './components/contests/contests-lea
 import { contestGuardGuard } from './guard/contest-guard.guard';
 import { InstructorInfoComponent } from './components/instructor/instructor-info/instructor-info.component';
 import { CourseQuizComponent } from './components/courses/course-quiz/course-quiz.component';
+import { UserBadgesComponent } from './components/user/user-dashboard/user-badges/user-badges.component';
+import { courseQuizGuard } from './guard/course-quiz.guard';
 
 export const routes: Routes = [
   // Home route
@@ -117,7 +119,7 @@ export const routes: Routes = [
         path:':id/quiz',
         component:CourseQuizComponent,
         data:{title:'Quiz'},
-        canActivate:[titleGuardGuard]
+        canActivate:[titleGuardGuard,courseQuizGuard]
       }
     ]
   },
@@ -178,6 +180,12 @@ export const routes: Routes = [
         path: 'courses',
         component: UserCoursesViewComponent,
         data: { title: 'My Courses' },
+        canActivate: [titleGuardGuard]
+      },
+      {
+        path: 'badges',
+        component: UserBadgesComponent,
+        data: { title: 'My Badges' },
         canActivate: [titleGuardGuard]
       },
       {

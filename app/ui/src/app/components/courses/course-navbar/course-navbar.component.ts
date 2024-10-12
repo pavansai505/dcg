@@ -14,9 +14,13 @@ import { FormsModule } from '@angular/forms';
 export class CourseNavbarComponent {
   isUserLoggedIn:boolean=false
   searchInput:string=""
+  isInstructorLoggedIn:boolean=false
+  isAdminLoggedIn:boolean=false
   @Output() searchInputCall=new EventEmitter<string>();
   constructor(private router:Router,private accessControl:AccessControlService){
     this.isUserLoggedIn=accessControl.isUser;
+    this.isAdminLoggedIn=accessControl.isAdmin
+    this.isInstructorLoggedIn=accessControl.isInstructor
   }
   searchCourse(value:string)
   {

@@ -1,0 +1,53 @@
+body {
+    background-color: #f8f9fa; /* Light background for contrast */
+  }
+  
+  .card {
+    border-radius: 10px; /* Rounded corners for the card */
+    transition: transform 0.3s ease; /* Smooth transition for hover effects */
+  }
+  
+  .card:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+  }
+  
+  .card-header {
+    background-color: #007bff; /* Primary color */
+    border-radius: 10px 10px 0 0; /* Round top corners */
+  }
+  
+  .form-check-input:checked {
+    background-color: #007bff; /* Checked radio button color */
+    border-color: #007bff;
+  }
+  
+  .form-check-label {
+    cursor: pointer; /* Make labels clickable */
+  }
+  
+  .progress {
+    height: 20px; /* Height of the progress bar */
+    border-radius: 10px; /* Rounded corners */
+  }
+  
+  .btn {
+    transition: background-color 0.3s ease, transform 0.2s; /* Button transition effects */
+  }
+  
+  .btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d; /* Grey color for secondary button */
+  }
+  
+  .btn-secondary:hover {
+    background-color: #5a6268; /* Darker grey on hover */
+  }
+  
+  .text-center {
+    position: relative; /* Positioning context for button animations */
+  }
+  

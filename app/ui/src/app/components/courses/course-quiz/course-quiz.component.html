@@ -1,13 +1,17 @@
-<div class="container-fluid p-5">
-    <div class="row justify-content-center">
-      <div class="col-md-8 col-lg-6">
-        <h2 class="mb-4 text-center text-primary">{{ course.title }}</h2>
-        <p class="mb-4 text-center text-muted">{{ course.description }}</p>
-  
-        <div *ngFor="let question of course?.quiz?.questions; let i = index" class="mb-4">
-          <fieldset class="border rounded p-4 bg-white shadow-lg">
-            <legend class="fw-bold mb-3 text-dark">{{ question.questionText }}</legend>
-  
+<div class="container-fluid p-5 bg-light">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <h2 class="mb-4 text-center text-primary">{{ course.title }}</h2>
+      <p class="mb-4 text-center text-muted">{{ course.description }}</p>
+
+    
+
+      <div *ngFor="let question of course?.quiz?.questions; let i = index" class="mb-4">
+        <div class="card shadow border-0 hover-shadow">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">{{ question.questionText }}</h5>
+          </div>
+          <div class="card-body">
             <div *ngFor="let option of question.options; let j = index" class="form-check mb-2">
               <input 
                 type="radio" 
@@ -22,14 +26,18 @@
                 {{ option }}
               </label>
             </div>
-          </fieldset>
+          </div>
         </div>
-  
-        <div class="text-center mt-4">
-          <button type="button" class="btn btn-primary btn-lg px-5 py-3" (click)="submitQuiz()" *ngIf="!submitted">Submit Quiz</button>
-          <button type="button" class="btn btn-primary btn-lg px-5 py-3" disabled *ngIf="submitted">Your final score is {{score}}.</button>
-        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <button type="button" class="btn btn-primary btn-lg px-5 py-3" (click)="submitQuiz()" *ngIf="!submitted">
+          <i class="bi bi-check-circle"></i> Submit Quiz
+        </button>
+        <button type="button" class="btn btn-secondary btn-lg px-5 py-3" disabled *ngIf="submitted">
+          Your final score is {{ score }}.
+        </button>
       </div>
     </div>
   </div>
-  
+</div>
