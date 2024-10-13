@@ -151,7 +151,6 @@ public class UserController {
     @PutMapping("/subscribe-to-email")
     public ResponseEntity<CustomResponse> subscribeToEmail(Authentication authentication) {
         String username = ((UserDetails) authentication.getPrincipal()).getUsername();
-
         userService.subscribeToNewsLetter(username);
         return ResponseEntity.ok(CustomResponse.builder().message("Subscription changed successfully").build());
     }

@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule,ReactiveFormsModule  ],
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
 })
@@ -56,16 +56,23 @@ export class UserProfileComponent implements OnInit {
 
   toggleSubscription() {
     this.userService.emailSubscriptionToggle().subscribe({
-      next: (val: User) => {
-        console.log(val);
-        this.user.subscribeToEmail = true;
-        this.toast.showToast('Subscribed to mail.');
+      next: () => {
+        // Toggle the current status
+        this.user.subscribeToEmail = !this.user.subscribeToEmail;
+        
+        if (this.user.subscribeToEmail) {
+          this.toast.showToast('Subscribed to the newsletter.','success');
+        } else {
+          this.toast.showToast('Unsubscribed from the newsletter.','warning');
+        }
       },
       error: (err) => {
-        console.log(err);
-      },
+        console.error('Error toggling subscription:', err);
+        this.toast.showToast('Failed to toggle subscription. Please try again later.','danger');
+      }
     });
   }
+  
 
   // Method to submit the form
   onSubmit() {

@@ -16,6 +16,7 @@ import jakarta.servlet.ServletException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -153,30 +154,53 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void subscribeToNewsLetter(String username){
-        User user=userRepository.findByEmail(username).get();
-        user.setSubscribeToEmail(!user.isSubscribeToEmail());
-        if(user.isSubscribeToEmail()){
-            Coupon coupon=couponService.findCouponByCode("SAVE20").get();
-            emailService.sendNewsletterSubscriptionEmail(user.getFullName(),username);
-            emailService.sendCouponEmail(username,coupon.getCode(),coupon.getPercentage());
-        }
-        userRepository.save(user);
+    public void subscribeToNewsLetter(String username) {
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + username));
 
+        user.setSubscribeToEmail(!user.isSubscribeToEmail());
+
+        if (user.isSubscribeToEmail()) {
+            // Send the normal subscription email
+            emailService.sendNewsletterSubscriptionEmail(user.getFullName(), username);
+
+            // If the coupon is present, send the coupon email
+            couponService.findCouponByCode("SAVE20").ifPresent(coupon ->
+                    emailService.sendCouponEmail(username, coupon.getCode(), coupon.getPercentage())
+            );
+        }
+
+        userRepository.save(user);
     }
+
 
     public User updateUser(User user) {
-        Optional<User> optionalUser = userRepository.findById(user.getId());
+        try {
+            // Check if the user with the given ID exists
+            Optional<User> optionalUser = userRepository.findById(user.getId());
 
-        if (optionalUser.isPresent()) {
-            User existingUser = optionalUser.get();
-            existingUser.setFirstName(user.getFirstName());
-            existingUser.setEmail(user.getEmail());
-            existingUser.setLastName(user.getLastName());
-            return userRepository.save(existingUser);
-        } else {
-            throw new UserNotFoundException("User not found with id: " + user.getId());
+            if (optionalUser.isPresent()) {
+                User existingUser = optionalUser.get();
+
+                // Update the user details
+                existingUser.setFirstName(user.getFirstName());
+                existingUser.setEmail(user.getEmail());
+                existingUser.setLastName(user.getLastName());
+
+                // Save the updated user
+                return userRepository.save(existingUser);
+            } else {
+                // Throw an exception if the user is not found
+                throw new RuntimeException("User not found with id: " + user.getId());
+            }
+        } catch (DataIntegrityViolationException e) {
+            // Handle scenario where there might be database constraints violations
+            throw new RuntimeException("Invalid data provided for the user update: " + e.getMessage());
+        } catch (Exception e) {
+            // Handle any other unexpected exceptions
+            throw new RuntimeException("An unexpected error occurred while updating the user with id: " + user.getId());
         }
     }
+
 
 }
