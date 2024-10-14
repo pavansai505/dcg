@@ -22,7 +22,7 @@ public class EmailService {
     public CompletableFuture<Void> sendPasswordChangeEmail(String to, String token) {
         String subject = "Password Change Request";
         String text = createPasswordChangeEmailBody(token);
-
+        System.out.println(to);
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -73,6 +73,7 @@ public class EmailService {
     }
 
     private String createPasswordChangeEmailBody(String token) {
+        System.out.println("Sending mail");
         // HTML content for password change email
         return "<html>" +
                 "<body style='font-family: Arial, sans-serif;'>" +
@@ -80,7 +81,7 @@ public class EmailService {
                 "<h2 style='color: #333;'>Password Change Request</h2>" +
                 "<p style='font-size: 16px;'>Hello,</p>" +
                 "<p style='font-size: 16px;'>To change your password, please click the link below:</p>" +
-                "<p><a href='http://localhost:4200/auth/user/reset-password?token=" + token +
+                "<p><a href='http://dcgservice.online/auth/user/reset-password?token=" + token +
                 "' style='background-color: #007bff; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>Reset Password</a></p>" +
                 "<p style='font-size: 16px;'>If you did not request this change, please ignore this email.</p>" +
                 "<p style='font-size: 14px; color: #888;'>Thank you,<br>DCG</p>" +

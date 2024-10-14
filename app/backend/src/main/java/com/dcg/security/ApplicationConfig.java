@@ -67,7 +67,10 @@ public CorsFilter corsFilter() {
     // Allow your production frontend URL
     config.setAllowedOrigins(Arrays.asList(
         "http://157.173.219.134:4200",   // Production frontend
-        "http://localhost:4200"          // Development frontend (optional)
+        "http://localhost:4200",          // Development frontend (optional)
+            "http://157.173.219.134",
+            "http://157.173.219.134:80",
+            "http://dcgservice.online/"
     ));
     
     config.setAllowedHeaders(Arrays.asList(

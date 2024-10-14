@@ -34,16 +34,21 @@ export class PaymentService {
     orderId: string,
     amount: number,
     courseCode: string,
-    coupon: string
+    coupon: string,
+    userDetails:any
   ) {
     if (coupon) {
       this.coupon = coupon;
     }
+  
+    
+    // const totalAmount = parseFloat((amount * 100).toFixed(2)); 
+    // alert(totalAmount)
     const options = {
       key: environment.razorpayKeyId, // Replace with your Razorpay Key ID
-      amount: amount * 100, // Amount in the smallest currency unit (paise for INR)
+      amount: amount, // Amount in the smallest currency unit (paise for INR)
       currency: 'INR',
-      name: 'Your App Name',
+      name: 'DCG',
       description: 'Payment for Order #' + orderId,
       order_id: orderId, // This order ID comes from your backend
       handler: (response: any) => {
@@ -51,9 +56,9 @@ export class PaymentService {
         this.verifyPayment(response, courseCode);
       },
       prefill: {
-        name: 'John Doe',
-        email: 'john.doe@example.com',
-        contact: '+919876543210',
+        name: userDetails.name,
+        email: userDetails.email,
+        contact: userDetails.mobile,
       },
       theme: {
         color: '#F37254', // Set a theme color for the Razorpay popup

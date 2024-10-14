@@ -1,54 +1,45 @@
-<div class="container-fluid min-vh-100 centerIt bg-body-subtle ">
-    <!-- Course Details Section -->
-    <div class="card border rounded-3 shadow-lg overflow-hidden shadow w-75 border border-dark border-1">
-        <div class="row g-0">
-            
-            <div class="col-md-7 d-flex flex-column justify-content-center  p-4">
-                <h1 class="display-4 fw-bold mb-3 text-dark">{{ course.title }}</h1>
-                <p class="fs-5 mb-2 text-muted"><strong>Author:</strong> {{ course.authorName }}</p>
-                <p class="fs-6 mb-2 text-muted"><strong>Level:</strong> <span class="badge bg-warning">{{ course.courseLevel }}</span></p>
-                <p class="fs-6 mb-2 text-muted"><strong>Tags:</strong>
-                    <span *ngFor="let tag of course.tags" class="badge bg-info me-1">{{ tag }}</span>
-                </p>
-                <div class="mt-4">
-                    <p class="fs-5 text-muted mb-2"><strong>End Goals:</strong></p>
-                    <ul class="list-unstyled">
-                        <li *ngFor="let goal of course.endGoals" class="d-flex align-items-center mb-2">
-                            <i class="bi bi-check-circle text-success me-2"></i> {{ goal }}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-5 p-3">
-                <img [src]="course.courseCover || 'https://picsum.photos/600/400'" alt="{{ course.title }}" class="img-fluid h-100" style="object-fit: cover;">
-            </div>
+<div class="d-flex align-items-center justify-content-center vh-100 bg-light">
+    <div class="card shadow border-0 rounded-4" style="max-width: 950px; width: 100%;">
+      <div class="row g-0">
+        <!-- Course Image and Information -->
+        <div class="col-md-6 text-center d-flex flex-column align-items-center p-5" style="background-color: #f8f9fa;">
+          <img [src]="course.courseCover || 'https://picsum.photos/400/300'" alt="{{ course.title }}" class="img-fluid rounded-3 mb-4" style="max-width: 250px; object-fit: cover;">
+          <h3 class="fw-bold text-dark">{{ course.title }}</h3>
+          <p class="mb-1"><strong>Author:</strong> <span class="text-muted">{{ course.authorName }}</span></p>
+          <p class="mb-1"><strong>Level:</strong> <span class="badge bg-warning">{{ course.courseLevel }}</span></p>
         </div>
-        <hr >
-        <div class="row  p-4 rounded  text-center d-flex justify-content-center ">
-            <h3 class="mb-4">Secure Your Spot</h3>
-            <p class="fs-4 mb-4">Purchase the <strong>{{ course.title }}</strong> course for <strong>₹{{ course.price }}</strong>.</p>
-            
+        
+        <!-- Payment Form -->
+        <div class="col-md-6 p-4">
+          <h4 class="mb-4 text-center text-dark">Complete Your Purchase</h4>
+          <p class="mb-3 text-center text-muted">Get <strong>{{ course.title }}</strong> for <span class="text-decoration-line-through text-danger" *ngIf="isDiscountApplied">₹{{ course.price }}</span> <strong class="text-success">₹{{ isDiscountApplied ? discountPrice : course.price }}</strong></p>
+  
+          <!-- User Information Form -->
+         
+            <div class="mb-3">
+              <input type="text" [(ngModel)]="userName" class="form-control" placeholder="Your Name" required>
+            </div>
+            <div class="mb-3">
+              <input type="email" [(ngModel)]="userEmail" class="form-control" placeholder="Email Address" required>
+            </div>
+            <div class="mb-3">
+              <input type="tel" [(ngModel)]="userMobile" class="form-control" placeholder="Mobile Number" required>
+            </div>
+  
             <!-- Coupon Code Input -->
-            <!-- <div class="mb-4">
-                <input type="text" [(ngModel)]="couponCode" placeholder="Enter Coupon Code" class="form-control d-inline w-50"  />
-                <button class="btn btn-info ms-2" style=" color: white;" (click)="applyCoupon()">Apply Coupon</button>
-                <div *ngIf="couponError" class="text-danger mt-2" style="font-size: 0.9rem;">
-                    {{ couponError }}
-                </div>
-            </div> -->
-            
-            <button class="btn mb-4 w-50" (click)="initiatePayment()" style="background-color: #4caf50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 1.2rem;">
-               Pay  <span *ngIf="!isDiscountApplied">₹{{ course.price }}</span>
-                <span *ngIf="isDiscountApplied" style="text-decoration: line-through; color: white;">₹{{ course.price }}</span>
-                <span *ngIf="isDiscountApplied" style="color: #ffd700;"> ₹{{ discountPrice }}</span>
+            <div class="input-group mb-3">
+              <input type="text" [(ngModel)]="couponCode" class="form-control" placeholder="Enter Coupon Code">
+              <button class="btn btn-outline-primary" (click)="applyCoupon()" type="button">Apply</button>
+            </div>
+            <div *ngIf="couponError" class="text-danger mb-3">{{ couponError }}</div>
+  
+            <!-- Payment Button -->
+            <button class="btn btn-primary btn-lg w-100 py-2 fw-bold" (click)="initiatePayment()">
+              Pay Now <span *ngIf="isDiscountApplied" class="text-decoration-line-through">₹{{ course.price }}</span> ₹{{ isDiscountApplied ? discountPrice : course.price }}
             </button>
-            
-            
-            
+          
         </div>
+      </div>
     </div>
-    <!-- Payment Section -->
-    
-    
-    
-</div>
+  </div>
+  

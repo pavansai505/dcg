@@ -3,6 +3,7 @@ import { NavbarComponent } from '../../utilities/navbar/navbar.component';
 import { FooterComponent } from '../../utilities/footer/footer.component';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
+import { TokenService } from '../../../services/token/token.service';
 
 @Component({
   selector: 'app-instructor-dashboard',
@@ -13,8 +14,12 @@ import { filter } from 'rxjs';
 })
 export class InstructorDashboardComponent {
   currentPath:string | null=null
-  constructor(private router:Router,private activatedRouter:ActivatedRoute){
+  constructor(private router:Router,private activatedRouter:ActivatedRoute,private token:TokenService){
     
+  }
+ 
+  signOut(){
+    this.token.removeToken("jwt")
   }
   ngOnInit(): void {
     // This will get the initial path when the component is loaded

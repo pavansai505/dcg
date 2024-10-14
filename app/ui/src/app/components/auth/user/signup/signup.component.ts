@@ -10,6 +10,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { error } from 'console';
 import { AccessControlService } from '../../../../services/auth/access-control.service';
+import { TokenService } from '../../../../services/token/token.service';
 
 @Component({
   selector: 'app-signup',
@@ -19,7 +20,7 @@ import { AccessControlService } from '../../../../services/auth/access-control.s
   styleUrl: './signup.component.css',
 })
 export class SignupComponent {
-  constructor(private authService: AuthService, private router: Router, private accessControl: AccessControlService) {}
+  constructor(private authService: AuthService, private router: Router, private accessControl: AccessControlService,private tokenService:TokenService) {}
   signUpForm = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
@@ -29,8 +30,8 @@ export class SignupComponent {
   onSubmit(form: FormGroup) {
     this.authService.register(form.value).subscribe({
       next: (value) => {
-        sessionStorage.setItem('jwt', value.token);
-        sessionStorage.setItem('username', value.username);
+        this.tokenService.setToken('jwt', value.token);
+        this.tokenService.setToken('username', value.username);
         this.accessControl.refreshAccessControl();
       },
       error: (err) => console.error('Observable emitted an error: ' + err),

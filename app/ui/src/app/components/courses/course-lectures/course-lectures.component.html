@@ -109,7 +109,7 @@
           <button
           class="btn d-inline-flex align-items-center rounded w-100 text-dark border-0 "
           [routerLink]="['/courses/'+course?.courseCode+'/quiz']" routerLinkActive="router-link-active" 
-          *ngIf="completePercentage=='100%'"
+          *ngIf="completePercentage=='100%' && course?.quiz!=null"
         >
         <i class="bi bi-check-circle me-2"></i>Quiz
         </button>

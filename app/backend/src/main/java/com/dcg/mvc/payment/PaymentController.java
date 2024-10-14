@@ -42,7 +42,7 @@ public class PaymentController {
     // Endpoint to create an order
     @PostMapping("/createOrder")
     public String createOrder(@RequestBody Map<String, Object> data) throws RazorpayException {
-        int amount =(int) Double.parseDouble(data.get("amount").toString()) * 100; // Converting amount to paisa
+        Double amount =(double) Double.parseDouble(data.get("amount").toString()) * 100; // Converting amount to paisa
         JSONObject orderRequest = new JSONObject();
         orderRequest.put("amount", amount);
         orderRequest.put("currency", "INR");

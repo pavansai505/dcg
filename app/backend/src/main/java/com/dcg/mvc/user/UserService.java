@@ -166,7 +166,12 @@ public class UserService {
 
             // If the coupon is present, send the coupon email
             couponService.findCouponByCode("SAVE20").ifPresent(coupon ->
-                    emailService.sendCouponEmail(username, coupon.getCode(), coupon.getPercentage())
+                    {
+                        if(!coupon.getUsers().contains(user)){
+                            emailService.sendCouponEmail(username, coupon.getCode(), coupon.getPercentage());
+                        }
+
+                    }
             );
         }
 

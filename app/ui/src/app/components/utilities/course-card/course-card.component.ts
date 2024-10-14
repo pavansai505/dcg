@@ -21,13 +21,14 @@ export class CourseCardComponent {
   courseLecturesCount:number=0
   constructor(private courseService:CourseDataService){}
   ngOnInit(){
-    this.courseService.getCourseHistory(this.course.id).subscribe({
-      next:(data)=>{this.coursePercentage=data.percentageCompleted},
-      error:(err)=>console.log(err),
-      complete:()=>{
-      }
-      
-    })
+    if(this.progressShow){
+      this.courseService.getCourseHistory(this.course.id).subscribe({
+        next:(data)=>{this.coursePercentage=data.percentageCompleted},
+        error:(err)=>console.log(err),
+        complete:()=>{
+        }
+      })
+    }
     
   }
 
