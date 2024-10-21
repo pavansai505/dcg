@@ -26,6 +26,8 @@ public class UserDTO {
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
     private List<RoleDTO> roles;
+    private String imageUrl;
     private List<CourseDTO> courses;
     private boolean subscribeToEmail;
+
 }

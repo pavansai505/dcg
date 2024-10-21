@@ -14,7 +14,7 @@ public class ApiLoggingFilter implements Filter {
         // Ensure that the request is an instance of HttpServletRequest to access more information
         if (request instanceof HttpServletRequest httpRequest) {
             // Log the API call information
-            System.out.println("API Call: " + httpRequest.getRemoteAddr() + " " + httpRequest.getRequestURI());
+            System.out.println("API Call: "  + httpRequest.getRequestURI());
         }
 
         // Continue with the request

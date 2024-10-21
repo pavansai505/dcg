@@ -76,7 +76,7 @@
               class="form-control"
               id="firstName"
               placeholder="Enter your first name"
-              formControlName="firstName" 
+              formControlName="firstName"
             />
           </div>
           <div class="col">
@@ -86,14 +86,21 @@
               class="form-control"
               id="lastName"
               placeholder="Enter your last name"
-              formControlName="lastName" 
+              formControlName="lastName"
             />
           </div>
           <div class="col">
-            <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Save</button> <!-- Submit button -->
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="userForm.invalid"
+            >
+              Save
+            </button>
+            <!-- Submit button -->
           </div>
           <div class="col">
-            <div class="form-check form-switch" >
+            <div class="form-check form-switch">
               <input
                 class="form-check-input"
                 type="checkbox"
@@ -102,15 +109,16 @@
                 [checked]="user.subscribeToEmail"
                 (click)="toggleSubscription()"
               />
-              <label class="form-check-label" for="flexSwitchCheckChecked">Subscribe to newsletter.</label>
+              <label class="form-check-label" for="flexSwitchCheckChecked"
+                >Subscribe to newsletter.</label
+              >
             </div>
           </div>
         </div>
       </form>
-      
     </div>
-    <div class="col col-lg-4 col-12  centerIt ">
-      <div class="container position-relative  centerIt">
+    <div class="col col-lg-4 col-12 centerIt">
+      <div class="container position-relative centerIt">
         <!-- <svg
       class="mb-2"
         fill="#000000"
@@ -139,8 +147,94 @@
           </g>
         </g>
       </svg> -->
-      <div class="btn btn-secondary btn-sm position-absolute editBtn"><i class="bi bi-pencil-square"></i>Edit</div>
-      <i class="bi bi-person-circle " style="font-size: 8rem;"></i>
+        <button
+          type="button"
+          class="btn btn-secondary btn-sm position-absolute editBtn"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+        >
+          <i class="bi bi-pencil-square"></i>Edit
+        </button>
+        <!-- <div class="btn btn-secondary btn-sm position-absolute editBtn"><i class="bi bi-pencil-square"></i>Edit</div> -->
+        <i class="bi bi-person-circle" style="font-size: 8rem" *ngIf="user.imageUrl==null"></i>      
+        <img
+        [src]="imagePageUrl+'images/' + user.imageUrl"
+        class="img-fluid rounded-circle profile-pic"
+        *ngIf="user.imageUrl != null"
+        alt="User Profile Picture"
+        srcset=""
+        loading="lazy"
+      />
+   </div>
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                Modal title
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form
+                  [formGroup]="uploadForm"
+                  (ngSubmit)="onImageSubmit()"
+                  enctype="multipart/form-data"
+                  class="p-3 border rounded bg-light"
+              >
+                  <div class="form-group mb-3">
+                      <label for="file" class="form-label fw-bold">Upload Image</label>
+                      <input
+                          type="file"
+                          id="file"
+                          (change)="onFileSelected($event)"
+                          class="form-control form-control-lg"
+                          required
+                      />
+                      <small class="form-text text-muted">Select an image to upload (Max size: {{MAX_SIZE_MB}} MB, Allowed types: JPEG, PNG, GIF).</small>
+                      <div *ngIf="fileTypeError" class="text-danger mt-2">{{ fileTypeError }}</div>
+                      <div *ngIf="fileSizeError" class="text-danger mt-2">{{ fileSizeError }}</div>
+                  </div>
+                  <div class="d-grid gap-2">
+                      <button
+                          type="submit"
+                          class="btn btn-success btn-lg"
+                          [disabled]="!selectedFile"
+                      >
+                          <i class="bi bi-upload"></i> Upload Image
+                      </button>
+                  </div>
+              </form>
+          </div>
+          
+          
+          
+
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <!-- <button type="button" class="btn btn-primary">Understood</button> -->
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

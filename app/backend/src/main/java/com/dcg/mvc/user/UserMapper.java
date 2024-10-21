@@ -29,7 +29,7 @@ public class UserMapper {
                 .map(role -> new RoleDTO(role.getId(), role.getName()))
                 .collect(Collectors.toList());
         dto.setRoles(roles);
-
+        dto.setImageUrl(user.getImageUrl());
         // Convert courses using CourseMapper
         List<CourseDTO> courses = user.getCourses().stream()
                 .map(courseMapper::toDTO) // Use CourseMapper to convert Course to CourseDTO

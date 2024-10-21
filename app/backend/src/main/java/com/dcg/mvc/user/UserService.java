@@ -16,14 +16,21 @@ import jakarta.servlet.ServletException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.StringReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +48,9 @@ public class UserService {
     private final EmailService emailService;
     private final CouponService couponService;
 
+
+//    @Value("${upload.dir}")
+//    private String uploadDir; // Directory where images will be stored
     /**
      * Creates a new user account, saves it, and returns an authentication token.
      * @param user The user details for registration.
@@ -207,5 +217,52 @@ public class UserService {
         }
     }
 
+
+    public String uploadUserImage(String username, MultipartFile file) throws IOException {
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + username));
+
+        // Get the old image URL
+        String oldImageUrl = user.getImageUrl();
+
+        // Generate a unique filename for the new image
+        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+
+        // Define the upload directory inside the resources folder
+        String resourcePath = Paths.get("src", "main", "resources", "static", "images").toAbsolutePath().toString();
+        Path uploadDir = Paths.get(resourcePath);
+
+        // Create the directory if it doesn't exist
+        if (!Files.exists(uploadDir)) {
+            Files.createDirectories(uploadDir);
+        }
+
+        // If there's an existing image, delete it
+        if (oldImageUrl != null && !oldImageUrl.isEmpty()) {
+            Path oldImagePath = uploadDir.resolve(oldImageUrl);
+            try {
+                Files.deleteIfExists(oldImagePath); // Delete the old image file if it exists
+            } catch (IOException e) {
+                throw new IOException("Failed to delete the old image file", e);
+            }
+        }
+
+        // Save the file to the specified directory
+        Path filePath = uploadDir.resolve(fileName);
+        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        // Update the user with the new image URL
+        user.setImageUrl(fileName); // Save only the file name
+        userRepository.save(user);
+
+        return fileName; // Returning the filename
+    }
+
+    public String getUserImageUrl(String username) {
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + username));
+
+        return user.getImageUrl(); // Assuming getImageUrl() method exists in User class
+    }
 
 }

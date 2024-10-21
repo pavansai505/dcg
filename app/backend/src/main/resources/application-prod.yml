@@ -1,0 +1,7 @@
+server:
+  port: 8443  # Change to your desired HTTPS port
+  ssl:
+    key-store: file:/app/keystore.p12  # Path to your keystore
+    key-store-password: password123  
+    key-store-type: PKCS12  # Type of keystore
+    key-alias: dcg  # Alias of the key in the keystore

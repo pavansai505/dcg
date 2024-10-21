@@ -50,7 +50,8 @@ public class User implements UserDetails, Principal {
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Role> roles;
-
+    @Column(name = "image_url", nullable = true) // Field to store the image URL
+    private String imageUrl; // This field can be null by default
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnoreProperties("user")
     @JsonIgnore

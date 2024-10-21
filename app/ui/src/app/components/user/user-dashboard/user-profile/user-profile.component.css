@@ -6,3 +6,9 @@
     left: 50;
     z-index: 12;
 }
+.profile-pic {
+    width: 10rem;   /* Desired width */
+    aspect-ratio: 1/1;
+    border-radius: 50%; /* For circular images */
+    object-fit: cover; /* Ensures the image covers the specified area */
+}

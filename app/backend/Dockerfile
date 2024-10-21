@@ -7,8 +7,11 @@ WORKDIR /app
 # Copy the Spring Boot JAR file into the container
 COPY target/backend-0.0.1-SNAPSHOT.jar app.jar
 
-# Make port 8080 available to the world outside this containerdocker rm
-EXPOSE 8080
+# Copy the keystore file into the container
+COPY src/main/resources/ssl/keystore.p12 /app/keystore.p12
 
-# Run the JAR file
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Expose the necessary port (e.g., 8443 for HTTPS)
+EXPOSE 8443
+
+# Run the JAR file with the active Spring profile set to prod
+ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=prod"]

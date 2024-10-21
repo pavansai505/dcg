@@ -39,4 +39,11 @@ export class UserDetailsService {
     return this.http.put<any>(environment.apiBaseUrl+"user/update",user)
  }
 
+ uploadImage(file: File): Observable<any> {
+  const formData: FormData = new FormData();
+  formData.append('file', file);
+  const url = `${environment.apiBaseUrl}user/uploadImage`; // Adjust according to your API endpoint
+  return this.http.post<any>(url, formData);
+}
+
 }

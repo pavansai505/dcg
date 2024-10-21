@@ -14,4 +14,5 @@ export interface User {
   lastModifiedDate: string | null; // Use ISO 8601 date format string or null
   fullName:String;
   subscribeToEmail:boolean
+  imageUrl:string
 }

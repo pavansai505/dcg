@@ -11,7 +11,7 @@
        {{contest.startDate | date:'short'}} to {{contest.endDate | date:'short'}}
       </p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-        <button type="button" class="btn btn-success btn-lg px-4 gap-3"  style="background-color: #00b300;" *ngIf="!isRegistered" (click)="enrollToContest()">
+        <button type="button" class="btn btn-success btn-lg px-4 gap-3"  style="background-color: #00b300;" [disabled]="contest.maxParticipants<=contest.participants.length" *ngIf="!isRegistered" (click)="enrollToContest()">
           Enroll
         </button>
         <button type="button" class="btn btn-success btn-lg px-4 gap-3 disabled" style="background-color: #00b300;" *ngIf="isRegistered && !isBetween">

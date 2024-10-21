@@ -70,7 +70,8 @@ public CorsFilter corsFilter() {
         "http://localhost:4200",          // Development frontend (optional)
             "http://157.173.219.134",
             "http://157.173.219.134:80",
-            "http://dcgservice.online/"
+            "http://dcgservice.online/",
+            "https://dcgservice.online/"
     ));
     
     config.setAllowedHeaders(Arrays.asList(
