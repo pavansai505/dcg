@@ -1,5 +1,6 @@
 package com.dcg.exception;
-import com.dcg.exception.CustomUserExceptions.UserNotFoundException;
+
+import com.dcg.exception.CustomUserExceptions.UserNotFoundException; // Ensure this is the correct import
 import com.dcg.exception.CustomUserExceptions.UserAlreadyExistsException;
 import com.dcg.exception.CustomUserExceptions.RoleNotFoundException;
 import com.dcg.exception.CustomUserExceptions.AuthenticationFailedException;
@@ -14,8 +15,8 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(CustomUserExceptions.UserNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleUserNotFoundException(CustomUserExceptions.UserNotFoundException ex) {
+    @ExceptionHandler(UserNotFoundException.class) // Make sure you use the right one here
+    public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException ex) {
         ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), ex.getMessage(), HttpStatus.NOT_FOUND.value());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
@@ -38,9 +39,29 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
-    // You can add more exception handlers as needed
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    // Handle other exceptions
+    @ExceptionHandler(CouponNotFoundException.class)
+    public ResponseEntity<String> handleCouponNotFound(CouponNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(PaymentNotFoundException.class)
+    public ResponseEntity<String> handlePaymentNotFound(PaymentNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidCouponException.class)
+    public ResponseEntity<String> handleInvalidCoupon(InvalidCouponException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(CouponUsageLimitReachedException.class)
+    public ResponseEntity<String> handleCouponUsageLimitReached(CouponUsageLimitReachedException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(CouponAlreadyUsedException.class)
+    public ResponseEntity<String> handleCouponAlreadyUsed(CouponAlreadyUsedException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }

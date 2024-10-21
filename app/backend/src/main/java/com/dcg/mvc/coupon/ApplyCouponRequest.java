@@ -14,6 +14,5 @@ public class ApplyCouponRequest {
 
     @NotBlank(message = "Coupon code cannot be empty")
     private String couponCode;
-
     private Long paymentId;
 }

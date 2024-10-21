@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -32,6 +34,8 @@ public class PaymentController {
     PaymentRepository paymentRepository;
     @Autowired
     EmailService emailService;
+    @Autowired
+    PaymentService paymentService;
 
     private static final String SECRET_ID1 = "rzp_test_eDyZOTC4Wvj4LH";
     private static final String SECRET_KEY1 = "OtmkvEzptX0Yu6xUK6DDR6Cj";
@@ -57,8 +61,6 @@ public class PaymentController {
         String razorpayOrderId = data.get("razorpay_order_id");
         String razorpayPaymentId = data.get("razorpay_payment_id");
         String razorpaySignature = data.get("razorpay_signature");
-        String courseIdStr = data.get("course_id"); // Assume you get course ID in the request
-
 
         try {
             boolean isValid = verifySignature(razorpayOrderId, razorpayPaymentId, razorpaySignature);
@@ -80,23 +82,26 @@ public class PaymentController {
                         .course(course)
                         .build();
 
-                // Save payment and update user and course
+                // Save payment first
+                Payment savedPayment = paymentRepository.save(payment); // Persist payment first
 
-                user.addPayment(payment);
-                course.addPayment(payment);
+                // Now add the payment to user and course
+                user.addPayment(savedPayment); // Associate the saved payment
+                course.addPayment(savedPayment); // Associate the saved payment
+
+                // Save user and course to maintain relationships
                 userRepository.save(user);
                 courseRepository.save(course);
 
                 // Send payment details email
-                emailService.sendPaymentDetailsEmail(user.getEmail(), razorpayPaymentId, razorpayOrderId, payment.getAmount(), "Successful");
-                return ResponseEntity.ok(paymentRepository.save(payment));
+                emailService.sendPaymentDetailsEmail(user.getEmail(), razorpayPaymentId, razorpayOrderId, savedPayment.getAmount(), "Successful");
+                return ResponseEntity.ok(savedPayment); // Return the saved payment
             } else {
-                return ResponseEntity.ok(null);
+                return ResponseEntity.badRequest().body(null);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
@@ -109,6 +114,9 @@ public class PaymentController {
         return Utils.verifyPaymentSignature(options, SECRET_KEY1); // Ensure SECRET_KEY1 is set correctly
     }
 
-
+    @GetMapping("/all")
+    public ResponseEntity<List<PaymentDTO>> getAllPayments(){
+        return ResponseEntity.ok(paymentService.getAllPayments());
+    }
 
 }

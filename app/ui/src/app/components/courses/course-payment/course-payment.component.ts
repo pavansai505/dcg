@@ -74,11 +74,26 @@ export class CoursePaymentComponent {
   }
 
   setDiscount() {
+    // Validate discountPercentage before applying it
+    if (this.discountPercentage < 0 || this.discountPercentage > 100) {
+      console.error('Discount percentage must be between 0 and 100.');
+      return;
+    }
+  
+    // Calculate the discount amount and the new price
+    const discountAmount = (this.course.price * this.discountPercentage) / 100;
+    const newPrice = this.course.price - discountAmount;
+  
+    // Ensure the new price is not negative
+    if (newPrice < 0) {
+      console.error('Discounted price cannot be negative.');
+      return;
+    }
+  
     this.isDiscountApplied = true;
-    this.discountPrice = parseFloat(
-      (this.course.price - (this.course.price * this.discountPercentage) / 100).toFixed(2)
-    );
+    this.discountPrice = parseFloat(newPrice.toFixed(2)); // Using toFixed for two decimal places
   }
+  
 
   resetDiscount() {
     this.isDiscountApplied = false;
@@ -106,7 +121,7 @@ export class CoursePaymentComponent {
             order.id,
             amount,
             this.courseCode,
-            this.couponCode,
+            this.isDiscountApplied?this.couponCode:"",
             userDetails
           );
         }

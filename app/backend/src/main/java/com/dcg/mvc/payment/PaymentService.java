@@ -7,6 +7,9 @@ import com.dcg.mvc.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PaymentService {
 
@@ -19,23 +22,15 @@ public class PaymentService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public void savePayment(Payment payment, Long userId, Long courseId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new RuntimeException("Course not found"));
+    @Autowired
+    private PaymentMapper paymentMapper;
 
-        payment.setUser(user);
-        payment.setCourse(course);
-        paymentRepository.save(payment);
 
-        // Update user to include this payment
-        user.addPayment(payment);
-        userRepository.save(user);
-
-        // Update course to include this payment
-        course.addPayment(payment);
-        courseRepository.save(course);
+    public List<PaymentDTO> getAllPayments() {
+        List<Payment> payments = paymentRepository.findAll();
+        return payments.stream()
+                .map(paymentMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     // Other methods...

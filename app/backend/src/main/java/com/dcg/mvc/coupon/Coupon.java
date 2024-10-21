@@ -3,6 +3,7 @@ package com.dcg.mvc.coupon;
 import com.dcg.common.BaseEntity;
 import com.dcg.mvc.payment.Payment;
 import com.dcg.mvc.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -38,6 +39,7 @@ public class Coupon extends BaseEntity {
     private Set<User> users; // Users who have used this coupon
 
     @OneToMany(mappedBy = "coupon")
+    @JsonIgnore
     private List<Payment> payments; // Payments where this coupon was applied
 
     private boolean active;

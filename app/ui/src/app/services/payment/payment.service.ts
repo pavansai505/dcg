@@ -6,6 +6,8 @@ import { CourseDataService } from '../course/course-data.service';
 import CourseRegister from '../../models/course/courseRegister';
 import { Router } from '@angular/router';
 import { CouponService } from '../coupon/coupon.service';
+import { Observable } from 'rxjs';
+import { PaymentDTO } from '../../models/payment/payment';
 // Ensure your environment files contain your API base URL and Razorpay key ID.
 
 declare var Razorpay: any;
@@ -37,7 +39,7 @@ export class PaymentService {
     coupon: string,
     userDetails:any
   ) {
-    if (coupon) {
+    if (coupon.length>0) {
       this.coupon = coupon;
     }
   
@@ -113,4 +115,12 @@ export class PaymentService {
         },
       });
   }
+
+
+  getAllPayments(): Observable<PaymentDTO[]> { // Ensure this returns an array
+    return this.http.get<PaymentDTO[]>(`${environment.apiBaseUrl}payment/all`);
+  }
+
+
+
 }
