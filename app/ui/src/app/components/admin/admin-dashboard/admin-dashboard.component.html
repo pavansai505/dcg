@@ -39,6 +39,12 @@
                       Rejected Courses
                     </a>
                   </li>
+                  <li>
+                    <a [routerLink]="['users']" routerLinkActive="router-link-active"  class="nav-link link-body-emphasis">
+                      <i class="bi bi-people pe-none me-2"></i>
+                      Users
+                    </a>
+                  </li>
                   <hr>
                   <li>
                     <a class="nav-link link-body-emphasis">
@@ -70,15 +76,15 @@
                     </a>
                   </li>
                   <li>
-                    <a class="nav-link link-body-emphasis">
+                    <a class="nav-link link-body-emphasis" [routerLink]="['coupon']" routerLinkActive="router-link-active" >
                         <i class="bi bi-envelope-paper pe-none me-2"></i>
-                      Coupons
+                      Coupons Form
                     </a>
                   </li>
                   <li>
-                    <a class="nav-link link-body-emphasis">
-                        <i class="bi bi-alarm pe-none me-2"></i>
-                      Learning Time
+                    <a class="nav-link link-body-emphasis" [routerLink]="['coupon/list']" routerLinkActive="router-link-active" >
+                        <i class="bi bi-card-checklist pe-none me-2"></i>
+                      Coupons List
                     </a>
                   </li>
                 </ul>

@@ -1,0 +1,33 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Coupon List</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-light">
+        <thead class="thead-light">
+          <tr>
+            <th>#</th>
+            <th>Coupon Code</th>
+            <th>Discount Percentage</th>
+            <th>Total Uses</th>
+            <th>Expiry Date</th>
+            <th>Active</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let coupon of coupons; let i = index" class="bg-light">
+            <td>{{ i + 1 }}</td>
+            <td>{{ coupon.code }}</td>
+            <td>{{ coupon.percentage }}%</td>
+            <td>{{ coupon.totalUses }}</td>
+            <td>{{ coupon.expiryDate | date: 'short' }}</td>
+            <td>
+              <input type="checkbox" 
+                     [checked]="coupon.active" 
+                     (change)="toggleCoupon(coupon.id, !coupon.active)" 
+                     class="form-check-input" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

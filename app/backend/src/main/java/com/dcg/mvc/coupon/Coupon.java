@@ -45,7 +45,7 @@ public class Coupon extends BaseEntity {
     private boolean active;
 
     public boolean isValid() {
-        return totalUses > 0 && expiryDate.isAfter(LocalDateTime.now());
+        return totalUses > 0 && expiryDate.isAfter(LocalDateTime.now()) && active;
     }
 
     public void decrementUses() {

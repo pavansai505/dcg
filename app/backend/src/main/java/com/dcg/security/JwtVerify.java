@@ -67,7 +67,7 @@ public class JwtVerify extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request)
             throws ServletException {
-        return request.getRequestURI().contains("user/auth") || request.getRequestURI().contains("role");
+        return request.getRequestURI().contains("user/auth");
     }
 
 

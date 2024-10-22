@@ -46,6 +46,9 @@ import { InstructorInfoComponent } from './components/instructor/instructor-info
 import { CourseQuizComponent } from './components/courses/course-quiz/course-quiz.component';
 import { UserBadgesComponent } from './components/user/user-dashboard/user-badges/user-badges.component';
 import { courseQuizGuard } from './guard/course-quiz.guard';
+import { AdminCouponComponent } from './components/admin/admin-dashboard/admin-coupon/admin-coupon.component';
+import { AdminCouponListComponent } from './components/admin/admin-dashboard/admin-coupon-list/admin-coupon-list.component';
+import { AdminUsersComponent } from './components/admin/admin-dashboard/admin-users/admin-users.component';
 
 export const routes: Routes = [
   // Home route
@@ -309,15 +312,33 @@ export const routes: Routes = [
         component: AdminRejectedCoursesViewComponent,
         data: { title: 'Rejected Courses' },
         canActivate: [titleGuardGuard]
-      }
-    ]
-  },
-  {
-    path: 'admin/stats',
+      },{
+    path: 'stats',
     component: AdminStatsComponent,
     data: { title: 'Admin Stats' },
     canActivate: [titleGuardGuard]
   },
+  {
+    path:'coupon',
+    component:AdminCouponComponent,
+    data:{title:'Coupon'},
+    canActivate:[titleGuardGuard]
+  },
+  {
+    path:'coupon/list',
+    component:AdminCouponListComponent,
+    data:{title:'Coupon list'},
+    canActivate:[titleGuardGuard]
+  },
+  {
+    path:'users',
+    component:AdminUsersComponent,
+    data:{title:'Users'},
+    canActivate:[titleGuardGuard]
+  }
+    ]
+  },
+  
 
   // Contests
   {

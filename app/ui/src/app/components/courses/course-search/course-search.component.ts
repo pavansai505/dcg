@@ -35,6 +35,7 @@ export class CourseSearchComponent {
   coursesPerPage = 9; // Number of courses to load per scroll
   currentPage = 1;
   isLoading: boolean = false;
+  isDataLoading: boolean = false;
   searchResults: boolean = false;
   maxPrice: number = 100000;
   minPrice: number = 0;
@@ -44,6 +45,7 @@ export class CourseSearchComponent {
 
   ngOnInit() {
     this.getQuotes();
+    this.isDataLoading=true
     this.courseService.getCourses().subscribe({
       next: (value) => {
         this.AllCourses = [...value];
@@ -51,7 +53,7 @@ export class CourseSearchComponent {
         this.applyFiltersFromUrl(); // Apply filters from the URL on initialization
       },
       error: (err) => console.error('Observable emitted an error: ' + err),
-      complete: () => {},
+      complete: () => {this.isDataLoading=false},
     });
   }
 

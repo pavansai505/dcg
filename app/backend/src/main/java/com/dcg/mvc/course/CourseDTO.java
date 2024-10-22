@@ -6,6 +6,8 @@ import com.dcg.mvc.quiz.Quiz;
 import com.dcg.mvc.user.User;
 import com.dcg.mvc.unit.Unit;
 import com.dcg.mvc.history.CourseActionHistory;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,12 +28,12 @@ public class CourseDTO {
     private String courseCover;
     private double price;
     private String approvalStatus;
+    @JsonIgnore
     private Badge badge;
     private CourseLevel courseLevel;
     private List<String> tags;
     private List<String> endGoals;
     private String courseCode;
-
     private List<User> users; // List of User entities
     private Set<Unit> units; // Set of Unit entities
     private List<CourseActionHistory> histories; // List of CourseActionHistory entities

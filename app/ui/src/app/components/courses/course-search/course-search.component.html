@@ -78,7 +78,7 @@
       </div>
     </div>
     <div class="col col-md-9 col-12">
-      <div class="container">
+      <div class="container" *ngIf="!isDataLoading">
         <div
           class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-3 mb-5"
           infiniteScroll
@@ -97,6 +97,13 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="container min-vh-100 centerIt" *ngIf="isDataLoading">
+        <div class="spinner-border" role="status" style="width: 4rem; height: 4rem;">
+          <span class="visually-hidden">Loading...</span>
+      </div>
+      
+      
       </div>
     </div>
   </div>

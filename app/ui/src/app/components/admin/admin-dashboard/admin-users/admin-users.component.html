@@ -1,0 +1,47 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-4">User List</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Subscription Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <ul>
+                <li *ngFor="let role of user.roles">{{ role.name }}</li>
+              </ul>
+            </td>
+            <td>{{ user.subscribeToEmail ? 'Subscribed' : 'Not Subscribed' }}</td>
+            <td>
+              <button class="btn btn-outline-success btn-sm" (click)="promoteToInstructor(user)" *ngIf="!hasRole(user, 'ROLE_INSTRUCTOR')">
+                <i class="fas fa-user-plus"></i> Promote to Instructor
+              </button>
+              <button class="btn btn-outline-primary btn-sm" (click)="promoteToAdmin(user)" *ngIf="!hasRole(user, 'ROLE_ADMIN')">
+                <i class="fas fa-user-shield"></i> Promote to Admin
+              </button>
+              <button class="btn btn-outline-danger btn-sm" (click)="removeInstructor(user)" *ngIf="hasRole(user, 'ROLE_INSTRUCTOR')">
+                <i class="fas fa-user-times"></i> Remove Instructor
+              </button>
+              <button class="btn btn-outline-warning btn-sm" (click)="removeAdmin(user)" *ngIf="hasRole(user, 'ROLE_ADMIN')">
+                <i class="fas fa-user-slash"></i> Remove Admin
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

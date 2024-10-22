@@ -22,6 +22,9 @@ export class UserDetailsService {
       }
     })
  }
+  getUsers=():Observable<User[]>=>{
+    return this.http.get<User[]>(environment.apiBaseUrl+"user")
+ }
   getUserById=(id:number):Observable<any>=>{
     return this.http.get<any>(environment.apiBaseUrl+"user/getById/"+id,{
       headers:{
@@ -44,6 +47,13 @@ export class UserDetailsService {
   formData.append('file', file);
   const url = `${environment.apiBaseUrl}user/uploadImage`; // Adjust according to your API endpoint
   return this.http.post<any>(url, formData);
+}
+promoteUser(userId: number, role: string): Observable<void> {
+  return this.http.post<void>(`${environment.apiBaseUrl}role/promote/${userId}`, { role });
+}
+
+removeRole(userId: number, role: string): Observable<void> {
+  return this.http.post<void>(`${environment.apiBaseUrl}role/demote/${userId}`, { role });
 }
 
 }

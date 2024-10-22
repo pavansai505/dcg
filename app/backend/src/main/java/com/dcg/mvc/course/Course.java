@@ -45,7 +45,7 @@ public class Course extends BaseEntity {
 
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<CourseActionHistory> histories = new ArrayList<>();
+        private List<CourseActionHistory> histories = new ArrayList<>();
 
     @JsonIgnoreProperties("course")
     @OneToMany(mappedBy = "course", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)

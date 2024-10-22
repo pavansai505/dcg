@@ -85,11 +85,12 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserCount());
     }
 
-    /**
-     * Get details of the currently authenticated user.
-     * @param authentication The current user's authentication details.
-     * @return The user's details.
-     */
+
+    @GetMapping()
+    public ResponseEntity<List<UserDTO>> getUsers(  ) {
+        return ResponseEntity.ok(
+                userService.getUsers().stream().map(UserMapper::convertToDTO).collect(Collectors.toList()));
+    }
 
     @GetMapping("/getMyDetails")
     public ResponseEntity<UserDTO> getMyDetails(Authentication authentication) {

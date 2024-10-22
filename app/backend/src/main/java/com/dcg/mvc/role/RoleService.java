@@ -6,6 +6,8 @@ import com.dcg.mvc.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class RoleService {
@@ -25,5 +27,40 @@ public class RoleService {
         }
         return Promote.builder().role(UserRole.valueOf("ROLE_INVALID")).build();
 
+    }
+    // Method to promote a user by adding a role
+    public boolean promoteUserRole(Long userId, String roleName) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            Optional<Role> optionalRole = roleRepository.findByName(roleName);
+            if (optionalRole.isPresent()) {
+                Role role = optionalRole.get();
+                if (!user.getRoles().contains(role)) {
+                    user.getRoles().add(role);
+                    userRepository.save(user);
+                    return true; // Successfully promoted
+                }
+            }
+        }
+        return false; // Promotion failed
+    }
+
+    // Method to remove a role from a user
+    public boolean removeRole(Long userId, String roleName) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            Optional<Role> optionalRole = roleRepository.findByName(roleName);
+            if (optionalRole.isPresent()) {
+                Role role = optionalRole.get();
+                if (user.getRoles().contains(role)) {
+                    user.getRoles().remove(role);
+                    userRepository.save(user);
+                    return true; // Successfully removed role
+                }
+            }
+        }
+        return false; // Removal failed
     }
 }

@@ -125,9 +125,9 @@ public class CouponService {
         if (coupon.getTotalUses() <= 0) {
             throw new CouponUsageLimitReachedException("Coupon usage limit reached");
         }
-//        if (user.getCouponsUsed().contains(coupon)) {
-//            throw new CouponAlreadyUsedException("User has already used this coupon");
-//        }
+        if (user.getCouponsUsed().contains(coupon)) {
+            throw new CouponAlreadyUsedException("User has already used this coupon");
+        }
     }
 
     private void applyCouponToPayment(Coupon coupon, Payment payment, User user) {
