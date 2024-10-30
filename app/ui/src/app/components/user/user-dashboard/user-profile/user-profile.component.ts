@@ -27,7 +27,7 @@ export class UserProfileComponent implements OnInit {
   fileSizeError: string | null = null;
   readonly MAX_SIZE_MB = 5; // Maximum file size in MB
   fileTypeError: string | null = null;
-  readonly ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/jpg']; // Allowed image types
+  readonly ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/jpg','image/webp']; // Allowed image types
   imagePageUrl=environment.apiBaseUrl
 
   constructor(

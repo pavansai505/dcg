@@ -1,5 +1,6 @@
 package com.dcg.mvc.course;
 
+import com.dcg.exception.CourseNotFoundException;
 import com.dcg.model.RegistrationStatusResponse;
 import com.dcg.mvc.history.CourseActionHistory;
 import com.dcg.mvc.history.HistoryUpdate;
@@ -8,11 +9,14 @@ import com.dcg.mvc.unit.Unit;
 import com.dcg.mvc.unit.UnitService;
 import com.dcg.mvc.user.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +54,17 @@ public class CourseController {
         List<Course> savedCourses = courseService.addMultipleCourses(courses, connectedUser);
         return ResponseEntity.ok(savedCourses);
     }
-
+    @PutMapping("/{id}/update")
+    public ResponseEntity<Course> updateCourse(@PathVariable("id") Long courseId, @RequestBody Course updatedCourse) {
+        try {
+            Course course = courseService.updateCourse(courseId, updatedCourse);
+            return new ResponseEntity<>(course, HttpStatus.OK);
+        } catch (CourseNotFoundException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     /**
      * Endpoint to add a unit to a course.
      * @param unit The unit to be added.
@@ -248,4 +262,37 @@ public class CourseController {
     public ResponseEntity<CourseActionHistory> getCourseHistory(@PathVariable String code,Authentication authentication){
         return ResponseEntity.ok(courseService.getCourseActionHistoryByCode(code,((UserDetails) authentication.getPrincipal()).getUsername()));
     }
+
+
+
+    @PostMapping("{id}/image")
+    public ResponseEntity<Map<String, String>> uploadImage(@PathVariable Long id,@RequestParam("file") MultipartFile file, Authentication authentication) {
+        try {
+            String imageUrl = courseService.uploadCourseImage(
+
+                    id,
+                    file);
+
+            // Wrap the imageUrl in a Map for a proper JSON response
+            Map<String, String> response = new HashMap<>();
+            response.put("imageUrl", imageUrl); // Assuming `imageUrl` is the filename
+
+            return ResponseEntity.ok(response); // Return the JSON response
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Error uploading image: " + e.getMessage()));
+        }
+
+    }
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<Void> deleteCourse(@PathVariable("id") Long courseId){
+        try {
+            courseService.deleteCourse(courseId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204 No Content
+        } catch (CourseNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 Not Found
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // 500 Internal Server Error
+        }
+    }
+
 }

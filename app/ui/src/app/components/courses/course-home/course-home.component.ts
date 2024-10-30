@@ -16,7 +16,7 @@ import { CourseCardComponent } from '../../utilities/course-card/course-card.com
 import { CrewComponent } from '../../utilities/crew/crew.component';
 import { FooterComponent } from '../../utilities/footer/footer.component';
 import { ContestService } from '../../../services/contest/contest.service';
-import { Contest } from '../../../models/course/contest';
+import { Contest } from '../../../models/contest/contest';
 import Swiper from 'swiper';
 import { SwiperOptions } from 'swiper/types';
 import { forkJoin } from 'rxjs';

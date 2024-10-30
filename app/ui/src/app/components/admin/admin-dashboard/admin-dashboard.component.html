@@ -1,96 +1,172 @@
 <app-navbar></app-navbar>
-<div class="container  p-5">
-    <div class="row">
-        <div class="col-lg-3 col">
-            <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary shadow sticky-top border border-dark rounded" style="width: 100%;">
-                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                  <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-                  <span class="fs-4">Sidebar</span>
-                </a>
-                <hr>
-                <ul class="nav nav-pills flex-column mb-auto">
-                  <li class="nav-item">
-                    <a class="nav-link link-body-emphasis" aria-current="page" [routerLink]="['profile']" routerLinkActive="router-link-active" >
-                        <i class="bi bi-person-circle pe-none me-2"></i>
-                      Profile
-                    </a>
-                  </li>
-                  <li>
-                    <a [routerLink]="['stats']" routerLinkActive="router-link-active"  class="nav-link link-body-emphasis">
-                      <i class="bi bi-graph-up  pe-none me-2"></i>
-                      Stats
-                    </a>
-                  </li>
-                  <li>
-                    <a [routerLink]="['courses/approved']" routerLinkActive="router-link-active"  class="nav-link link-body-emphasis">
-                        <i class="bi bi-journal-code pe-none me-2"></i>
-                      Courses
-                    </a>
-                  </li>
-                  <li>
-                    <a [routerLink]="['courses/pending']" routerLinkActive="router-link-active"  class="nav-link link-body-emphasis">
-                      <i class="bi bi-hourglass-split pe-none me-2"></i>
-                      Pending Courses
-                    </a>
-                  </li>
-                  <li>
-                    <a [routerLink]="['courses/rejected']" routerLinkActive="router-link-active"  class="nav-link link-body-emphasis">
-                      <i class="bi bi-ban pe-none me-2"></i>
-                      Rejected Courses
-                    </a>
-                  </li>
-                  <li>
-                    <a [routerLink]="['users']" routerLinkActive="router-link-active"  class="nav-link link-body-emphasis">
-                      <i class="bi bi-people pe-none me-2"></i>
-                      Users
-                    </a>
-                  </li>
-                  <hr>
-                  <li>
-                    <a class="nav-link link-body-emphasis">
-                      <small>Learning</small>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="nav-link link-body-emphasis">
-                        <i class="bi bi-patch-check pe-none me-2"></i>
-                      Badges
-                    </a>
-                  </li>
-                  <li>
-                    <a class="nav-link link-body-emphasis">
-                        <i class="bi bi-gift pe-none me-2"></i>
-                      Rewards
-                    </a>
-                  </li>
-                  <li>
-                    <a class="nav-link link-body-emphasis">
-                        <i class="bi bi-card-checklist pe-none me-2"></i>
-                      Certifications 
-                    </a>
-                  </li>
-                  <li>
-                    <a class="nav-link link-body-emphasis">
-                        <i class="bi bi-coin pe-none me-2"></i>
-                      Coins
-                    </a>
-                  </li>
-                  <li>
-                    <a class="nav-link link-body-emphasis" [routerLink]="['coupon']" routerLinkActive="router-link-active" >
-                        <i class="bi bi-envelope-paper pe-none me-2"></i>
-                      Coupons Form
-                    </a>
-                  </li>
-                  <li>
-                    <a class="nav-link link-body-emphasis" [routerLink]="['coupon/list']" routerLinkActive="router-link-active" >
-                        <i class="bi bi-card-checklist pe-none me-2"></i>
-                      Coupons List
-                    </a>
-                  </li>
-                </ul>
-                <hr>
-                <div class="btn btn-outline-dark btn-sm" (click)="signOut()">Sign out</div>
-                <!-- <div class="dropdown">
+<div class="container p-5">
+  <div class="row">
+    <div class="col-lg-3 col">
+      <div
+        class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary shadow sticky-top border border-dark rounded"
+        style="width: 100%"
+      >
+        <a
+          href="/"
+          class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
+        >
+          <svg class="bi pe-none me-2" width="40" height="32">
+            <use xlink:href="#bootstrap"></use>
+          </svg>
+          <span class="fs-4">Menu</span>
+        </a>
+        <hr />
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item">
+            <a
+              class="nav-link link-body-emphasis"
+              aria-current="page"
+              [routerLink]="['profile']"
+              routerLinkActive="router-link-active"
+            >
+              <i class="bi bi-person-circle pe-none me-2"></i>
+              Profile
+            </a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['stats']"
+              routerLinkActive="router-link-active"
+              class="nav-link link-body-emphasis"
+            >
+              <i class="bi bi-graph-up pe-none me-2"></i>
+              Stats
+            </a>
+          </li>
+          <li>
+            <a class="nav-link link-body-emphasis">
+              <small>Courses</small>
+            </a>
+          </li>
+          
+          <li>
+            <a
+              [routerLink]="['courses/approved']"
+              routerLinkActive="router-link-active"
+              class="nav-link link-body-emphasis"
+            >
+              <i class="bi bi-journal-code pe-none me-2"></i>
+              Courses
+            </a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['courses/pending']"
+              routerLinkActive="router-link-active"
+              class="nav-link link-body-emphasis"
+            >
+              <i class="bi bi-hourglass-split pe-none me-2"></i>
+              Pending Courses
+            </a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['courses/rejected']"
+              routerLinkActive="router-link-active"
+              class="nav-link link-body-emphasis"
+            >
+              <i class="bi bi-ban pe-none me-2"></i>
+              Rejected Courses
+            </a>
+          </li> <li>
+            <a class="nav-link link-body-emphasis">
+              <small>Users</small>
+            </a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['users']"
+              routerLinkActive="router-link-active"
+              class="nav-link link-body-emphasis"
+            >
+              <i class="bi bi-people pe-none me-2"></i>
+              Users
+            </a>
+          </li>
+          
+          <li>
+            <a class="nav-link link-body-emphasis">
+              <small>Awards</small>
+            </a>
+          </li>
+          
+          <li>
+            <a class="nav-link link-body-emphasis">
+              <i class="bi bi-patch-check pe-none me-2"></i>
+              Badges
+            </a>
+          </li>
+          <li>
+            <a class="nav-link link-body-emphasis">
+              <i class="bi bi-gift pe-none me-2"></i>
+              Rewards
+            </a>
+          </li>
+          <li>
+            <a class="nav-link link-body-emphasis">
+              <i class="bi bi-card-checklist pe-none me-2"></i>
+              Certifications
+            </a>
+          </li>
+          <li>
+            <a class="nav-link link-body-emphasis">
+              <small>Contests</small>
+            </a>
+          </li>
+          <li>
+            <a
+              class="nav-link link-body-emphasis"
+              [routerLink]="['contest/add']"
+            >
+              <i class="bi bi-calendar3-event pe-none me-2"></i>
+              Contest Create
+            </a>
+          </li>
+          <li>
+            <a
+              class="nav-link link-body-emphasis"
+              [routerLink]="['contest/modify']"
+            >
+              <i class="bi bi-calendar3-event pe-none me-2"></i>
+              Contest Modify
+            </a>
+          </li>
+          <li>
+            <a class="nav-link link-body-emphasis">
+              <small>Coupons</small>
+            </a>
+          </li>
+          <li>
+            <a
+              class="nav-link link-body-emphasis"
+              [routerLink]="['coupon']"
+              routerLinkActive="router-link-active"
+            >
+              <i class="bi bi-envelope-paper pe-none me-2"></i>
+              Coupons Form
+            </a>
+          </li>
+          <li>
+            <a
+              class="nav-link link-body-emphasis"
+              [routerLink]="['coupon/list']"
+              routerLinkActive="router-link-active"
+            >
+              <i class="bi bi-card-checklist pe-none me-2"></i>
+              Coupons List
+            </a>
+          </li>
+        </ul>
+        <hr />
+        <div class="btn btn-outline-dark btn-sm" (click)="signOut()">
+          Sign out
+        </div>
+        <!-- <div class="dropdown">
                   <a class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
                     <strong>mdo</strong>
@@ -103,13 +179,13 @@
                     <li><a class="dropdown-item">Sign out</a></li>
                   </ul>
                 </div> -->
-              </div>
-        </div>
-        <div class="col-lg-9 col ">
-            <div class="p-3 bg-body-tertiary shadow border border-dark rounded" >
-              <router-outlet></router-outlet>
-            </div>
-        </div>
+      </div>
     </div>
+    <div class="col-lg-9 col">
+      <div class="p-3 bg-body-tertiary shadow border border-dark rounded">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
 </div>
 <app-footer></app-footer>

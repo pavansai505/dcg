@@ -1,5 +1,6 @@
 package com.dcg.mvc.badge;
 
+import com.dcg.exception.CourseNotFoundException;
 import com.dcg.mvc.user.User;
 import com.dcg.mvc.user.UserRepository;
 import com.dcg.mvc.course.Course;
@@ -8,7 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Set;
 
 @Service
@@ -116,5 +123,45 @@ public class BadgeService {
             }
             return badge;
 
+    }
+    public String uploadCourseImage(Long badgeId, MultipartFile file) throws IOException {
+        Badge badge = badgeRepository.findById(badgeId)
+                .orElseThrow(() -> new CourseNotFoundException("Course not found "+badgeId));
+
+        // Get the old image URL
+        String oldImageUrl = badge.getImageUrl();
+
+        // Generate a unique filename for the new image
+        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+
+        // Define the upload directory inside the resources folder
+        String resourcePath = Paths.get("src", "main", "resources", "static", "images","badge",badge.getId()+"").toAbsolutePath().toString();
+        Path uploadDir = Paths.get(resourcePath);
+
+        // Create the directory if it doesn't exist
+        if (!Files.exists(uploadDir)) {
+            Files.createDirectories(uploadDir);
+        }
+
+
+        // If there's an existing image, delete it
+        if (oldImageUrl != null && !oldImageUrl.isEmpty()) {
+            Path oldImagePath = uploadDir.resolve(oldImageUrl);
+            try {
+                Files.deleteIfExists(oldImagePath); // Delete the old image file if it exists
+            } catch (IOException e) {
+                throw new IOException("Failed to delete the old image file", e);
+            }
+        }
+
+        // Save the file to the specified directory
+        Path filePath = uploadDir.resolve(fileName);
+        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        // Update the user with the new image URL
+        badge.setImageUrl(fileName); // Save only the file name
+        badgeRepository.save(badge);
+
+        return fileName; // Returning the filename
     }
 }

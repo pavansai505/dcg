@@ -58,4 +58,8 @@ public class ContestController {
         return CustomResponse.builder().isResultTrue(contestService.isUserRegisteredForContest(contestId, ((UserDetails) authentication.getPrincipal()).getUsername())
     ).build();
     }
+    @PatchMapping("/{contestId}/toggle/status")
+    public ResponseEntity<Contest> toggleStatus(@PathVariable Long contestId) {
+        return ResponseEntity.ok(contestService.toggleContest(contestId));
+    }
 }

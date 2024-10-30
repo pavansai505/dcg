@@ -5,6 +5,7 @@ import { Course } from '../../../models/course/course';
 import { CommonModule } from '@angular/common';
 import { CourseDataService } from '../../../services/course/course-data.service';
 import CourseApproval from '../../../models/course/courseApproval';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-course-card-approval-cards',
@@ -17,7 +18,7 @@ export class CourseCardApprovalCardsComponent {
   @Input() course!:Course
   @Output() updateCourses=new EventEmitter<null>();
   courseLecturesCount:number=0
-  
+  imagePageUrl=environment.apiBaseUrl
 
   constructor(private courseService:CourseDataService){}
   ngOnInit(){

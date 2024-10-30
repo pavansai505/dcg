@@ -1,4 +1,4 @@
-server:
+  server:
   port: 8443  # Change to your desired HTTPS port
   ssl:
     key-store: file:/app/keystore.p12  # Path to your keystore

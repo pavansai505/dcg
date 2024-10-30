@@ -26,8 +26,27 @@
         </div>
   
         <div class="text-center mt-4">
-          <button type="button" class="btn btn-primary btn-lg px-5 py-3" (click)="submitQuiz()" *ngIf="!submitted">Submit Quiz</button>
-          <button type="button" class="btn btn-primary btn-lg px-5 py-3" disabled *ngIf="submitted">Your final score is {{score}}.</button>
+          <button type="button"  class="btn btn-primary btn-lg px-5 py-3" (click)="submitQuiz()" *ngIf="!submitted">Submit Quiz</button>
+          <!-- <button type="button" class="btn btn-primary btn-lg px-5 py-3" disabled *ngIf="submitted">Your final score is {{score}}.</button> -->
+          <button type="button" #myBtton id="myButton" hidden class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Launch demo modal
+          </button>
+          <div class="modal fade"  id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Congratulations</h1>
+                  <button type="button" id="btnClose" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body fs-2 my-3">
+                  Your final score is {{score}}
+                </div>
+                <div class="modal-footer">
+                  <p>Closing in {{closeTimer}}.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

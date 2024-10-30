@@ -63,7 +63,8 @@ public class Course extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private CourseLevel courseLevel;
-
+    @Column(name = "image_url", nullable = true) // Field to store the image URL
+    private String imageUrl; // This field can be null by default
     @ElementCollection
     @CollectionTable(name = "course_tags", joinColumns = @JoinColumn(name = "course_id"))
     @Column(name = "tag")

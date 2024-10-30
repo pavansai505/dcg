@@ -5,6 +5,7 @@ import com.dcg.exception.CustomUserExceptions.UserAlreadyExistsException;
 import com.dcg.exception.CustomUserExceptions.RoleNotFoundException;
 import com.dcg.exception.CustomUserExceptions.AuthenticationFailedException;
 
+import com.dcg.mvc.contest.ContestNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -63,5 +64,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CouponAlreadyUsedException.class)
     public ResponseEntity<String> handleCouponAlreadyUsed(CouponAlreadyUsedException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+    @ExceptionHandler(CourseNotFoundException.class)
+    public ResponseEntity<String> handleCourseNotFoundException(CourseNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+    @ExceptionHandler(ContestNotFoundException.class)
+    public ResponseEntity<String> handleContestNotFoundException(ContestNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }

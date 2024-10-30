@@ -39,7 +39,6 @@ import { coursePurchaseAuthGuard } from './guard/course-purchase-auth.guard';
 import { titleGuardGuard } from './guard/title-guard.guard'; // Import your guard here
 import { ContestsComponent } from './components/contests/contests/contests.component';
 import { ContestsInfoComponent } from './components/contests/contests-info/contests-info.component';
-import { ContestsQuizComponent } from './components/contests/contests-quiz/contests-quiz.component';
 import { ContestsLeaderboardComponent } from './components/contests/contests-leaderboard/contests-leaderboard.component';
 import { contestGuardGuard } from './guard/contest-guard.guard';
 import { InstructorInfoComponent } from './components/instructor/instructor-info/instructor-info.component';
@@ -49,6 +48,11 @@ import { courseQuizGuard } from './guard/course-quiz.guard';
 import { AdminCouponComponent } from './components/admin/admin-dashboard/admin-coupon/admin-coupon.component';
 import { AdminCouponListComponent } from './components/admin/admin-dashboard/admin-coupon-list/admin-coupon-list.component';
 import { AdminUsersComponent } from './components/admin/admin-dashboard/admin-users/admin-users.component';
+import { userNotLoggedInGuard } from './guard/user-not-logged-in.guard';
+import { contestQuizGuardGuard } from './guard/contest-quiz-guard.guard';
+import { ContestsQuizComponent } from './components/contests/contests-quiz/contests-quiz.component';
+import { AdminContestComponent } from './components/admin/admin-dashboard/admin-contest/admin-contest.component';
+import { AdminContestStatusComponent } from './components/admin/admin-dashboard/admin-contest-status/admin-contest-status.component';
 
 export const routes: Routes = [
   // Home route
@@ -56,12 +60,12 @@ export const routes: Routes = [
     path: '',
     component: CourseHomeComponent,
     data: { title: 'Home' },
-    canActivate: [titleGuardGuard]
+    canActivate: [titleGuardGuard],
   },
   {
     path: 'home',
     redirectTo: 'courses',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
 
   // Details page
@@ -69,13 +73,13 @@ export const routes: Routes = [
     path: 'about',
     component: AboutComponent,
     data: { title: 'About Us' },
-    canActivate: [titleGuardGuard]
+    canActivate: [titleGuardGuard],
   },
   {
     path: 'contact',
     component: ContactComponent,
     data: { title: 'Contact Us' },
-    canActivate: [titleGuardGuard]
+    canActivate: [titleGuardGuard],
   },
 
   // Courses
@@ -86,45 +90,45 @@ export const routes: Routes = [
         path: '',
         component: CourseHomeComponent,
         data: { title: 'Courses' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'home',
         component: CourseHomeComponent,
         data: { title: 'Courses' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'search',
         component: CourseSearchComponent,
         data: { title: 'Course Search' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'course/info/:id',
         component: CourseInfoComponent,
         data: { title: 'Course Details' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'course/:id/lectures',
         component: CourseLecturesComponent,
         data: { title: 'Course Lectures' },
-        canActivate: [authGuard, courseAuthGuard, titleGuardGuard]
+        canActivate: [authGuard, courseAuthGuard, titleGuardGuard],
       },
       {
         path: 'course/:courseCode/payment',
         component: CoursePaymentComponent,
         data: { title: 'Course Payment' },
-        canActivate: [authGuard, coursePurchaseAuthGuard, titleGuardGuard]
+        canActivate: [authGuard, coursePurchaseAuthGuard, titleGuardGuard],
       },
       {
-        path:':id/quiz',
-        component:CourseQuizComponent,
-        data:{title:'Quiz'},
-        canActivate:[titleGuardGuard,courseQuizGuard]
-      }
-    ]
+        path: ':id/quiz',
+        component: CourseQuizComponent,
+        data: { title: 'Quiz' },
+        canActivate: [titleGuardGuard, courseQuizGuard],
+      },
+    ],
   },
 
   // Authentication pages
@@ -133,25 +137,25 @@ export const routes: Routes = [
     path: 'auth/user/signin',
     component: SigninComponent,
     data: { title: 'User Sign In' },
-    canActivate: [titleGuardGuard]
+    canActivate: [titleGuardGuard, userNotLoggedInGuard],
   },
   {
     path: 'auth/user/signup',
     component: SignupComponent,
     data: { title: 'User Sign Up' },
-    canActivate: [titleGuardGuard]
+    canActivate: [titleGuardGuard, userNotLoggedInGuard],
   },
   {
     path: 'auth/user/forgot-password',
     component: ForgotPasswordComponent,
     data: { title: 'Forgot Password' },
-    canActivate: [titleGuardGuard]
+    canActivate: [titleGuardGuard],
   },
   {
     path: 'auth/user/reset-password',
     component: ResetPasswordComponent,
     data: { title: 'Reset Password' },
-    canActivate: [titleGuardGuard]
+    canActivate: [titleGuardGuard],
   },
 
   // Admin authentication paths
@@ -159,7 +163,7 @@ export const routes: Routes = [
     path: 'auth/admin/signin',
     component: AdminSigninComponent,
     data: { title: 'Admin Sign In' },
-    canActivate: [titleGuardGuard]
+    canActivate: [titleGuardGuard, userNotLoggedInGuard],
   },
 
   // User pages
@@ -171,31 +175,31 @@ export const routes: Routes = [
       {
         path: '',
         redirectTo: 'profile',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'profile',
         component: UserProfileComponent,
         data: { title: 'User Profile' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'courses',
         component: UserCoursesViewComponent,
         data: { title: 'My Courses' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'badges',
         component: UserBadgesComponent,
         data: { title: 'My Badges' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: '**',
-        redirectTo: 'profile'
-      }
-    ]
+        redirectTo: 'profile',
+      },
+    ],
   },
 
   // Instructor pages
@@ -203,7 +207,7 @@ export const routes: Routes = [
     path: 'instructor/:id/info',
     component: InstructorInfoComponent,
     data: { title: 'Instructor info' },
-    canActivate: [titleGuardGuard]
+    canActivate: [titleGuardGuard],
   },
   {
     path: 'instructor/dashboard',
@@ -213,57 +217,57 @@ export const routes: Routes = [
       {
         path: '',
         redirectTo: 'profile',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'profile',
         component: UserProfileComponent,
         data: { title: 'Instructor Profile' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'stats',
         component: InstructorCheckStatsComponent,
         data: { title: 'Instructor Stats' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'courses',
         component: InstructorMyCoursesComponent,
         data: { title: 'My Courses' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'courses/modify',
         component: InstructorModifyCourseComponent,
         data: { title: 'Modify Course' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'courses/add',
         component: InstructorAddCourseComponent,
         data: { title: 'Add New Course' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'courses/units/add',
         component: InstructorAddUnitsComponent,
         data: { title: 'Add Course Units' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'courses/lessons/add',
         component: InstructorAddLessonsComponent,
         data: { title: 'Add Course Lessons' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'courses/badge/add',
         component: InstructorAddBadgeComponent,
         data: { title: 'Add Course Badge' },
-        canActivate: [titleGuardGuard]
-      }
-    ]
+        canActivate: [titleGuardGuard],
+      },
+    ],
   },
 
   // Admin pages
@@ -275,112 +279,131 @@ export const routes: Routes = [
       {
         path: '',
         redirectTo: 'profile',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'profile',
         component: UserProfileComponent,
         data: { title: 'Admin Profile' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'stats',
         component: AdminStatsComponent,
         data: { title: 'Admin Stats' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'courses',
         component: AdminCoursesViewComponent,
         data: { title: 'All Courses' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'courses/approved',
         component: AdminCoursesViewComponent,
         data: { title: 'Approved Courses' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'courses/pending',
         component: AdminPendingCoursesViewComponent,
         data: { title: 'Pending Courses' },
-        canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
       },
       {
         path: 'courses/rejected',
         component: AdminRejectedCoursesViewComponent,
         data: { title: 'Rejected Courses' },
-        canActivate: [titleGuardGuard]
-      },{
-    path: 'stats',
-    component: AdminStatsComponent,
-    data: { title: 'Admin Stats' },
-    canActivate: [titleGuardGuard]
+        canActivate: [titleGuardGuard],
+      },
+      {
+        path: 'stats',
+        component: AdminStatsComponent,
+        data: { title: 'Admin Stats' },
+        canActivate: [titleGuardGuard],
+      },
+      {
+        path: 'coupon',
+        component: AdminCouponComponent,
+        data: { title: 'Coupon' },
+        canActivate: [titleGuardGuard],
+      },
+      {
+        path: 'coupon/list',
+        component: AdminCouponListComponent,
+        data: { title: 'Coupon list' },
+        canActivate: [titleGuardGuard],
+      },
+      {
+        path: 'users',
+        component: AdminUsersComponent,
+        data: { title: 'Users' },
+        canActivate: [titleGuardGuard],
+      },
+      {
+        path: 'contest',
+        children: [
+          {
+            path: 'add',
+            component: AdminContestComponent,
+            data: { title: 'Create contest' },
+            canActivate: [titleGuardGuard],
+          },
+          {
+            path: 'modify',
+            component: AdminContestStatusComponent,
+            data: { title: 'Users' },
+            canActivate: [titleGuardGuard],
+          }
+        ],
+        canActivate: [titleGuardGuard], // Apply the guard to all children if applicable
+      }
+      
+    ],
   },
-  {
-    path:'coupon',
-    component:AdminCouponComponent,
-    data:{title:'Coupon'},
-    canActivate:[titleGuardGuard]
-  },
-  {
-    path:'coupon/list',
-    component:AdminCouponListComponent,
-    data:{title:'Coupon list'},
-    canActivate:[titleGuardGuard]
-  },
-  {
-    path:'users',
-    component:AdminUsersComponent,
-    data:{title:'Users'},
-    canActivate:[titleGuardGuard]
-  }
-    ]
-  },
-  
 
   // Contests
   {
-    path:'contests',
-    children:[
+    path: 'contests',
+    children: [
       {
-      path:'',
-      component:ContestsComponent,
-      data:{title:'Contests'},
-      canActivate:[titleGuardGuard]
-    },
+        path: '',
+        component: ContestsComponent,
+        data: { title: 'Contests' },
+        canActivate: [titleGuardGuard],
+      },
       {
-      path:':id/info',
-      component:ContestsInfoComponent,
-      data:{title:'Contest info'},
-      canActivate:[titleGuardGuard]
-    },
+        path: ':id/info',
+        component: ContestsInfoComponent,
+        data: { title: 'Contest info' },
+        canActivate: [titleGuardGuard],
+      },
       {
-      path:':id/quiz',
-      component:ContestsQuizComponent,
-      data:{title:'Quiz'},
-      canActivate:[titleGuardGuard]
-    },
+        path: ':id/quiz',
+        component: ContestsQuizComponent,
+        data: { title: 'Quiz' },
+        canActivate: [titleGuardGuard,contestQuizGuardGuard],
+      },
       {
-      path:':id/leaderboard',
-      component:ContestsLeaderboardComponent,
-      data:{title:'Leaderboard'},
-      canActivate:[titleGuardGuard]
-    }
-  ]
+        path: ':id/leaderboard',
+        component: ContestsLeaderboardComponent,
+        data: { title: 'Leaderboard' },
+        canActivate: [titleGuardGuard],
+      },
+    ],
   },
   // Miscellaneous
   {
     path: 'routes',
     component: RoutesComponent,
     data: { title: 'Routes' },
-    canActivate: [titleGuardGuard]
+    canActivate: [titleGuardGuard],
   },
   {
     path: '**',
     component: NotfoundComponent,
     data: { title: 'Page Not Found' },
-    canActivate: [titleGuardGuard]
-  }
+    canActivate: [titleGuardGuard],
+  },
 ];

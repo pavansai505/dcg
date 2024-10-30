@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { CreateContestRequest } from '../../models/course/CreateContestRequest';
 import { ScoreCheckResponse } from '../../models/contest/scoreCheckResponse';
+import { Contest } from '../../models/contest/contest';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,9 @@ export class ContestService {
   private apiBaseUrl = environment.apiBaseUrl + 'contest/';
 
   constructor(private http: HttpClient) { }
+  addContest(data:Contest): Observable<any> {
+    return this.http.post<any>(this.apiBaseUrl.slice(0,-1),data);
+  }
   getContests(): Observable<any> {
     return this.http.get<any>(this.apiBaseUrl + 'get');
   }
@@ -33,6 +37,9 @@ export class ContestService {
   }
   isUserRegisteredToContest(id:number): Observable<any> {
     return this.http.get<any>(this.apiBaseUrl + id+"/is-user-registered");
+  }
+  toggleContestStatus(id:number): Observable<any> {
+    return this.http.patch<any>(this.apiBaseUrl + id+"/toggle/status",{});
   }
 
   

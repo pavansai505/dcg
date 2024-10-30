@@ -21,11 +21,12 @@ export interface Course {
   approvalStatus: string;
   price: number;
   users:User[];
-  badge?:Badge;
+  badge?:Badge | null;
   courseLevel:string;
   tags:string[];
   endGoals:string[];
   courseCode:string;
   histories:CourseActionHistory[],
   quiz:Quiz
+  imageUrl:string
 }

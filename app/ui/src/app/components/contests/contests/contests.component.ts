@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavbarComponent } from '../../utilities/navbar/navbar.component';
 import { FooterComponent } from '../../utilities/footer/footer.component';
 import { ContestService } from '../../../services/contest/contest.service';
-import { Contest } from '../../../models/course/contest';
+import { Contest } from '../../../models/contest/contest';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -19,7 +19,7 @@ export class ContestsComponent {
   constructor(private contestService:ContestService){}
   ngOnInit(){
     this.contestService.getContests().subscribe({
-      next:(data)=>{this.contests=data;console.log(data[0]);
+      next:(data)=>{this.contests=data;
       }
       
     })

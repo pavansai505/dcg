@@ -159,7 +159,7 @@
         <!-- <div class="btn btn-secondary btn-sm position-absolute editBtn"><i class="bi bi-pencil-square"></i>Edit</div> -->
         <i class="bi bi-person-circle" style="font-size: 8rem" *ngIf="user.imageUrl==null"></i>      
         <img
-        [src]="imagePageUrl+'images/' + user.imageUrl"
+        [src]="imagePageUrl+'images/user/'+user.id+'/' + user.imageUrl"
         class="img-fluid rounded-circle profile-pic"
         *ngIf="user.imageUrl != null"
         alt="User Profile Picture"

@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { TruncateStringSizePipe } from '../../../pipes/truncate-string-size.pipe';
 import { CourseDataService } from '../../../services/course/course-data.service';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-course-card',
@@ -17,7 +18,7 @@ export class CourseCardComponent {
   @Input() priceShow:boolean=true
   @Input() progressShow:boolean=false
   coursePercentage:number=0
-
+  imagePageUrl=environment.apiBaseUrl
   courseLecturesCount:number=0
   constructor(private courseService:CourseDataService){}
   ngOnInit(){

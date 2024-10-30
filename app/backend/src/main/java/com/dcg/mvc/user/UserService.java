@@ -232,7 +232,7 @@ public class UserService {
         String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
 
         // Define the upload directory inside the resources folder
-        String resourcePath = Paths.get("src", "main", "resources", "static", "images").toAbsolutePath().toString();
+        String resourcePath = Paths.get("src", "main", "resources", "static", "images","user",user.getId()+"").toAbsolutePath().toString();
         Path uploadDir = Paths.get(resourcePath);
 
         // Create the directory if it doesn't exist

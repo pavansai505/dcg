@@ -10,4 +10,5 @@ export interface Badge {
   course?: Course;           // Reference to the associated course (nullable or optional)
   users?: User[];              // List of users who have earned this badge (optional)
   acquired: boolean;           // Whether the badge has been acquired by the user
+  imageUrl:string
 }

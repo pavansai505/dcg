@@ -1,0 +1,66 @@
+<div [formGroup]="contestForm" class="container mt-5">
+    <h2 class="mb-4">Create Contest</h2>
+    <form (ngSubmit)="onSubmit()" [formGroup]="contestForm">
+      <div class="form-group mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input id="title" formControlName="title" class="form-control" />
+      </div>
+  
+      <div class="form-group mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea id="description" formControlName="description" class="form-control"></textarea>
+      </div>
+  
+      <div class="form-group mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select id="status" formControlName="status" class="form-select">
+          <option value="UPCOMING">Upcoming</option>
+          <option value="ONGOING">Ongoing</option>
+          <option value="COMPLETED">Completed</option>
+        </select>
+      </div>
+  
+      <div class="form-group mb-3">
+        <label for="maxParticipants" class="form-label">Max Participants</label>
+        <input id="maxParticipants" type="number" formControlName="maxParticipants" class="form-control" />
+      </div>
+  
+      <div class="form-group mb-3">
+        <label for="startDate" class="form-label">Start Date</label>
+        <input id="startDate" type="datetime-local" formControlName="startDate" class="form-control" />
+      </div>
+  
+      <div class="form-group mb-3">
+        <label for="endDate" class="form-label">End Date</label>
+        <input id="endDate" type="datetime-local" formControlName="endDate" class="form-control" />
+      </div>
+  
+      <div formArrayName="questions" class="mb-4">
+        <h3 class="mb-3">Questions</h3>
+        <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i" class="mb-3 border p-3 rounded">
+          <h4 class="mb-3">Question {{ i + 1 }}</h4>
+          <div class="form-group mb-3">
+            <label for="questionText" class="form-label">Question Text</label>
+            <input id="questionText" formControlName="questionText" class="form-control" />
+          </div>
+  
+          <div formArrayName="options" class="form-group mb-3">
+            <label class="form-label">Options</label>
+            <div *ngFor="let option of getOptionsControls(i).controls; let j = index" class="input-group mb-2">
+              <input [formControlName]="j" class="form-control" />
+            </div>
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="correctAnswer" class="form-label">Correct Answer</label>
+            <input id="correctAnswer" formControlName="correctAnswer" class="form-control" />
+          </div>
+  
+          <button type="button" class="btn btn-danger" (click)="removeQuestion(i)">Remove Question</button>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="addQuestion()">Add Question</button>
+      </div>
+  
+      <button type="submit" class="btn btn-success" [disabled]="contestForm.invalid">Submit</button>
+    </form>
+  </div>

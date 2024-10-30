@@ -74,7 +74,19 @@
               </div>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-block" [disabled]="!courseForm.valid" *ngIf="!courseUploaded">Submit</button>
+            <!-- Image Upload Field -->
+            <div class="form-group mb-4">
+              <label for="image" class="mb-1">Course Image (Max 5 MB)</label>
+              <input type="file" id="image" (change)="onImageSelected($event)" accept="image/*" class="form-control" required>
+              <div *ngIf="imageError" class="text-danger mt-1">
+                {{ imageError }}
+              </div>
+              <div *ngIf="imagePreview" class="mt-2">
+                <img [src]="imagePreview" alt="Image Preview" class="img-thumbnail" style="max-height: 200px; max-width: 200px;">
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" [disabled]="!courseForm.valid || imageError" *ngIf="!courseUploaded">Submit</button>
             <button class="btn btn-success btn-block" [disabled]="true" *ngIf="courseUploaded">Course uploaded successfully!</button>
           </form>
         </div>

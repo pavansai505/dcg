@@ -7,6 +7,7 @@ import { Course } from '../../../models/course/course';
 import { CommonModule, DatePipe } from '@angular/common';
 import CourseRegister from '../../../models/course/courseRegister';
 import { Subscription } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-course-info',
@@ -24,6 +25,7 @@ import { Subscription } from 'rxjs';
 export class CourseInfoComponent implements OnDestroy {
   course!: Course;
   isCourseRegistered: boolean = false;
+  imageUrl:string=environment.apiBaseUrl
   private routeSub!: Subscription; // To manage route subscription
 
   constructor(

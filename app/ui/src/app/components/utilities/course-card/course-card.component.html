@@ -1,11 +1,12 @@
 <div class="card bg-body-tertiary h-100" style="min-height: 360px;">
   <img
-    src="{{ 'https://lh6.googleusercontent.com/proxy/B7RjQtahBgFWtmyDxU45ggA5xRbtgnzW9H9Pv0AZ7qFNIjTsW_0eCRTfgyiuWy9EeXHMhUpuhqEW_hmhZKe-wxpU09WoIPEX-WFsIu0gH-JxluIE-A' }}"
-    loading="lazy"
+  [src]="course.imageUrl? (imagePageUrl+'images/course/'+ course.id +'/'+ course.imageUrl) : 'https://www.picsum.photos/170/100'" 
+  loading="lazy"
     class="card-img-top"
-    alt="..."
+    style="height: 45%;"
   />
-  <div class="card-body d-flex flex-column fs-6 text-start">
+  
+  <div class="card-body d-flex flex-column fs-6 text-start" style="height: 55%;">
     <p class="card-title fw-bold">
       {{ course.title }}
     </p>

@@ -51,11 +51,13 @@ export class CourseDataService {
       })
    }
    addCourse=(course:Course):Observable<any>=>{
-      return this.http.post<any>(environment.apiBaseUrl+"course/add",course,{
-        headers:{
-          'Authorization':'Bearer '+this.token.getToken()
-        }
-      })
+      return this.http.post<any>(environment.apiBaseUrl+"course/add",course)
+   }
+   updateCourse=(courseId:number,course:Course):Observable<any>=>{
+      return this.http.put<any>(environment.apiBaseUrl+`course/${courseId}/update`,course)
+   }
+   deleteCourse=(courseId:number):Observable<any>=>{
+      return this.http.delete<any>(environment.apiBaseUrl+`course/${courseId}/delete`)
    }
    addUnits=(units:Unit[],id:number):Observable<any>=>{
       return this.http.post<any>(environment.apiBaseUrl+"course/units/addMultiple/"+id,units)
@@ -107,9 +109,12 @@ export class CourseDataService {
       "courseId":id,
       "percentage":Number(percentageCompleted.split("%")[0])
     });
+    
    
     
   }
-  
+  uploadCourseImage(courseId: number, imageData: FormData): Observable<any> {
+    return this.http.post(`${environment.apiBaseUrl}course/${courseId}/image`, imageData);
+  }
 
 }

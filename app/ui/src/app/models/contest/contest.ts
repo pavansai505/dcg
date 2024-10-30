@@ -1,5 +1,5 @@
 import { User } from "../user/user";
-import { Quiz } from "./quiz";
+import { Quiz } from "../course/quiz";
 
 export interface Contest {
     id: number;
@@ -13,5 +13,6 @@ export interface Contest {
     createdDate:string;
     quiz: Quiz;   
     participants:User[]  // Optional, if a quiz is associated
+    disabled:boolean;
     // List of scores and other related data
 }

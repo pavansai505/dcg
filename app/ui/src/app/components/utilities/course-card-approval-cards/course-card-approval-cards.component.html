@@ -2,7 +2,8 @@
   class="card bg-body-tertiary h-100"
 >
   <img
-    src="{{ 'https://picsum.photos/800/500?random=' + course.id }}"
+  [src]="course.imageUrl?(imagePageUrl+'images/course/'+ course.id +'/'+ course.imageUrl) : 'https://www.picsum.photos/170/100'" 
+             
     class="card-img-top"
     alt="..."
   />

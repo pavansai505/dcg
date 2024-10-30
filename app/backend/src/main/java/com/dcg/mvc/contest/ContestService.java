@@ -5,6 +5,7 @@ import com.dcg.mvc.quiz.QuizRepository;
 import com.dcg.mvc.user.User;
 import com.dcg.mvc.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,6 +94,12 @@ public class ContestService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
        return contest.getParticipants().contains(user);
+    }
+    @Secured("ROLE_ADMIN")
+    public Contest toggleContest(Long id){
+        Contest contest=contestRepository.findById(id).orElseThrow(()->new ContestNotFoundException("Contest not found"));
+        contest.setDisabled(!contest.isDisabled());
+        return contestRepository.save(contest);
     }
 
 }

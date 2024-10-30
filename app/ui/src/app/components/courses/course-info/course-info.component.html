@@ -93,7 +93,7 @@
       <div class="col-lg-4">
         <div class="bg-light p-4 rounded">
           <h3 class="fw-bold mb-3">Course Cover</h3>
-          <img [src]="'https://www.picsum.photos/250'" alt="Course Cover" class="img-fluid rounded">
+          <img [src]="(imageUrl+'images/course/'+ course.id +'/'+ course.imageUrl) || 'https://www.picsum.photos/250'"  alt="Course Cover" class="img-fluid rounded">
         </div>
       </div>
     </div>
@@ -172,15 +172,15 @@
     </div>
     
     <!-- Badge -->
-    <div class="row mb-4">
+    <div class="row mb-4" *ngIf="course.badge">
         <div class="col">
           <div class="bg-light p-4 rounded">
             <h3 class="fw-bold mb-3">Course Badge</h3>
             <div class="d-flex align-items-center">
-              <img [src]="'https://picsum.photos/100'" alt="Course Badge" class="img-fluid rounded-circle me-3" style="width: 100px; height: 100px;" />
+              <img [src]="course.badge.imageUrl?(imageUrl+'images/badge/'+ course.badge.id +'/'+ course.badge.imageUrl) : 'https://www.picsum.photos/250'"  alt="Course Badge" class="img-fluid rounded-circle me-3" style="width: 100px; height: 100px;" />
               <div>
-                <h4 class="fw-bold">{{ course.badge?.badgeName }}</h4>
-                <p>{{ course.badge?.badgeDescription }}</p>
+                <h4 class="fw-bold">{{ course.badge.badgeName }}</h4>
+                <p>{{ course.badge.badgeDescription }}</p>
               </div>
             </div>
           </div>

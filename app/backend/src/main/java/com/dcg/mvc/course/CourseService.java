@@ -1,6 +1,8 @@
 package com.dcg.mvc.course;
 
 import com.dcg.constants.CourseStatus;
+import com.dcg.exception.CourseNotFoundException;
+import com.dcg.exception.CustomUserExceptions;
 import com.dcg.exception.ResourceNotFoundException;
 import com.dcg.mvc.history.CourseActionHistory;
 import com.dcg.mvc.history.CourseActionHistoryRepository;
@@ -13,7 +15,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -200,6 +208,91 @@ public class CourseService {
 
         return courseActionHistoryRepository.findByUserAndCourse(user, course)
                 .orElseThrow(() -> new ResourceNotFoundException("Course action history not found for user and course"));
+    }
+
+    public String uploadCourseImage(Long courseId, MultipartFile file) throws IOException {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new CourseNotFoundException("Course not found "+courseId));
+
+        // Get the old image URL
+        String oldImageUrl = course.getImageUrl();
+
+        // Generate a unique filename for the new image
+        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+
+        // Define the upload directory inside the resources folder
+        String resourcePath = Paths.get("src", "main", "resources", "static", "images","course",course.getId()+"").toAbsolutePath().toString();
+        Path uploadDir = Paths.get(resourcePath);
+
+        // Create the directory if it doesn't exist
+        if (!Files.exists(uploadDir)) {
+            Files.createDirectories(uploadDir);
+        }
+
+
+        // If there's an existing image, delete it
+        if (oldImageUrl != null && !oldImageUrl.isEmpty()) {
+            Path oldImagePath = uploadDir.resolve(oldImageUrl);
+            try {
+                Files.deleteIfExists(oldImagePath); // Delete the old image file if it exists
+            } catch (IOException e) {
+                throw new IOException("Failed to delete the old image file", e);
+            }
+        }
+
+        // Save the file to the specified directory
+        Path filePath = uploadDir.resolve(fileName);
+        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        // Update the user with the new image URL
+        course.setImageUrl(fileName); // Save only the file name
+        courseRepository.save(course);
+
+        return fileName; // Returning the filename
+    }
+    public Course updateCourse(Long courseId, Course updatedCourse) {
+        Optional<Course> existingCourseOptional = courseRepository.findById(courseId);
+
+        if (existingCourseOptional.isPresent()) {
+            Course existingCourse = existingCourseOptional.get();
+
+            // Update only non-null fields
+            if (updatedCourse.getTitle() != null) {
+                existingCourse.setTitle(updatedCourse.getTitle());
+            }
+            if (updatedCourse.getAuthorName() != null) {
+                existingCourse.setAuthorName(updatedCourse.getAuthorName());
+            }
+            if (updatedCourse.getSynopsis() != null) {
+                existingCourse.setSynopsis(updatedCourse.getSynopsis());
+            }
+            if (updatedCourse.getDescription() != null) {
+                existingCourse.setDescription(updatedCourse.getDescription());
+            }
+            if (updatedCourse.getPrice() == 0) {
+                existingCourse.setPrice(updatedCourse.getPrice());
+            }
+            if (updatedCourse.getTags() != null) {
+                existingCourse.setTags(updatedCourse.getTags());
+            }
+            if (updatedCourse.getEndGoals() != null) {
+                existingCourse.setEndGoals(updatedCourse.getEndGoals());
+            }
+            if (updatedCourse.getCourseLevel() != null) {
+                existingCourse.setCourseLevel(updatedCourse.getCourseLevel());
+            }
+
+            // Save the updated course
+            return courseRepository.save(existingCourse);
+        } else {
+            throw new CourseNotFoundException("Course not found with ID: " + courseId);
+        }
+    }
+    public void deleteCourse(Long courseId) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new CourseNotFoundException("Course not found with ID: " + courseId));
+        course.setApprovalStatus("rejected");
+        courseRepository.save(course);
     }
 
 }

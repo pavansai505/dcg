@@ -1,0 +1,59 @@
+<div class="container">
+  <h2 class="mb-4">Contests</h2>
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1">
+    <div
+      class="col py-3 centerIt"
+      *ngFor="let contest of contests; let i = index"
+    >
+      <div class="card shadow h-100" style="width: 20rem">
+        <div class="card-body">
+          <h5 class="card-title my-0">
+            <i class="bi bi-trophy"></i>{{ " "
+            }}{{ contest.createdByUser.fullName }}
+            <span class="float-end">{{ contest.startDate | date }}</span>
+          </h5>
+          <small class="">
+            {{ calculateDaysAgo(contest.createdDate) }}
+          </small>
+          <p
+            class="card-text fw-bold fs-6 my-3 cursor-pointer"
+            [routerLink]="['/contests/' + contest.id + '/info']"
+            routerLinkActive="router-link-active"
+          >
+            {{ contest.title }}
+          </p>
+          <div class="progress mb-3" role="progressbar" style="height: 7px">
+            <div
+              class="progress-bar"
+              [style.width]="getProgressWidth(contest)"
+            ></div>
+          </div>
+
+          <div class="card-text d-flex justify-content-between">
+            <span class="fw-bold">
+              Slots left:
+              {{ contest.maxParticipants - contest.participants.length }}
+            </span>
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                [checked]="!contest.disabled"
+                (change)="toggleContestStatus(contest.id)"
+                [ngClass]="{'bg-success': !contest.disabled, 'bg-danger': contest.disabled}"
+              />
+            </div>
+          </div>
+
+          <!-- <a
+            [routerLink]="['info']"
+            routerLinkActive="router-link-active"
+            class="btn contestBtn btn-sm"
+            >Enter</a
+          > -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

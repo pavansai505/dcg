@@ -36,4 +36,10 @@ export class BadgeService {
   awardBadgesToAuthenticatedUserByCourseId(courseId: number): Observable<any> {
     return this.http.post<any>(`${this.apiBaseUrl}award/course/${courseId}`, {});
   }
+
+  uploadBadgeImage(badgeId: number, imageData: FormData): Observable<any> {
+    return this.http.post(`${this.apiBaseUrl}${badgeId}/image`, imageData);
+  }
+
+
 }

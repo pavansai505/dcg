@@ -3,7 +3,7 @@ import { NavbarComponent } from '../../utilities/navbar/navbar.component';
 import { FooterComponent } from '../../utilities/footer/footer.component';
 import { ContestService } from '../../../services/contest/contest.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Contest } from '../../../models/course/contest';
+import { Contest } from '../../../models/contest/contest';
 import { CommonModule, DatePipe } from '@angular/common';
 import { AccessControlService } from '../../../services/auth/access-control.service';
 import { ToastService } from '../../../services/toast/toast.service';

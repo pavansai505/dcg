@@ -5,6 +5,7 @@ import com.dcg.mvc.quiz.Quiz;
 import com.dcg.mvc.score.Score; // Import Score entity
 import com.dcg.mvc.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -19,8 +20,6 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 public class Contest extends BaseEntity {
-
-
 
     private String title;
 
@@ -37,6 +36,7 @@ public class Contest extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "created_by_user")
+    @JsonIgnoreProperties({"badges","authorities"})
     private User createdByUser;
 
     @ManyToMany
@@ -45,15 +45,18 @@ public class Contest extends BaseEntity {
             joinColumns = @JoinColumn(name = "contest_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
+    @JsonIgnoreProperties({"badges","authorities"})
     private List<User> participants;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "quiz_id", referencedColumnName = "id")
     private Quiz quiz; // Each contest has one associated quiz
 
-//     Possibly not needed
-//    @OneToMany(mappedBy = "contest", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Score> scores; // List of scores associated with the contest
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean disabled;
 
+    // Possibly not needed
+    // @OneToMany(mappedBy = "contest", cascade = CascadeType.ALL, orphanRemoval = true)
+    // private List<Score> scores; // List of scores associated with the contest
 
 }

@@ -21,6 +21,7 @@ public class CourseMapper {
                 course.getApprovalStatus(),
                 course.getBadge(),
                 course.getCourseLevel(),
+                course.getImageUrl(),
                 course.getTags(),
                 course.getEndGoals(),
                 course.getCourseCode(),

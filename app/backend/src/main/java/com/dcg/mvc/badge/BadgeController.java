@@ -3,8 +3,13 @@ package com.dcg.mvc.badge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -75,4 +80,25 @@ public class BadgeController {
     public ResponseEntity<Badge> awardBadgesByCourseId(@PathVariable Long courseId) {
         return new ResponseEntity<>(badgeService.awardBadgesByCourseId(courseId),HttpStatus.OK);
     }
+
+    @PostMapping("{id}/image")
+    public ResponseEntity<Map<String, String>> uploadImage(@PathVariable Long id, @RequestParam("file") MultipartFile file, Authentication authentication) {
+        try {
+            String imageUrl = badgeService.uploadCourseImage(
+
+                    id,
+                    file);
+
+            // Wrap the imageUrl in a Map for a proper JSON response
+            Map<String, String> response = new HashMap<>();
+            response.put("imageUrl", imageUrl); // Assuming `imageUrl` is the filename
+
+            return ResponseEntity.ok(response); // Return the JSON response
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Error uploading image: " + e.getMessage()));
+        }
+
+    }
+
+
 }

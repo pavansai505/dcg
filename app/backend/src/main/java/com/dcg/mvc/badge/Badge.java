@@ -39,7 +39,8 @@ public class Badge extends BaseEntity {
     private Set<User> users = new HashSet<>();
 
     private boolean acquired;
-
+    @Column(name = "image_url", nullable = true) // Field to store the image URL
+    private String imageUrl; // This field can be null by default
     @PrePersist
     private void setDefaultAcquiredStatus() {
         this.acquired = false;

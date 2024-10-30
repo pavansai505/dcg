@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { TruncateStringSizePipe } from '../../../../pipes/truncate-string-size.pipe';
 import { Toast } from 'bootstrap';
 import { ToastService } from '../../../../services/toast/toast.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-instructor-add-units',
@@ -32,6 +33,7 @@ export class InstructorAddUnitsComponent {
   selectedCourse: Course | null = null;
   unitForm: FormGroup;
   courses: any;
+  imagePageUrl = environment.apiBaseUrl;
   constructor(
     private courseService: CourseDataService,
     private fb: FormBuilder,

@@ -10,6 +10,7 @@ import { CourseDataService } from '../../../../services/course/course-data.servi
 import { TruncateStringSizePipe } from '../../../../pipes/truncate-string-size.pipe';
 import { Course } from '../../../../models/course/course';
 import { ToastService } from '../../../../services/toast/toast.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-instructor-add-lessons',
@@ -25,6 +26,8 @@ export class InstructorAddLessonsComponent {
   selectedUnit: number | null = null;
   lessonFormGroup: FormGroup;
   courses: any;
+  imagePageUrl = environment.apiBaseUrl;
+imageUrl: any;
   constructor(private courseService: CourseDataService,private toast:ToastService) {
     this.lessonFormGroup = new FormGroup({
       lessonId: new FormControl('', Validators.required),
