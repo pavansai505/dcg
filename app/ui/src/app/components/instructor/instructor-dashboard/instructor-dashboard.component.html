@@ -1,84 +1,186 @@
 <app-navbar></app-navbar>
 <div class="container p-5">
-    <div class="row">
-        <div class="col-lg-3 col">
-            <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary shadow sticky-top  border border-dark rounded" style="width: 100%;">
-                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                  <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-                  <span class="fs-4">Sidebar</span>
-                </a>
-                <hr>
-                <ul class="nav nav-pills flex-column mb-auto">
-                  <li [class.selectedPath]="isRouteActive('/instructor/dashboard/profile')">
-                    <a href="#" class="nav-link link-body-emphasis" aria-current="page" [routerLink]="['profile']" routerLinkActive="router-link-active" >
-                        <i class="bi bi-person-circle pe-none me-2"></i>
-                      Profile
-                    </a>
-                  </li>
-                  <li [class.selectedPath]="isRouteActive('/instructor/dashboard/stats')">
-                    <a [routerLink]="['stats']" routerLinkActive="router-link-active"  class="nav-link link-body-emphasis">
-                        <i class="bi bi-journal-code pe-none me-2"></i>
-                      Stats
-                    </a>
-                  </li>
-                  <hr>
-                  <li>
-                    <a class="nav-link link-body-emphasis">
-                      <small>Courses</small>
-                    </a>
-                  </li>
-                  <li [class.selectedPath]="isRouteActive('/instructor/dashboard/courses')">
-                    <a [routerLink]="['courses']" routerLinkActive="router-link-active" class="nav-link link-body-emphasis">
-                        <i class="bi bi-patch-check pe-none me-2"></i>
-                      My courses
-                    </a>
-                  </li>
-                  <li [class.selectedPath]="isRouteActive('/instructor/dashboard/courses/add')">
-                    <a [routerLink]="['courses/add']" routerLinkActive="router-link-active" class="nav-link link-body-emphasis">
-                        <i class="bi bi-gift pe-none me-2"></i>
-                      Add courses
-                    </a>
-                  </li>
-                  <li [class.selectedPath]="isRouteActive('/instructor/dashboard/courses/modify')">
-                    <a [routerLink]="['courses/modify']" routerLinkActive="router-link-active" class="nav-link link-body-emphasis">
-                        <i class="bi bi-card-checklist pe-none me-2"></i>
-                      Modify Courses 
-                    </a>
-                  </li>
-                  <li [class.selectedPath]="isRouteActive('/instructor/dashboard/courses/units/add')">
-                    <a [routerLink]="['courses/units/add']" routerLinkActive="router-link-active" class="nav-link link-body-emphasis">
-                      <i class="bi bi-journal pe-none me-2"></i>
-                      Add units
-                    </a>
-                  </li>
-                  <li [class.selectedPath]="isRouteActive('/instructor/dashboard/courses/lessons/add')">
-                    <a [routerLink]="['courses/lessons/add']" routerLinkActive="router-link-active" class="nav-link link-body-emphasis">
-                        <i class="bi bi-coin pe-none me-2"></i>
-                      Add lessons
-                    </a>
-                  </li>
-                  <li [class.selectedPath]="isRouteActive('/instructor/dashboard/courses/badge/add')">
-                    <a [routerLink]="['courses/badge/add']" routerLinkActive="router-link-active" class="nav-link link-body-emphasis">
-                        <i class="bi bi-award pe-none me-2"></i>
-                      Add badge
-                    </a>
-                  </li>
-                </ul>
-                <hr>
-                <div class="btn btn-outline-dark btn-sm" (click)="signOut()">Sign out</div>
-                <!-- <div class="dropdown">
+  <div class="row">
+    <div class="col-lg-3 col">
+      <div
+        class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary shadow sticky-top border border-dark rounded"
+        style="width: 100%"
+      >
+        <a
+          href="/"
+          class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
+        >
+          <svg class="bi pe-none me-2" width="40" height="32">
+            <use xlink:href="#bootstrap"></use>
+          </svg>
+          <span class="fs-4">Menu</span>
+        </a>
+        <hr />
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li>
+            <a
+              href="#"
+              class="nav-link link-body-emphasis"
+              aria-current="page"
+              [routerLink]="['profile']"
+              routerLinkActive="router-link-active"
+            >
+              <i class="bi bi-person-circle pe-none me-2"></i>
+              Profile
+            </a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['stats']"
+              routerLinkActive="router-link-active"
+              class="nav-link link-body-emphasis"
+            >
+              <i class="bi bi-journal-code pe-none me-2"></i>
+              Stats
+            </a>
+          </li>
+          <hr />
+          <li>
+            <a class="nav-link link-body-emphasis">
+              <small>Courses</small>
+            </a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['courses']"
+              routerLinkActive="router-link-active"
+              class="nav-link link-body-emphasis"
+            >
+              <i class="bi bi-patch-check pe-none me-2"></i>
+              My courses
+            </a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['courses/add']"
+              routerLinkActive="router-link-active"
+              class="nav-link link-body-emphasis"
+            >
+              <i class="bi bi-gift pe-none me-2"></i>
+              Add courses
+            </a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['courses/modify']"
+              routerLinkActive="router-link-active"
+              class="nav-link link-body-emphasis"
+            >
+              <i class="bi bi-card-checklist pe-none me-2"></i>
+              Modify Courses
+            </a>
+          </li>
+          <li>
+            <a class="nav-link link-body-emphasis">
+              <small>Units</small>
+            </a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['courses/units/add']"
+              routerLinkActive="router-link-active"
+              class="nav-link link-body-emphasis"
+            >
+              <i class="bi bi-journal pe-none me-2"></i>
+              Add units
+            </a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['courses/units/modify']"
+              routerLinkActive="router-link-active"
+              class="nav-link link-body-emphasis"
+            >
+              <i class="bi bi-journal pe-none me-2"></i>
+              Modify units
+            </a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['courses/units/delete']"
+              routerLinkActive="router-link-active"
+              class="nav-link link-body-emphasis"
+            >
+              <i class="bi bi-journal pe-none me-2"></i>
+              Delete units
+            </a>
+          </li>
+          <li>
+            <a class="nav-link link-body-emphasis">
+              <small>Lectures</small>
+            </a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['courses/lessons/add']"
+              routerLinkActive="router-link-active"
+              class="nav-link link-body-emphasis"
+            >
+              <i class="bi bi-coin pe-none me-2"></i>
+              Add lessons
+            </a>
+          </li>
+          <li></li>
+          <li>
+            <a
+              [routerLink]="['courses/lessons/modify']"
+              routerLinkActive="router-link-active"
+              class="nav-link link-body-emphasis"
+            >
+              <i class="bi bi-coin pe-none me-2"></i>
+              Modify lessons
+            </a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['courses/lessons/delete']"
+              routerLinkActive="router-link-active"
+              class="nav-link link-body-emphasis"
+            >
+              <i class="bi bi-coin pe-none me-2"></i>
+              Delete lessons
+            </a>
+          </li>
+          <li>
+            <a class="nav-link link-body-emphasis">
+              <small>Badges</small>
+            </a>
+          </li>
+          <li
+           
+          >
+            <a
+              [routerLink]="['courses/badge/add']"
+              routerLinkActive="router-link-active"
+              class="nav-link link-body-emphasis"
+            >
+              <i class="bi bi-award pe-none me-2"></i>
+              Add badge
+            </a>
+          </li>
+        </ul>
+        <hr />
+        <div class="btn btn-outline-dark btn-sm" (click)="signOut()">
+          Sign out
+        </div>
+        <!-- <div class="dropdown">
                   <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
                     <strong>mdo</strong>
                   </a>
                 </div> -->
-              </div>
-        </div>
-        <div class="col-lg-9 col ">
-            <div class="p-3 bg-body-tertiary shadow border border-dark rounded" >
-              <router-outlet></router-outlet>
-            </div>
-        </div>
+      </div>
     </div>
+    <div class="col-lg-9 col">
+      <div class="p-3 bg-body-tertiary shadow border border-dark rounded">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
 </div>
 <app-footer></app-footer>

@@ -1,5 +1,6 @@
 package com.dcg.mvc.unit;
 
+import com.dcg.exception.ResourceNotFoundException;
 import com.dcg.mvc.course.Course;
 import com.dcg.mvc.course.CourseRepository;
 import com.dcg.mvc.lecture.Lecture;
@@ -95,5 +96,25 @@ public class UnitService {
         }
 
         return course;
+    }
+
+    public List<Unit> updateUnits(List<Unit> updatedUnits) {
+        // Create a list to hold updated units
+        for (Unit updatedUnit : updatedUnits) {
+            // Find the existing unit by ID
+            Unit existingUnit = unitRepository.findById(updatedUnit.getId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Unit not found with id: " + updatedUnit.getId()));
+
+            // Check if the existing title is different from the updated title
+            if (!existingUnit.getUnitTitle().equals(updatedUnit.getUnitTitle())) {
+                // Update the unit's properties (e.g., title)
+                existingUnit.setUnitTitle(updatedUnit.getUnitTitle());
+
+                // Save the updated unit back to the repository
+                unitRepository.save(existingUnit);
+            }
+        }
+        // Return the list of updated units
+        return updatedUnits;
     }
 }

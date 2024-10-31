@@ -116,5 +116,9 @@ export class CourseDataService {
   uploadCourseImage(courseId: number, imageData: FormData): Observable<any> {
     return this.http.post(`${environment.apiBaseUrl}course/${courseId}/image`, imageData);
   }
+  updateUnits(units:Unit[]): Observable<any> {
+    var unitsData=units.map((ele)=>({id:ele.id,unitTitle:ele.unitTitle}))
+    return this.http.put(`${environment.apiBaseUrl}unit/bulk-update`,unitsData);
+  }
 
 }

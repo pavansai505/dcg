@@ -53,6 +53,9 @@ import { contestQuizGuardGuard } from './guard/contest-quiz-guard.guard';
 import { ContestsQuizComponent } from './components/contests/contests-quiz/contests-quiz.component';
 import { AdminContestComponent } from './components/admin/admin-dashboard/admin-contest/admin-contest.component';
 import { AdminContestStatusComponent } from './components/admin/admin-dashboard/admin-contest-status/admin-contest-status.component';
+import { InstructorModifyUnitsComponent } from './components/instructor/instructor-modify-units/instructor-modify-units.component';
+import { InstructorModifyLecturesComponent } from './components/instructor/instructor-modify-lectures/instructor-modify-lectures.component';
+import { InstructorDeleteUnitsComponent } from './components/instructor/instructor-delete-units/instructor-delete-units.component';
 
 export const routes: Routes = [
   // Home route
@@ -256,9 +259,33 @@ export const routes: Routes = [
         canActivate: [titleGuardGuard],
       },
       {
+        path: 'courses/units/modify',
+        component: InstructorModifyUnitsComponent,
+        data: { title: 'Modify Course Units' },
+        canActivate: [titleGuardGuard],
+      },
+      {
+        path: 'courses/units/delete',
+        component: InstructorDeleteUnitsComponent,
+        data: { title: 'Delete Course Units' },
+        canActivate: [titleGuardGuard],
+      },
+      {
         path: 'courses/lessons/add',
         component: InstructorAddLessonsComponent,
         data: { title: 'Add Course Lessons' },
+        canActivate: [titleGuardGuard],
+      },
+      {
+        path: 'courses/lessons/modify',
+        component: InstructorModifyLecturesComponent,
+        data: { title: 'Modify Course Lessons' },
+        canActivate: [titleGuardGuard],
+      },
+      {
+        path: 'courses/lessons/delete',
+        component: InstructorModifyLecturesComponent,
+        data: { title: 'Delete Course Lessons' },
         canActivate: [titleGuardGuard],
       },
       {
@@ -377,7 +404,7 @@ export const routes: Routes = [
         path: ':id/info',
         component: ContestsInfoComponent,
         data: { title: 'Contest info' },
-        canActivate: [titleGuardGuard],
+        canActivate: [titleGuardGuard,contestGuardGuard],
       },
       {
         path: ':id/quiz',

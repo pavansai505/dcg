@@ -1,10 +1,10 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { CourseDataService } from '../services/course/course-data.service';
 import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { AccessControlService } from '../services/auth/access-control.service';
 import { ContestService } from '../services/contest/contest.service';
+import { Contest } from '../models/contest/contest';
 
 export const contestGuardGuard: CanActivateFn = (route, state) => {
   const contestService = inject(ContestService);
@@ -15,7 +15,8 @@ export const contestGuardGuard: CanActivateFn = (route, state) => {
   const contestId = Number(route.paramMap.get('id'));
 
   if (!contestId) {
-    // If no ID is present, deny access
+    // If no ID is present, deny access and navigate to /contests
+    router.navigate(['/contests']);
     return of(false);
   }
 
@@ -26,34 +27,14 @@ export const contestGuardGuard: CanActivateFn = (route, state) => {
   }
 
   return contestService.getContestById(contestId).pipe(
-    map(data => {
-      const now = new Date();
-      const isBetween = now >= new Date(data.startDate) && now <= new Date(data.endDate);
-
-      if (!isBetween) {
-        // If the contest is ongoing, redirect to the contest info page
-        router.navigate([`contests/${contestId}/info`]);
-        return false;
+    map((data: Contest) => !data.disabled),
+    tap((isAccessible) => {
+      if (!isAccessible) {
+        router.navigate(['/contests']); // Redirect if the contest is disabled
       }
-
-      return data;
     }),
-    switchMap(data => 
-      contestService.isUserRegisteredToContest(contestId).pipe(
-        map(registration => {
-          if (registration.resultTrue) {
-            return true;
-          } else {
-            // If the user is not registered, redirect to the contest info page
-            router.navigate([`contest/${contestId}/info`]);
-            return false;
-          }
-        })
-      )
-    ),
     catchError(() => {
-      // Handle errors by redirecting or denying access
-      router.navigate([`contests/${contestId}/info`]);
+      router.navigate(['/contests']); // Redirect on error
       return of(false);
     })
   );
