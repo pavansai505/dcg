@@ -4,7 +4,6 @@ import com.dcg.common.BaseEntity;
 import com.dcg.mvc.course.Course;
 import com.dcg.mvc.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

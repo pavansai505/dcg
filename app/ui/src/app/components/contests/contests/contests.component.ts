@@ -5,21 +5,25 @@ import { ContestService } from '../../../services/contest/contest.service';
 import { Contest } from '../../../models/contest/contest';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { LoaderComponent } from "../../utilities/loader/loader.component";
 
 @Component({
   selector: 'app-contests',
   standalone: true,
-  imports: [NavbarComponent, FooterComponent,CommonModule,RouterLink,DatePipe],
+  imports: [NavbarComponent, FooterComponent, CommonModule, RouterLink, DatePipe, LoaderComponent],
   templateUrl: './contests.component.html',
   styleUrl: './contests.component.css'
 })
 export class ContestsComponent {
-
+  loading:boolean=false
   contests:Contest[]=[]
   constructor(private contestService:ContestService){}
   ngOnInit(){
+    this.loading=true
     this.contestService.getContests().subscribe({
       next:(data)=>{this.contests=data;
+      },complete:()=>{
+        this.loading=false
       }
       
     })

@@ -83,6 +83,12 @@ public class User implements UserDetails, Principal {
     @Column(insertable = false)
     private LocalDateTime lastModifiedDate;
 
+    @Column(nullable = true)
+    private LocalDateTime nameLastModifiedDate;
+
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean disabled;
+
     public String getFullName() {
         return firstName + " " + lastName;
     }

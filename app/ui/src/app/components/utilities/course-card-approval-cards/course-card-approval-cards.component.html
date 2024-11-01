@@ -1,9 +1,10 @@
-<div
-  class="card bg-body-tertiary h-100"
->
+<div class="card bg-body-tertiary h-100">
   <img
-  [src]="course.imageUrl?(imagePageUrl+'images/course/'+ course.id +'/'+ course.imageUrl) : 'https://www.picsum.photos/170/100'" 
-             
+    [src]="
+      course.imageUrl
+        ? imagePageUrl + 'images/course/' + course.id + '/' + course.imageUrl
+        : 'https://www.picsum.photos/170/100'
+    "
     class="card-img-top"
     alt="..."
   />
@@ -19,16 +20,37 @@
       {{ course.authorName }}
     </p>
     <p class="card-text">Units : {{ course.units.length }}</p>
-    <div class="d-flex justify-content-between align-items-center mt-auto" >
+    <div class="d-flex justify-content-between align-items-center mt-auto">
       <div class="btn-group">
-        <button type="button" class="btn btn-sm btn-outline-success fw-bold" *ngIf="course.approvalStatus!='approved'" (click)="changeStatus(course.id,'approved')">
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-success fw-bold"
+          *ngIf="course.approvalStatus != 'approved'"
+          (click)="changeStatus(course.id, 'approved')"
+        >
           Approve
         </button>
-        <button type="button" class="btn btn-sm btn-outline-danger fw-bold" *ngIf="course.approvalStatus!='rejected'" (click)="changeStatus(course.id,'rejected')">
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-danger fw-bold"
+          *ngIf="course.approvalStatus != 'rejected'"
+          (click)="changeStatus(course.id, 'rejected')"
+        >
           Reject
-        </button> 
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-dark fw-bold"
+          [routerLink]="['/courses/course/info', course.id]"
+          routerLinkActive="router-link-active"
+        >
+          View
+        </button>
       </div>
-      <small class="text-body-secondary centerIt"><i class="bi bi-patch-check fs-6 text-warning">&nbsp;</i>Verified</small>
+      <small class="text-body-secondary centerIt"
+        ><i class="bi bi-patch-check fs-6 text-warning">&nbsp;</i
+        >Verified</small
+      >
     </div>
   </div>
 </div>

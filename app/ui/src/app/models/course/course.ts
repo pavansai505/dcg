@@ -29,4 +29,5 @@ export interface Course {
   histories:CourseActionHistory[],
   quiz:Quiz
   imageUrl:string
+  disabled:boolean
 }

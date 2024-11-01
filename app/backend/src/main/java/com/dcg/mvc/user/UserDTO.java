@@ -27,6 +27,8 @@ public class UserDTO {
     private LocalDate dateOfBirth;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
+    private LocalDateTime nameLastModifiedDate;
+    private boolean disabled;
     private List<RoleDTO> roles;
     private String imageUrl;
     @JsonIgnoreProperties({"badge","units","histories","quiz","users"})

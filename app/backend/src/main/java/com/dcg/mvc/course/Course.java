@@ -38,6 +38,8 @@ public class Course extends BaseEntity {
     private String synopsis;
     private String courseCover;
     private double price;
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean disabled;
 
     @ManyToMany(mappedBy = "courses", fetch = FetchType.EAGER)
     @JsonIgnore
@@ -75,19 +77,19 @@ public class Course extends BaseEntity {
     @Column(name = "end_goal")
     private List<String> endGoals = new ArrayList<>();
 
-    @PrePersist
-    private void generateCourseCode() {
-        if (this.courseCode == null) {
-            this.courseCode = generateUniqueHashCode();
-        }
-    }
+   
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Payment> payments = new ArrayList<>();
     @OneToOne(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
     @JsonIgnoreProperties("course")
     private Quiz quiz; // One-to-one relationship with Quiz
-
+    @PrePersist
+    private void generateCourseCode() {
+        if (this.courseCode == null) {
+            this.courseCode = generateUniqueHashCode();
+        }
+    }
     private String generateUniqueHashCode() {
         try {
             String data = title + authorName + System.currentTimeMillis();

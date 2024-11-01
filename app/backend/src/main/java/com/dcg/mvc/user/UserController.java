@@ -3,6 +3,7 @@ package com.dcg.mvc.user;
 import com.dcg.exception.CustomUserExceptions;
 import com.dcg.handlers.password.ForgotPasswordHandler;
 import com.dcg.model.*;
+import com.dcg.mvc.contest.Contest;
 import com.dcg.mvc.coupon.Coupon;
 import com.dcg.mvc.coupon.CouponService;
 import com.dcg.mvc.course.Course;
@@ -29,6 +30,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -168,9 +170,9 @@ public class UserController {
     }
 
     @PutMapping("/update") // PUT request to update user by ID
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
+    public ResponseEntity<User> updateUser(@RequestBody UpdateUserName updateUserName,Authentication authentication) {
         try {
-            User updatedUser = userService.updateUser(user);
+            User updatedUser = userService.updateUser(updateUserName,((UserDetails) authentication.getPrincipal()).getUsername());
             return new ResponseEntity<>(updatedUser, HttpStatus.OK); // Return the updated user with 200 OK
         } catch (CustomUserExceptions.UserNotFoundException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); // Return 404 if user not found
@@ -221,42 +223,40 @@ public class UserController {
         }
     }
 
-//    @GetMapping("/profile/images/{imageName:.+}")
-//    public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
-//        try {
-//            Resource resource = resourceLoader.getResource("classpath:static/images/" + imageName);
-//            System.out.println(resource);
-//            System.out.println(resource.exists());
-//            if (resource.exists()) {
-//                HttpHeaders headers = new HttpHeaders();
-//                String contentType = determineContentType(imageName);
-//                headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + imageName + "\"");
-//                headers.add(HttpHeaders.CONTENT_TYPE, contentType); // Set the content type
-//
-//                // Add cache control headers
-//                headers.add(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-//                headers.add(HttpHeaders.PRAGMA, "no-cache"); // HTTP 1.0.
-//                headers.add(HttpHeaders.EXPIRES, "0"); // Proxies.
-//
-//                return ResponseEntity.ok()
-//                        .headers(headers)
-//                        .body(resource);
-//            } else {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//            }
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//        }
-//    }
-//
-//    private String determineContentType(String imageName) {
-//        if (imageName.endsWith(".png")) {
-//            return "image/png";
-//        } else if (imageName.endsWith(".jpg") || imageName.endsWith(".jpeg")) {
-//            return "image/jpeg";
-//        } else {
-//            return "application/octet-stream"; // Default if the type is unknown
-//        }
-//    }
+    @PatchMapping("/{userId}/toggle/status")
+    public ResponseEntity<User> toggleStatus(@PathVariable Long userId) {
+        return ResponseEntity.ok(userService.toggleUser(userId));
+    }
+    @PostMapping("/bulk-add")
+    public ResponseEntity<CustomResponse> addUsersInBulk(@RequestBody List<User> users) {
+        // Validate the input
+        if (users == null || users.isEmpty()) {
+            return ResponseEntity.badRequest().body(CustomResponse.builder().message("User list cannot be empty.").build());
+        }
+
+        List<String> errors = new ArrayList<>();
+
+        // Iterate over users and attempt to create each account
+        for (User user : users) {
+            try {
+                userService.createAccount(user);
+            } catch (CustomUserExceptions.UserAlreadyExistsException e) {
+                // Collect the error message instead of failing fast
+                errors.add("User with email " + user.getEmail() + " already exists.");
+            } catch (Exception e) {
+                // Handle other exceptions as needed
+                errors.add("Failed to create account for user " + user.getEmail() + ": " + e.getMessage());
+            }
+        }
+
+        // Check if there were any errors during the process
+        if (!errors.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).body(CustomResponse.builder().message(String.join(", ", errors)).build());
+        }
+
+        // If all users are added successfully
+        return ResponseEntity.status(HttpStatus.CREATED).body(CustomResponse.builder().message("All users added successfully.").build());
+    }
+
 
 }

@@ -53,9 +53,12 @@ import { contestQuizGuardGuard } from './guard/contest-quiz-guard.guard';
 import { ContestsQuizComponent } from './components/contests/contests-quiz/contests-quiz.component';
 import { AdminContestComponent } from './components/admin/admin-dashboard/admin-contest/admin-contest.component';
 import { AdminContestStatusComponent } from './components/admin/admin-dashboard/admin-contest-status/admin-contest-status.component';
-import { InstructorModifyUnitsComponent } from './components/instructor/instructor-modify-units/instructor-modify-units.component';
-import { InstructorModifyLecturesComponent } from './components/instructor/instructor-modify-lectures/instructor-modify-lectures.component';
-import { InstructorDeleteUnitsComponent } from './components/instructor/instructor-delete-units/instructor-delete-units.component';
+import { InstructorModifyUnitsComponent } from './components/instructor/instructor-dashboard/instructor-modify-units/instructor-modify-units.component';
+import { InstructorModifyLecturesComponent } from './components/instructor/instructor-dashboard/instructor-modify-lectures/instructor-modify-lectures.component';
+import { InstructorDeleteUnitsComponent } from './components/instructor/instructor-dashboard/instructor-delete-units/instructor-delete-units.component';
+import { AdminAddUsersComponent } from './components/admin/admin-dashboard/admin-add-users/admin-add-users.component';
+import { InstructorAddQuizLecturesComponent } from './components/instructor/instructor-dashboard/instructor-add-quiz-lectures/instructor-add-quiz-lectures.component';
+import { InstructorDeleteLecturesComponent } from './components/instructor/instructor-dashboard/instructor-delete-lectures/instructor-delete-lectures.component';
 
 export const routes: Routes = [
   // Home route
@@ -229,70 +232,90 @@ export const routes: Routes = [
         canActivate: [titleGuardGuard],
       },
       {
-        path: 'stats',
-        component: InstructorCheckStatsComponent,
-        data: { title: 'Instructor Stats' },
-        canActivate: [titleGuardGuard],
-      },
-      {
         path: 'courses',
-        component: InstructorMyCoursesComponent,
-        data: { title: 'My Courses' },
-        canActivate: [titleGuardGuard],
-      },
-      {
-        path: 'courses/modify',
-        component: InstructorModifyCourseComponent,
-        data: { title: 'Modify Course' },
-        canActivate: [titleGuardGuard],
-      },
-      {
-        path: 'courses/add',
-        component: InstructorAddCourseComponent,
-        data: { title: 'Add New Course' },
-        canActivate: [titleGuardGuard],
-      },
-      {
-        path: 'courses/units/add',
-        component: InstructorAddUnitsComponent,
-        data: { title: 'Add Course Units' },
-        canActivate: [titleGuardGuard],
-      },
-      {
-        path: 'courses/units/modify',
-        component: InstructorModifyUnitsComponent,
-        data: { title: 'Modify Course Units' },
-        canActivate: [titleGuardGuard],
-      },
-      {
-        path: 'courses/units/delete',
-        component: InstructorDeleteUnitsComponent,
-        data: { title: 'Delete Course Units' },
-        canActivate: [titleGuardGuard],
-      },
-      {
-        path: 'courses/lessons/add',
-        component: InstructorAddLessonsComponent,
-        data: { title: 'Add Course Lessons' },
-        canActivate: [titleGuardGuard],
-      },
-      {
-        path: 'courses/lessons/modify',
-        component: InstructorModifyLecturesComponent,
-        data: { title: 'Modify Course Lessons' },
-        canActivate: [titleGuardGuard],
-      },
-      {
-        path: 'courses/lessons/delete',
-        component: InstructorModifyLecturesComponent,
-        data: { title: 'Delete Course Lessons' },
-        canActivate: [titleGuardGuard],
-      },
-      {
-        path: 'courses/badge/add',
-        component: InstructorAddBadgeComponent,
-        data: { title: 'Add Course Badge' },
-        canActivate: [titleGuardGuard],
+        children: [
+          {
+            path: '',
+            component: InstructorMyCoursesComponent,
+            data: { title: 'My Courses' },
+            canActivate: [titleGuardGuard],
+          },
+          {
+            path: 'modify',
+            component: InstructorModifyCourseComponent,
+            data: { title: 'Modify Course' },
+            canActivate: [titleGuardGuard],
+          },
+          {
+            path: 'add',
+            component: InstructorAddCourseComponent,
+            data: { title: 'Add New Course' },
+            canActivate: [titleGuardGuard],
+          },
+          {
+            path: 'units',
+            children: [
+              {
+                path: 'add',
+                component: InstructorAddUnitsComponent,
+                data: { title: 'Add Course Units' },
+                canActivate: [titleGuardGuard],
+              },
+              {
+                path: 'modify',
+                component: InstructorModifyUnitsComponent,
+                data: { title: 'Modify Course Units' },
+                canActivate: [titleGuardGuard],
+              },
+              {
+                path: 'delete',
+                component: InstructorDeleteUnitsComponent,
+                data: { title: 'Delete Course Units' },
+                canActivate: [titleGuardGuard],
+              },
+            ],
+          },
+          {
+            path: 'lessons',
+            children: [
+              {
+                path: 'add',
+                component: InstructorAddLessonsComponent,
+                data: { title: 'Add Course Lessons' },
+                canActivate: [titleGuardGuard],
+              },
+              {
+                path: 'modify',
+                component: InstructorModifyLecturesComponent,
+                data: { title: 'Modify Course Lessons' },
+                canActivate: [titleGuardGuard],
+              },
+              {
+                path: 'delete',
+                component: InstructorDeleteLecturesComponent,
+                data: { title: 'Delete Course Lessons' },
+                canActivate: [titleGuardGuard],
+              },
+              {
+                path: 'quiz',
+                component: InstructorAddQuizLecturesComponent,
+                data: { title: 'Add quiz ' },
+                canActivate: [titleGuardGuard],
+              },
+            ],
+          },
+          {
+            path: 'badge',
+            children: [
+              {
+                path: 'add',
+                component: InstructorAddBadgeComponent,
+                data: { title: 'Add Course Badge' },
+                canActivate: [titleGuardGuard],
+              },
+            ],
+          },
+        ],
       },
     ],
   },
@@ -345,12 +368,6 @@ export const routes: Routes = [
         canActivate: [titleGuardGuard],
       },
       {
-        path: 'stats',
-        component: AdminStatsComponent,
-        data: { title: 'Admin Stats' },
-        canActivate: [titleGuardGuard],
-      },
-      {
         path: 'coupon',
         component: AdminCouponComponent,
         data: { title: 'Coupon' },
@@ -366,6 +383,12 @@ export const routes: Routes = [
         path: 'users',
         component: AdminUsersComponent,
         data: { title: 'Users' },
+        canActivate: [titleGuardGuard],
+      },
+      {
+        path: 'users/add',
+        component: AdminAddUsersComponent,
+        data: { title: 'Add users' },
         canActivate: [titleGuardGuard],
       },
       {

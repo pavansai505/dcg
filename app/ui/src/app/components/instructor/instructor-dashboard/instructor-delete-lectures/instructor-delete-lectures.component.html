@@ -1,0 +1,116 @@
+<div class="container-fluid p-0">
+  <div class="row justify-content-center">
+    <div class="col" *ngIf="!showForm">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-3">
+        <div class="col" *ngFor="let course of courses">
+          <div
+            class="card bg-body-tertiary h-100"
+            (click)="showFormForCard(course)"
+            routerLinkActive="router-link-active"
+          >
+            <img
+              [src]="
+                course.imageUrl
+                  ? imagePageUrl +
+                    'images/course/' +
+                    course.id +
+                    '/' +
+                    course.imageUrl
+                  : 'https://www.picsum.photos/170/100'
+              "
+              loading="lazy"
+              class="card-img-top"
+              style="height: 45%"
+            />
+
+            <div class="card-body d-flex flex-column" style="height: 55%">
+              <p class="card-title fw-bold h-100">
+                {{ course.title }}
+              </p>
+              <p class="card-text">
+                {{ course.description | limitTo : "60" }}
+              </p>
+              <p class="card-text text-success">
+                <i class="bi bi-person-check-fill"></i>
+                {{ course.authorName }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col" *ngIf="showForm">
+      <div
+        class="card"
+        style="border: none !important; background-color: inherit"
+      >
+        <div class="card-body p-5">
+          <button
+            class="card-title text-start mb-4 btn btn-info fw-bolder"
+            (click)="
+              selectedCourse = null; selectedUnit = null; showForm = false
+            "
+          >
+            Back
+          </button>
+          <h3 class="card-title text-center mb-4 fs-2 fw-bolder">
+            {{ selectedCourse?.title }}
+          </h3>
+          <h3 class="card-title text-center mb-4 fs-2 fw-bolder">Quiz Form</h3>
+          <div>
+            <label for="unitId" class="mb-1">Select a unit</label>
+            <select
+              class="form-select mb-4"
+              id="unitId"
+              aria-label="Default select example"
+              (change)="setUnit($event)"
+            >
+              <option value="" selected disabled hidden>Choose</option>
+              <option
+                *ngFor="let unit of selectedCourse?.units"
+                [value]="unit.id"
+              >
+                {{ unit.unitTitle }}
+              </option>
+            </select>
+          </div>
+
+          <div *ngIf="showLectures">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                  <h5 class="card-title mb-4 text-center">Disable Course Units</h5>
+                  <!-- course.component.html -->
+                  <!-- course.component.html -->
+                  <div class="container mt-4">
+                    <h2 class="text-primary">{{ selectedUnit?.unitTitle }}</h2>
+                    <ul class="list-group">
+                      <li
+                        *ngFor="let lecture of selectedUnit?.lectures"
+                        class="list-group-item d-flex justify-content-between align-items-center mb-3"
+                      >
+                        <div class="fs-5">{{lecture.lessonTitle}}</div>
+                        <span 
+                          >
+                          <div class="form-check form-switch">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                role="switch"
+                                [checked]="!lecture.disabled"
+                                (change)="toggleLectureStatus(lecture.id)"
+                                [ngClass]="{'bg-success': !lecture.disabled, 'bg-danger': lecture.disabled}"
+                              />
+                            </div>
+                          </span
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

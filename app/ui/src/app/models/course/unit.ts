@@ -11,4 +11,6 @@ export interface Unit {
   unitTitle: string;
   description:string;
   lectures: Lecture[]; // List of lectures in the unit
+  disabled:boolean
+
 }

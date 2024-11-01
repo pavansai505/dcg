@@ -53,11 +53,13 @@ public class BadgeController {
         Badge badge = badgeService.createOrUpdateBadge(request);
         return new ResponseEntity<>(badge, HttpStatus.CREATED);
     }
+
     @PutMapping("/assign/{courseId}")
     public ResponseEntity<Badge> assignBadge(@PathVariable Long courseId) {
         Badge badge1 = badgeService.awardBadgesByCourseId(courseId);
         return new ResponseEntity<>(badge1, HttpStatus.OK);
     }
+
     /**
      * Retrieves all badges for a specific course.
      *
@@ -78,11 +80,12 @@ public class BadgeController {
      */
     @PostMapping("/award/course/{courseId}")
     public ResponseEntity<Badge> awardBadgesByCourseId(@PathVariable Long courseId) {
-        return new ResponseEntity<>(badgeService.awardBadgesByCourseId(courseId),HttpStatus.OK);
+        return new ResponseEntity<>(badgeService.awardBadgesByCourseId(courseId), HttpStatus.OK);
     }
 
     @PostMapping("{id}/image")
-    public ResponseEntity<Map<String, String>> uploadImage(@PathVariable Long id, @RequestParam("file") MultipartFile file, Authentication authentication) {
+    public ResponseEntity<Map<String, String>> uploadImage(@PathVariable Long id,
+            @RequestParam("file") MultipartFile file, Authentication authentication) {
         try {
             String imageUrl = badgeService.uploadCourseImage(
 
@@ -95,10 +98,10 @@ public class BadgeController {
 
             return ResponseEntity.ok(response); // Return the JSON response
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Error uploading image: " + e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Error uploading image: " + e.getMessage()));
         }
 
     }
-
 
 }

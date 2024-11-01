@@ -15,4 +15,5 @@ export interface Lecture {
   code: string;
   enable: boolean;
   quizzes:Quiz[];
+  disabled:boolean;
 }

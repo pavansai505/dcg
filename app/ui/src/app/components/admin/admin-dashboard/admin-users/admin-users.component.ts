@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UserDetailsService } from '../../../../services/user/user-details.service';
 import { User } from '../../../../models/user/user';
 import { CommonModule } from '@angular/common'; // Import CommonModule
+import { ToastService } from '../../../../services/toast/toast.service';
 
 @Component({
   selector: 'app-admin-users',
@@ -13,7 +14,7 @@ import { CommonModule } from '@angular/common'; // Import CommonModule
 export class AdminUsersComponent {
   users!: User[];
 
-  constructor(private userService: UserDetailsService) {}
+  constructor(private userService: UserDetailsService,private toast:ToastService) {}
 
   ngOnInit() {
     this.getUsers();
@@ -64,5 +65,27 @@ export class AdminUsersComponent {
   // Method to check if the user has a specific role
   hasRole(user: User, roleName: string): boolean {
     return user.roles.some(role => role.name === roleName);
+  }
+  toggleUserStatus(id: number): void {
+    const user = this.users.find((user) => user.id === id);
+
+    if (user) {
+      // Toggle the disabled field
+      user.disabled = !user.disabled;
+
+      // Update the server with the new disabled state
+      this.userService.toggleUserStatus(id).subscribe({
+        next: (response) => {
+          console.log('Contest status updated successfully:', response);
+        },
+        error: (error) => {
+          console.error('Error updating contest status:', error);
+          user.disabled = !user.disabled; // Revert the change if needed
+          this.toast.showToast('Error');
+        },
+      });
+    } else {
+      console.log(`Contest with id ${id} not found.`);
+    }
   }
 }

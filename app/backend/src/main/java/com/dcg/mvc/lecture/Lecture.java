@@ -27,6 +27,7 @@ public class Lecture extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "unit_id")
     @JsonIgnoreProperties("lectures")
+    @JsonIgnore
     private Unit unit;
 
     private Long lessonId;
@@ -45,8 +46,10 @@ public class Lecture extends BaseEntity {
 
     @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("lecture")
+    @OrderBy("createdDate ASC") // Change to DESC for descending order
     private Set<Quiz> quizzes; // One-to-many relationship with Quiz
-
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean disabled;
     @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<LectureProgress> lectureProgresses = new ArrayList<>();

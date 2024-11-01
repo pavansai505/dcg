@@ -2,6 +2,8 @@ package com.dcg.mvc.course;
 
 import com.dcg.exception.CourseNotFoundException;
 import com.dcg.model.RegistrationStatusResponse;
+import com.dcg.mvc.contest.Contest;
+import com.dcg.mvc.contest.ContestNotFoundException;
 import com.dcg.mvc.history.CourseActionHistory;
 import com.dcg.mvc.history.HistoryUpdate;
 import com.dcg.mvc.lecture.Lecture;
@@ -11,6 +13,7 @@ import com.dcg.mvc.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +36,8 @@ public class CourseController {
 
     /**
      * Endpoint to add a single course.
-     * @param course The course to be added.
+     * 
+     * @param course        The course to be added.
      * @param connectedUser The authenticated user.
      * @return The added course.
      */
@@ -45,7 +49,8 @@ public class CourseController {
 
     /**
      * Endpoint to add multiple courses.
-     * @param courses The list of courses to be added.
+     * 
+     * @param courses       The list of courses to be added.
      * @param connectedUser The authenticated user.
      * @return The list of added courses.
      */
@@ -54,6 +59,7 @@ public class CourseController {
         List<Course> savedCourses = courseService.addMultipleCourses(courses, connectedUser);
         return ResponseEntity.ok(savedCourses);
     }
+
     @PutMapping("/{id}/update")
     public ResponseEntity<Course> updateCourse(@PathVariable("id") Long courseId, @RequestBody Course updatedCourse) {
         try {
@@ -65,10 +71,12 @@ public class CourseController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     /**
      * Endpoint to add a unit to a course.
-     * @param unit The unit to be added.
-     * @param courseId The ID of the course to which the unit will be added.
+     * 
+     * @param unit          The unit to be added.
+     * @param courseId      The ID of the course to which the unit will be added.
      * @param connectedUser The authenticated user.
      * @return The updated course with the new unit.
      */
@@ -83,8 +91,9 @@ public class CourseController {
 
     /**
      * Endpoint to add multiple units to a course.
-     * @param units The list of units to be added.
-     * @param courseId The ID of the course to which the units will be added.
+     * 
+     * @param units         The list of units to be added.
+     * @param courseId      The ID of the course to which the units will be added.
      * @param connectedUser The authenticated user.
      * @return The updated course with the new units.
      */
@@ -99,9 +108,10 @@ public class CourseController {
 
     /**
      * Endpoint to add a lecture to a unit within a course.
-     * @param lecture The lecture to be added.
-     * @param courseId The ID of the course containing the unit.
-     * @param unitId The ID of the unit to which the lecture will be added.
+     * 
+     * @param lecture       The lecture to be added.
+     * @param courseId      The ID of the course containing the unit.
+     * @param unitId        The ID of the unit to which the lecture will be added.
      * @param connectedUser The authenticated user.
      * @return The updated course with the new lecture.
      */
@@ -117,9 +127,10 @@ public class CourseController {
 
     /**
      * Endpoint to add multiple lectures to a unit within a course.
-     * @param lectures The list of lectures to be added.
-     * @param courseId The ID of the course containing the unit.
-     * @param unitId The ID of the unit to which the lectures will be added.
+     * 
+     * @param lectures      The list of lectures to be added.
+     * @param courseId      The ID of the course containing the unit.
+     * @param unitId        The ID of the unit to which the lectures will be added.
      * @param connectedUser The authenticated user.
      * @return The updated course with the new lectures.
      */
@@ -135,6 +146,7 @@ public class CourseController {
 
     /**
      * Endpoint to get all courses.
+     * 
      * @return The list of all courses.
      */
     @GetMapping("/get")
@@ -149,6 +161,7 @@ public class CourseController {
 
     /**
      * Endpoint to get a course by its ID.
+     * 
      * @param id The ID of the course.
      * @return The course with the specified ID.
      */
@@ -157,6 +170,7 @@ public class CourseController {
         Course course = courseService.getCourseById(id);
         return ResponseEntity.ok(courseMapper.toDTO(course));
     }
+
     @GetMapping("/get/v2/{courseCode}")
     public ResponseEntity<CourseDTO> getCourseByCourseCode(@PathVariable String courseCode) {
         Course course = courseService.getCourseByCourseCode(courseCode);
@@ -165,6 +179,7 @@ public class CourseController {
 
     /**
      * Endpoint to get courses by the logged-in user's ID, returning DTOs.
+     * 
      * @param currentUser The authenticated user.
      * @return The list of courses for the logged-in user as DTOs.
      */
@@ -183,6 +198,7 @@ public class CourseController {
 
     /**
      * Endpoint to get courses by a user's ID.
+     * 
      * @param id The ID of the user.
      * @return The list of courses for the specified user.
      */
@@ -198,6 +214,7 @@ public class CourseController {
 
     /**
      * Endpoint to get the count of all courses.
+     * 
      * @return The total number of courses.
      */
     @GetMapping("/getCourseCount")
@@ -208,6 +225,7 @@ public class CourseController {
 
     /**
      * Endpoint to register a user to a course.
+     * 
      * @param courseRegister The course registration details.
      * @param authentication The authenticated user.
      * @return The updated course with the new registration.
@@ -216,12 +234,14 @@ public class CourseController {
     public ResponseEntity<Course> registerUserToCourse(
             @RequestBody CourseRegister courseRegister,
             Authentication authentication) {
-        Course updatedCourse = courseService.registerUserToCourse(courseRegister, (UserDetails) authentication.getPrincipal());
+        Course updatedCourse = courseService.registerUserToCourse(courseRegister,
+                (UserDetails) authentication.getPrincipal());
         return ResponseEntity.ok(updatedCourse);
     }
 
     /**
      * Endpoint to check if a user is registered for a course.
+     * 
      * @param courseRegister The course registration details.
      * @param authentication The authenticated user.
      * @return The registration status response.
@@ -230,13 +250,15 @@ public class CourseController {
     public ResponseEntity<RegistrationStatusResponse> isUserRegistered(
             @RequestBody CourseRegister courseRegister,
             Authentication authentication) {
-        boolean isRegistered = courseService.isUserRegisteredForCourse(courseRegister, (UserDetails) authentication.getPrincipal());
+        boolean isRegistered = courseService.isUserRegisteredForCourse(courseRegister,
+                (UserDetails) authentication.getPrincipal());
         RegistrationStatusResponse response = RegistrationStatusResponse.builder().isRegistered(isRegistered).build();
         return ResponseEntity.ok(response);
     }
 
     /**
      * Endpoint to update the approval status of a course.
+     * 
      * @param course The course with the updated status.
      * @return A message indicating the success of the operation.
      */
@@ -248,25 +270,29 @@ public class CourseController {
         return ResponseEntity.ok(map);
     }
 
-
     @PutMapping("/updateCourseHistory/completionPercentage")
-    public ResponseEntity<CourseActionHistory> updateCourseHistory(@RequestBody HistoryUpdate historyUpdate
-            , Authentication authentication){
-        return ResponseEntity.ok(courseService.updateCourseHistoryCompletionPercentage(historyUpdate,((UserDetails) authentication.getPrincipal()).getUsername()));
+    public ResponseEntity<CourseActionHistory> updateCourseHistory(@RequestBody HistoryUpdate historyUpdate,
+            Authentication authentication) {
+        return ResponseEntity.ok(courseService.updateCourseHistoryCompletionPercentage(historyUpdate,
+                ((UserDetails) authentication.getPrincipal()).getUsername()));
     }
+
     @GetMapping("/courseActionHistory/{id}")
-    public ResponseEntity<CourseActionHistory> getCourseHistory(@PathVariable Long id,Authentication authentication){
-        return ResponseEntity.ok(courseService.getCourseActionHistory(id,((UserDetails) authentication.getPrincipal()).getUsername()));
+    public ResponseEntity<CourseActionHistory> getCourseHistory(@PathVariable Long id, Authentication authentication) {
+        return ResponseEntity.ok(
+                courseService.getCourseActionHistory(id, ((UserDetails) authentication.getPrincipal()).getUsername()));
     }
+
     @GetMapping("/courseActionHistory/{code}/code")
-    public ResponseEntity<CourseActionHistory> getCourseHistory(@PathVariable String code,Authentication authentication){
-        return ResponseEntity.ok(courseService.getCourseActionHistoryByCode(code,((UserDetails) authentication.getPrincipal()).getUsername()));
+    public ResponseEntity<CourseActionHistory> getCourseHistory(@PathVariable String code,
+            Authentication authentication) {
+        return ResponseEntity.ok(courseService.getCourseActionHistoryByCode(code,
+                ((UserDetails) authentication.getPrincipal()).getUsername()));
     }
-
-
 
     @PostMapping("{id}/image")
-    public ResponseEntity<Map<String, String>> uploadImage(@PathVariable Long id,@RequestParam("file") MultipartFile file, Authentication authentication) {
+    public ResponseEntity<Map<String, String>> uploadImage(@PathVariable Long id,
+            @RequestParam("file") MultipartFile file, Authentication authentication) {
         try {
             String imageUrl = courseService.uploadCourseImage(
 
@@ -279,12 +305,14 @@ public class CourseController {
 
             return ResponseEntity.ok(response); // Return the JSON response
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Error uploading image: " + e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Error uploading image: " + e.getMessage()));
         }
 
     }
+
     @DeleteMapping("/{id}/delete")
-    public ResponseEntity<Void> deleteCourse(@PathVariable("id") Long courseId){
+    public ResponseEntity<Void> deleteCourse(@PathVariable("id") Long courseId) {
         try {
             courseService.deleteCourse(courseId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204 No Content
@@ -294,5 +322,6 @@ public class CourseController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // 500 Internal Server Error
         }
     }
+
 
 }

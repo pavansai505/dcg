@@ -21,23 +21,14 @@
 </div> -->
 
   <!-- * Carousel -->
-  <div class="container mt-4">
+  <div class="container mt-4" >
     <div
       id="carouselExampleCaptions"
       class="carousel slide"
       data-bs-ride="carousel"
       data-bs-interval="3000"
     >
-      <!-- <div class="carousel-indicators">
-        <button
-          *ngFor="let contest of contests; let i = index"
-          type="button"
-          [attr.data-bs-slide-to]="i"
-          [class.active]="i === 0"
-          aria-current="true"
-          [attr.aria-label]="'Slide ' + (i + 1)"
-        ></button>
-      </div> -->
+      
       <div class="carousel-inner">
         <div
           *ngFor="let contest of contests; let i = index; trackBy: trackByFn"
@@ -45,9 +36,11 @@
           [class.active]="i === 0"
         >
           <img
+          [routerLink]="['/contests/'+contest.id+'/info']" routerLinkActive="router-link-active" 
             [src]="'https://picsum.photos/1600/600?random=' + i"
             class="d-block w-100"
             [alt]="contest.title"
+            loading="lazy"
           />
           <div class="carousel-caption d-none d-md-block">
             <h5>{{ contest.title }}</h5>

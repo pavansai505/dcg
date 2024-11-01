@@ -8,7 +8,7 @@
   </h1>
   <div class="row row-cols-lg-4 row-cols-2">
     <div class="col py-2 px-4">
-      <div class="row border border-1 border-dark userCount py-2 rounded shadow ">
+      <div class="row border border-1 border-dark userCount py-2 rounded shadow " [routerLink]="['/admin/dashboard/users']">
         <div class="col ">
           <i class="bi bi-people fs-2 " style=""></i>
         </div>
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="col py-2 px-4">
-      <div class="row border border-1 border-dark courseCount py-2 rounded shadow">
+      <div class="row border border-1 border-dark courseCount py-2 rounded shadow" [routerLink]="['/admin/dashboard/courses/approved']">
         <div class="col">
           <i class="bi bi-book fs-2 " style=""></i>
         </div>

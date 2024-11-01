@@ -9,6 +9,7 @@ import { Lecture } from '../../models/course/lecture';
 import { environment } from '../../../environments/environment';
 import { Unit } from '../../models/course/unit';
 import { CourseActionHistory } from '../../models/course/courseActionHistory';
+import { Quiz } from '../../models/course/quiz';
 
 @Injectable({
   providedIn: 'root'
@@ -121,4 +122,14 @@ export class CourseDataService {
     return this.http.put(`${environment.apiBaseUrl}unit/bulk-update`,unitsData);
   }
 
+  toggleUnitStatus(id:number): Observable<any> {
+    return this.http.patch(`${environment.apiBaseUrl}unit/${id}/toggle/status`,{});
+  }
+  toggleLectureStatus(id:number): Observable<any> {
+    return this.http.patch(`${environment.apiBaseUrl}lecture/${id}/toggle/status`,{});
+  }
+
+  addQUizToLecture(id:number,data:Quiz[]): Observable<any> {
+    return this.http.post(`${environment.apiBaseUrl}course/quiz/add/${id}`,data);
+  }
 }

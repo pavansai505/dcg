@@ -35,7 +35,7 @@ services:
       dockerfile: Dockerfile
     image: pavansai505/dcg-backend:latest
     ports:
-      - "8080:8080"
+      - "8443:8443"  # Change this to match your Spring Boot app's port
     environment:
       SPRING_APPLICATION_NAME: backend
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -43,7 +43,6 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: password
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
-      SPRING_PROFILES_ACTIVE: prod
     volumes:
       - ./backend/src/main/resources/static:/app/src/main/resources/static 
     depends_on:
@@ -51,7 +50,7 @@ services:
         condition: service_healthy
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8443/actuator/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3

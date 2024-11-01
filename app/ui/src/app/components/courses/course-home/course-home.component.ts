@@ -83,6 +83,7 @@ export class CourseHomeComponent implements OnInit {
       next: ({ contests, courses }) => {
         this.contests = contests;  // Set contests from the response
         this.courses = courses;    // Set courses from the response
+        this.contests=this.contests.filter((ele)=>ele.status==="ONGOING")
       },
       error: (err) => console.error('Observable emitted an error: ' + err),
       complete: () => {},

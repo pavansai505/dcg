@@ -1,6 +1,8 @@
 package com.dcg.mvc.unit;
 
 import com.dcg.exception.ResourceNotFoundException;
+import com.dcg.mvc.contest.Contest;
+import com.dcg.mvc.contest.ContestNotFoundException;
 import com.dcg.mvc.course.Course;
 import com.dcg.mvc.course.CourseRepository;
 import com.dcg.mvc.lecture.Lecture;
@@ -8,6 +10,7 @@ import com.dcg.mvc.lecture.LectureRepository;
 import com.dcg.mvc.user.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -116,5 +119,11 @@ public class UnitService {
         }
         // Return the list of updated units
         return updatedUnits;
+    }
+    @Secured("ROLE_INSTRUCTOR")
+    public Unit toggleUnit(Long id){
+        Unit unit=unitRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Unit not found"));
+        unit.setDisabled(!unit.isDisabled());
+        return unitRepository.save(unit);
     }
 }

@@ -1,11 +1,11 @@
 package com.dcg.mvc.user;
 
 import com.dcg.constants.Roles;
-import com.dcg.exception.ResourceNotFoundException;
-import com.dcg.mvc.coupon.Coupon;
 import com.dcg.mvc.coupon.CouponService;
 import com.dcg.mvc.course.Course;
 import com.dcg.mvc.role.RoleRepository;
+import com.dcg.mvc.user.exceptions.NameModificationTooSoonException;
+import com.dcg.mvc.user.exceptions.UserDisabledException;
 import com.dcg.security.JwtTokenCreation;
 import com.dcg.exception.CustomUserExceptions.UserNotFoundException;
 import com.dcg.exception.CustomUserExceptions.UserAlreadyExistsException;
@@ -16,9 +16,9 @@ import jakarta.servlet.ServletException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,11 +26,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,6 +85,13 @@ public class UserService {
      */
     public String userLogin(User user) throws ServletException, IOException {
         try {
+            // Find the user by email first
+            Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
+            if (optionalUser.isEmpty() || optionalUser.get().isDisabled()) { // Assume you have a method to check if user is disabled
+                throw new UserDisabledException("User account is disabled for email: " + user.getEmail());
+            }
+
+            // Authenticate the user
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             user.getEmail(),
@@ -93,6 +100,10 @@ public class UserService {
 
             logger.debug("Authentication details: {}", auth);
             return jwtTokenCreation.createToken((User) auth.getPrincipal());
+        } catch (UserDisabledException e) {
+            throw e; // Re-throwing the custom exception to be handled by the handler
+        } catch (BadCredentialsException e) {
+            throw new AuthenticationFailedException("Invalid credentials for email: " + user.getEmail());
         } catch (Exception e) {
             throw new AuthenticationFailedException("Authentication failed for email: " + user.getEmail());
         }
@@ -191,35 +202,31 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public User updateUser(UpdateUserName user, String username) {
+        // Check if the user with the given email exists
+        Optional<User> optionalUser = userRepository.findByEmail(username);
 
-    public User updateUser(User user) {
-        try {
-            // Check if the user with the given ID exists
-            Optional<User> optionalUser = userRepository.findById(user.getId());
-
-            if (optionalUser.isPresent()) {
-                User existingUser = optionalUser.get();
-
-                // Update the user details
-                existingUser.setFirstName(user.getFirstName());
-                existingUser.setEmail(user.getEmail());
-                existingUser.setLastName(user.getLastName());
-
-                // Save the updated user
-                return userRepository.save(existingUser);
-            } else {
-                // Throw an exception if the user is not found
-                throw new RuntimeException("User not found with id: " + user.getId());
-            }
-        } catch (DataIntegrityViolationException e) {
-            // Handle scenario where there might be database constraints violations
-            throw new RuntimeException("Invalid data provided for the user update: " + e.getMessage());
-        } catch (Exception e) {
-            // Handle any other unexpected exceptions
-            throw new RuntimeException("An unexpected error occurred while updating the user with id: " + user.getId());
+        if (optionalUser.isEmpty()) {
+            // Throw an exception if the user is not found
+            throw new UserNotFoundException("User not found.");
         }
-    }
 
+        User existingUser = optionalUser.get();
+        LocalDateTime currentTime = LocalDateTime.now();
+
+        // Check if nameLastModifiedDate is less than 30 days old
+        if (existingUser.getNameLastModifiedDate().plusDays(30).isAfter(currentTime)) {
+            throw new NameModificationTooSoonException("Cannot update name. Last modification was less than 30 days ago.");
+        }
+
+        // Update the user details
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+        existingUser.setNameLastModifiedDate(currentTime); // Update the modification time
+
+        // Save the updated user
+        return userRepository.save(existingUser);
+    }
 
     public String uploadUserImage(String username, MultipartFile file) throws IOException {
         User user = userRepository.findByEmail(username)
@@ -266,6 +273,12 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + username));
 
         return user.getImageUrl(); // Assuming getImageUrl() method exists in User class
+    }
+    @Secured("ROLE_ADMIN")
+    public User toggleUser(Long id){
+        User user=userRepository.findById(id).orElseThrow(()->new UserNotFoundException("Contest not found"));
+        user.setDisabled(!user.isDisabled());
+        return userRepository.save(user);
     }
 
 }

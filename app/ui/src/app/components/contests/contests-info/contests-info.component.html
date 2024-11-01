@@ -8,7 +8,7 @@
        {{contest.description}}
       </p>
       <p class="lead mb-4">
-       {{contest.startDate | date:'short'}} to {{contest.endDate | date:'short'}}
+        {{ contest.startDate | date:'dd/MM/yyyy' }} to {{ contest.endDate | date:'dd/MM/yyyy' }}
       </p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
         <button type="button" class="btn btn-success btn-lg px-4 gap-3"  style="background-color: #00b300;" [disabled]="contest.maxParticipants<=contest.participants.length" *ngIf="!isRegistered" (click)="enrollToContest()">

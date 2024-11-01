@@ -55,5 +55,11 @@ promoteUser(userId: number, role: string): Observable<void> {
 removeRole(userId: number, role: string): Observable<void> {
   return this.http.post<void>(`${environment.apiBaseUrl}role/demote/${userId}`, { role });
 }
+toggleUserStatus(id:number): Observable<any> {
+  return this.http.patch<any>(`${environment.apiBaseUrl}user/${id}/toggle/status`, {});
+}
 
+addUsers(users: any[]): Observable<any> {
+  return this.http.post<any>(`${environment.apiBaseUrl}user/bulk-add`, users);
+}
 }

@@ -6,14 +6,16 @@ import com.dcg.exception.CustomUserExceptions.RoleNotFoundException;
 import com.dcg.exception.CustomUserExceptions.AuthenticationFailedException;
 
 import com.dcg.mvc.contest.ContestNotFoundException;
+import com.dcg.mvc.user.exceptions.NameModificationTooSoonException;
+import com.dcg.mvc.user.exceptions.UserDisabledException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class) // Make sure you use the right one here
@@ -72,5 +74,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ContestNotFoundException.class)
     public ResponseEntity<String> handleContestNotFoundException(ContestNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+    @ExceptionHandler(NameModificationTooSoonException.class)
+    public ResponseEntity<String> handleNameModificationTooSoon(NameModificationTooSoonException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+    @ExceptionHandler(UserDisabledException.class)
+    public ResponseEntity<String> handleUserDisabled(UserDisabledException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
     }
 }

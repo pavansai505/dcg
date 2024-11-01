@@ -12,13 +12,13 @@ import {
 
 import { CommonModule } from '@angular/common';
 import { Toast } from 'bootstrap';
-import { TruncateStringSizePipe } from '../../../pipes/truncate-string-size.pipe';
-import { Course } from '../../../models/course/course';
-import { environment } from '../../../../environments/environment';
-import { CourseDataService } from '../../../services/course/course-data.service';
-import { ToastService } from '../../../services/toast/toast.service';
+import { TruncateStringSizePipe } from '../../../../pipes/truncate-string-size.pipe';
+import { Course } from '../../../../models/course/course';
+import { environment } from '../../../../../environments/environment';
+import { CourseDataService } from '../../../../services/course/course-data.service';
+import { ToastService } from '../../../../services/toast/toast.service';
 import { log } from 'console';
-import { Unit } from '../../../models/course/unit';
+import { Unit } from '../../../../models/course/unit';
 @Component({
   selector: 'app-instructor-modify-units',
   standalone: true,

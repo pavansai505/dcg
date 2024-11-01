@@ -18,6 +18,7 @@ public class CourseMapper {
                 course.getSynopsis(),
                 course.getCourseCover(),
                 course.getPrice(),
+                course.isDisabled(),
                 course.getApprovalStatus(),
                 course.getBadge(),
                 course.getCourseLevel(),

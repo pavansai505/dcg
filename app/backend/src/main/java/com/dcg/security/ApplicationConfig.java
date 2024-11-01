@@ -1,6 +1,5 @@
 package com.dcg.security;
 
-
 import com.dcg.audit.ApplicationAuditAware;
 import com.dcg.mvc.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -57,43 +56,40 @@ public class ApplicationConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    @Bean
-public CorsFilter corsFilter() {
-    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    final CorsConfiguration config = new CorsConfiguration();
-    
-    config.setAllowCredentials(true);
-    
-    // Allow your production frontend URL
-    config.setAllowedOrigins(Arrays.asList(
-        "http://157.173.219.134:4200",   // Production frontend
-        "http://localhost:4200",          // Development frontend (optional)
-            "http://157.173.219.134",
-            "http://157.173.219.134:80",
-            "http://dcgservice.online/",
-            "https://dcgservice.online/"
-    ));
-    
-    config.setAllowedHeaders(Arrays.asList(
-        HttpHeaders.ORIGIN,
-        HttpHeaders.CONTENT_TYPE,
-        HttpHeaders.ACCEPT,
-        HttpHeaders.AUTHORIZATION
-    ));
-    
-    config.setAllowedMethods(Arrays.asList(
-        "GET",
-        "POST",
-        "DELETE",
-        "PUT",
-        "PATCH"
-    ));
-    
-    // Apply CORS settings to all endpoints
-    source.registerCorsConfiguration("/**", config);
-    
-    return new CorsFilter(source);
-}
 
+    @Bean
+    public CorsFilter corsFilter() {
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        final CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowCredentials(true);
+
+        // Allow your production frontend URL
+        config.setAllowedOrigins(Arrays.asList(
+                "http://157.173.219.134:4200", // Production frontend
+                "http://localhost:4200", // Development frontend (optional)
+                "http://157.173.219.134",
+                "http://157.173.219.134:80",
+                "http://dcgservice.online",
+                "https://dcgservice.online"));
+
+        config.setAllowedHeaders(Arrays.asList(
+                HttpHeaders.ORIGIN,
+                HttpHeaders.CONTENT_TYPE,
+                HttpHeaders.ACCEPT,
+                HttpHeaders.AUTHORIZATION));
+
+        config.setAllowedMethods(Arrays.asList(
+                "GET",
+                "POST",
+                "DELETE",
+                "PUT",
+                "PATCH"));
+
+        // Apply CORS settings to all endpoints
+        source.registerCorsConfiguration("/**", config);
+
+        return new CorsFilter(source);
+    }
 
 }

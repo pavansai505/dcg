@@ -1,7 +1,7 @@
-  server:
-  port: 8443  # Change to your desired HTTPS port
+server:
+  port: 8443  # Set your desired HTTPS port
   ssl:
-    key-store: file:/app/keystore.p12  # Path to your keystore
+    key-store: classpath:ssl/keystore.p12  # Use 'classpath:' if the keystore is in the resources directory
     key-store-password: password123  
-    key-store-type: PKCS12  # Type of keystore
+    key-store-type: PKCS12  # Specify the type of the keystore
     key-alias: dcg  # Alias of the key in the keystore
