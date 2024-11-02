@@ -2,11 +2,9 @@ package com.dcg.mvc.lecture;
 
 import com.dcg.mvc.unit.Unit;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/lecture")
@@ -17,5 +15,10 @@ public class LectureController {
     @PatchMapping("/{lectureId}/toggle/status")
     public ResponseEntity<Lecture> toggleStatus(@PathVariable Long lectureId) {
         return ResponseEntity.ok(lectureService.toggleLecture(lectureId));
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Lecture> updateLecture(@PathVariable Long id, @RequestBody LectureUpdateRequest updateRequest) {
+        Lecture updatedLecture = lectureService.updateLecture(id, updateRequest);
+        return new ResponseEntity<>(updatedLecture, HttpStatus.OK);
     }
 }

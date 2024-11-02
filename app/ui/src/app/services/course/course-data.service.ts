@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Course } from '../../models/course/course';
 import CourseApproval from '../../models/course/courseApproval';
 import CourseRegister from '../../models/course/courseRegister';
-import { Lecture } from '../../models/course/lecture';
+import { Lecture, LectureUpdateRequest } from '../../models/course/lecture';
 import { environment } from '../../../environments/environment';
 import { Unit } from '../../models/course/unit';
 import { CourseActionHistory } from '../../models/course/courseActionHistory';
@@ -132,4 +132,7 @@ export class CourseDataService {
   addQUizToLecture(id:number,data:Quiz[]): Observable<any> {
     return this.http.post(`${environment.apiBaseUrl}course/quiz/add/${id}`,data);
   }
+  updateLecture(id: number, updateRequest: LectureUpdateRequest): Observable<any> {
+    return this.http.put(`${environment.apiBaseUrl}lecture/${id}`, updateRequest);
+}
 }

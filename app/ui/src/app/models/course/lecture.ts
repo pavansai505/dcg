@@ -17,3 +17,10 @@ export interface Lecture {
   quizzes:Quiz[];
   disabled:boolean;
 }
+
+export interface LectureUpdateRequest {
+  lessonTitle: string;
+  lessonNotes: string;
+  lessonVideo: string;
+  code: string;
+}

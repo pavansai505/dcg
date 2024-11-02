@@ -8,10 +8,13 @@ import com.dcg.exception.CustomUserExceptions.AuthenticationFailedException;
 import com.dcg.mvc.contest.ContestNotFoundException;
 import com.dcg.mvc.user.exceptions.NameModificationTooSoonException;
 import com.dcg.mvc.user.exceptions.UserDisabledException;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDateTime;
 
@@ -82,5 +85,28 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserDisabledException.class)
     public ResponseEntity<String> handleUserDisabled(UserDisabledException ex) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
+    }
+    // Handle general JWT-related exceptions
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<String> handleJwtException(JwtException ex, WebRequest request) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body("Invalid or expired JWT token: " + ex.getMessage());
+    }
+
+    // Handle specific ExpiredJwtException if you want separate handling for expired tokens
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<String> handleExpiredJwtException(ExpiredJwtException ex, WebRequest request) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body("JWT token has expired: " + ex.getMessage());
+    }
+
+    // Handle other unexpected exceptions
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleGlobalException(Exception ex, WebRequest request) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("An error occurred: " + ex.getMessage());
     }
 }
