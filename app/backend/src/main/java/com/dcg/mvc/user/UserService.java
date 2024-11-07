@@ -6,6 +6,7 @@ import com.dcg.mvc.course.Course;
 import com.dcg.mvc.role.RoleRepository;
 import com.dcg.mvc.user.exceptions.NameModificationTooSoonException;
 import com.dcg.mvc.user.exceptions.UserDisabledException;
+import com.dcg.response.TokenResponse;
 import com.dcg.security.JwtTokenCreation;
 import com.dcg.exception.CustomUserExceptions.UserNotFoundException;
 import com.dcg.exception.CustomUserExceptions.UserAlreadyExistsException;
@@ -21,6 +22,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -83,7 +85,7 @@ public class UserService {
      * @throws ServletException If a servlet error occurs.
      * @throws IOException If an I/O error occurs.
      */
-    public String userLogin(User user) throws ServletException, IOException {
+    public TokenResponse userLogin(User user) throws ServletException, IOException {
         try {
             // Find the user by email first
             Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
@@ -99,7 +101,9 @@ public class UserService {
                     ));
 
             logger.debug("Authentication details: {}", auth);
-            return jwtTokenCreation.createToken((User) auth.getPrincipal());
+            return TokenResponse.builder().username(user.getFullName())
+                    .token(jwtTokenCreation.createToken((User) auth.getPrincipal()))
+                    .refreshToken(jwtTokenCreation.createRefreshToken((User) auth.getPrincipal())).build();
         } catch (UserDisabledException e) {
             throw e; // Re-throwing the custom exception to be handled by the handler
         } catch (BadCredentialsException e) {
@@ -107,6 +111,16 @@ public class UserService {
         } catch (Exception e) {
             throw new AuthenticationFailedException("Authentication failed for email: " + user.getEmail());
         }
+    }
+    public TokenResponse generateTokens(String username) throws ServletException, IOException {
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+
+        return TokenResponse.builder().username(user.getFullName())
+                .token(jwtTokenCreation.createToken(user))
+                .refreshToken(jwtTokenCreation.createRefreshToken(user)).build();
+
     }
 
     /**

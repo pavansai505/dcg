@@ -57,8 +57,8 @@ export class CourseDataService {
    updateCourse=(courseId:number,course:Course):Observable<any>=>{
       return this.http.put<any>(environment.apiBaseUrl+`course/${courseId}/update`,course)
    }
-   deleteCourse=(courseId:number):Observable<any>=>{
-      return this.http.delete<any>(environment.apiBaseUrl+`course/${courseId}/delete`)
+   toggleCourseStatus=(courseId:number):Observable<any>=>{
+      return this.http.delete<any>(environment.apiBaseUrl+`course/${courseId}/disable`)
    }
    addUnits=(units:Unit[],id:number):Observable<any>=>{
       return this.http.post<any>(environment.apiBaseUrl+"course/units/addMultiple/"+id,units)

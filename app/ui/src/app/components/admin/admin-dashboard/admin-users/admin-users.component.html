@@ -1,5 +1,6 @@
 <div class="container mt-5">
   <h2 class="text-center mb-4">User List</h2>
+  <button class="btn btn-primary mb-3" (click)="exportToExcel()">Export to Excel</button>
   <div class="table-responsive">
       <table class="table table-bordered table-striped">
           <thead>
@@ -20,7 +21,7 @@
                   <td>{{ user.email }}</td>
                   <td>
                       <ul>
-                          <li *ngFor="let role of user.roles">{{ role.name }}</li>
+                          <li *ngFor="let role of user.roles">{{ role.name.split("_")[1] }}</li>
                       </ul>
                   </td>
                   <td>{{ user.subscribeToEmail ? 'Subscribed' : 'Not Subscribed' }}</td>

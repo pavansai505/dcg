@@ -15,10 +15,10 @@ import {
   ɵɵdefineNgModule,
   ɵɵdirectiveInject
 } from "./chunk-3XMZVVQQ.js";
+import "./chunk-SAVXX6OM.js";
 import {
   fromEvent
 } from "./chunk-SG3BCSKH.js";
-import "./chunk-SAVXX6OM.js";
 import {
   filter,
   map,

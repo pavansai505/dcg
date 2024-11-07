@@ -20,6 +20,7 @@ import { Contest } from '../../../models/contest/contest';
 import Swiper from 'swiper';
 import { SwiperOptions } from 'swiper/types';
 import { forkJoin } from 'rxjs';
+import { courseConstants } from '../../../constants/CourseConstants';
 
 @Component({
   selector: 'app-course-home',
@@ -47,6 +48,7 @@ export class CourseHomeComponent implements OnInit {
   contests: Contest[] = [];
   trackByFn!: TrackByFunction<Contest>;
   swiperEl:any=null
+  constants=courseConstants
 
   @ViewChild('swiperContainer') swiperContainer!: ElementRef;
   swiperConfig: any = {

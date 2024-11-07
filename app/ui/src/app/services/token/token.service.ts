@@ -13,9 +13,9 @@ export class TokenService {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
-  getToken = (): string => {
+  getToken = (key="jwt"): string => {
     if (this.isBrowser) {
-      return window.localStorage.getItem("jwt") || "";
+      return window.localStorage.getItem(key) || "";
     }
     return "";
   }

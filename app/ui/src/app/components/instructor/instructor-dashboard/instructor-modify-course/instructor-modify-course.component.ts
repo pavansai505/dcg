@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Course } from '../../../../models/course/course';
 import { CourseDataService } from '../../../../services/course/course-data.service';
 import { ToastService } from '../../../../services/toast/toast.service';
@@ -13,7 +18,7 @@ import { finalize } from 'rxjs';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, TruncateStringSizePipe],
   templateUrl: './instructor-modify-course.component.html',
-  styleUrls: ['./instructor-modify-course.component.css']
+  styleUrls: ['./instructor-modify-course.component.css'],
 })
 export class InstructorModifyCourseComponent {
   showForm: boolean = false;
@@ -25,7 +30,7 @@ export class InstructorModifyCourseComponent {
   imagePreview: string | ArrayBuffer | null = null; // To hold the image preview
   imageFile: File | null = null; // To hold the selected image file
   imageError: string | null = null; // To hold error messages for image validation
-  deletingCourse!:Course
+  deletingCourse!: Course | null;
   constructor(
     private courseService: CourseDataService,
     private formBuilder: FormBuilder,
@@ -95,27 +100,31 @@ export class InstructorModifyCourseComponent {
       reader.readAsDataURL(file);
     }
   }
-  selectCourseToDelete(course:Course){
-    this.deletingCourse=course
+  selectCourseToDelete(course: Course) {
+    this.deletingCourse = course;
   }
 
   onSubmit(form: FormGroup) {
     const formValue = {
       ...form.value,
       tags: form.value.tags.split(',').map((tag: string) => tag.trim()),
-      endGoals: form.value.endGoals.split(',').map((goal: string) => goal.trim()),
+      endGoals: form.value.endGoals
+        .split(',')
+        .map((goal: string) => goal.trim()),
     };
 
-    this.courseService.updateCourse(this.selectedCourse?.id!, formValue).subscribe({
-      next: (course) => {
-        if (this.imageFile) {
-          this.uploadImage(course.id, this.imageFile); // Upload image with course ID
-        }
-        this.courseUploaded = true;
-      },
-      error: (err) => console.error('Error updating course: ' + err),
-      complete: () => {},
-    });
+    this.courseService
+      .updateCourse(this.selectedCourse?.id!, formValue)
+      .subscribe({
+        next: (course) => {
+          if (this.imageFile) {
+            this.uploadImage(course.id, this.imageFile); // Upload image with course ID
+          }
+          this.courseUploaded = true;
+        },
+        error: (err) => console.error('Error updating course: ' + err),
+        complete: () => {},
+      });
   }
 
   uploadImage(courseId: number, file: File | null) {
@@ -132,24 +141,31 @@ export class InstructorModifyCourseComponent {
     });
   }
   deleteCourse(): void {
+    if(!this.deletingCourse){return }
     const courseId = this.deletingCourse.id;
-  
-    this.courseService.deleteCourse(courseId).pipe(
-      finalize(() => {
-        // This will run whether the request succeeds or fails
-        document.getElementById("closeModal")?.click();
-      })
-    ).subscribe({
-      next: () => {
-        // Filter out the deleted course from the list
-        this.courses = this.courses.filter(course => course.id !== courseId);
-        this.toast.showToast('Course deleted successfully', 'success');
-      },
-      error: (err) => {
-        console.error('Error deleting course: ' + err);
-        this.toast.showToast('Failed to delete course', "danger");
-      }
-    });
+
+    this.courseService
+      .toggleCourseStatus(courseId)
+      .pipe(
+        finalize(() => {
+          // This will run whether the request succeeds or fails
+          document.getElementById('closeModal')?.click();
+        })
+      )
+      .subscribe({
+        next: () => {
+          // Filter out the deleted course from the list
+          const course = this.courses.find((course) => course.id === courseId);
+          if (course) {
+            course.disabled = !course.disabled;
+          }
+
+          this.toast.showToast('Course deleted successfully', 'success');
+        },
+        error: (err) => {
+          console.error('Error deleting course: ' + err);
+          this.toast.showToast('Failed to delete course', 'danger');
+        },
+      });
   }
-  
 }

@@ -12,6 +12,7 @@ import { FooterComponent } from '../../utilities/footer/footer.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FormsModule } from '@angular/forms';
 import { quotes } from '../../../data/quotes';
+import { courseConstants } from '../../../constants/CourseConstants';
 
 @Component({
   selector: 'app-course-search',
@@ -30,6 +31,7 @@ import { quotes } from '../../../data/quotes';
   styleUrls: ['./course-search.component.css'], // Fixed typo here (changed from styleUrl to styleUrls)
 })
 export class CourseSearchComponent {
+  constants=courseConstants
   displayedCourses: Course[] = [];
   AllCourses: Course[] = [];
   coursesPerPage = 9; // Number of courses to load per scroll

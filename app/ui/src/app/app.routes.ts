@@ -165,12 +165,12 @@ export const routes: Routes = [
   },
 
   // Admin authentication paths
-  {
-    path: 'auth/admin/signin',
-    component: AdminSigninComponent,
-    data: { title: 'Admin Sign In' },
-    canActivate: [titleGuardGuard, userNotLoggedInGuard],
-  },
+  // {
+  //   path: 'auth/admin/signin',
+  //   component: AdminSigninComponent,
+  //   data: { title: 'Admin Sign In' },
+  //   canActivate: [titleGuardGuard, userNotLoggedInGuard],
+  // },
 
   // User pages
   {
@@ -229,6 +229,12 @@ export const routes: Routes = [
         path: 'profile',
         component: UserProfileComponent,
         data: { title: 'Instructor Profile' },
+        canActivate: [titleGuardGuard],
+      },
+      {
+        path: 'stats',
+        component: InstructorCheckStatsComponent,
+        data: { title: 'Courses stats' },
         canActivate: [titleGuardGuard],
       },
       {

@@ -11,7 +11,7 @@ export const authAdminGuard: CanActivateFn = (route, state) => {
   }else{
     console.log("Admin access only");
     
-    router.navigate(['auth/admin/signin'],{queryParams:{'redirectURL':state.url}})
+    router.navigate(['auth/user/signin'],{queryParams:{'redirectURL':state.url}})
     return false
   }
 };

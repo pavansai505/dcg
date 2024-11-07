@@ -1,6 +1,7 @@
 package com.dcg.mvc.user;
 
 import com.dcg.exception.CustomUserExceptions;
+import com.dcg.exception.RefreshTokenException;
 import com.dcg.handlers.password.ForgotPasswordHandler;
 import com.dcg.model.*;
 import com.dcg.mvc.contest.Contest;
@@ -11,6 +12,7 @@ import com.dcg.mvc.course.CourseDTO;
 import com.dcg.mvc.course.CourseMapper;
 import com.dcg.response.CustomResponse;
 import com.dcg.response.TokenResponse;
+import com.dcg.security.JwtTokenCreation;
 import com.dcg.services.EmailService;
 //import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;
@@ -49,6 +51,7 @@ public class UserController {
     private final CouponService couponService;
 //    private final String imagePath = Paths.get("src", "main", "resources", "static", "profile", "pics").toAbsolutePath().toString();
     private final ResourceLoader resourceLoader;
+    private final JwtTokenCreation jwtTokenCreation;
     /**
      * Register a new user and return an authentication token.
      * @param user The user details for registration.
@@ -59,9 +62,8 @@ public class UserController {
     @PostMapping("/auth/register")
     public ResponseEntity<TokenResponse> registerUser(@RequestBody User user) throws ServletException, IOException {
         userService.createAccount(user);
-        String token = userService.userLogin(user);
-        String username = userService.getUsername(user);
-        return ResponseEntity.ok(TokenResponse.builder().token(token).username(username).build());
+        TokenResponse token = userService.userLogin(user);
+        return ResponseEntity.ok(token);
     }
 
     /**
@@ -73,9 +75,27 @@ public class UserController {
      */
     @PostMapping("/auth/login")
     public ResponseEntity<TokenResponse> userLogin(@RequestBody User request) throws ServletException, IOException {
-        String token = userService.userLogin(request);
-        String username = userService.getUsername(request);
-        return ResponseEntity.ok(TokenResponse.builder().token(token).username(username).build());
+        TokenResponse token = userService.userLogin(request);
+        return ResponseEntity.ok(token);
+    }
+    @GetMapping("/auth/refresh")
+    public ResponseEntity<TokenResponse> refreshTokens(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) throws ServletException, IOException {
+        // Extract token from the Authorization header
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            throw new RefreshTokenException("Invalid authorization header.");
+        }
+        String refreshToken = authorizationHeader.substring(7);
+
+        // Validate the refresh token
+        if (!jwtTokenCreation.validateRefreshToken(refreshToken)) {
+            throw new RefreshTokenException("Invalid or expired refresh token.");
+        }
+
+        // Extract username and generate new tokens
+        String username = jwtTokenCreation.getUsernameFromRefreshToken(refreshToken);
+        TokenResponse newTokens = userService.generateTokens(username);
+
+        return ResponseEntity.ok(newTokens);
     }
 
     /**

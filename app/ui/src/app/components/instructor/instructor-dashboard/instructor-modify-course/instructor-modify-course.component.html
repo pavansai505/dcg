@@ -27,21 +27,22 @@
                 </p>
                 <div class="card-text btn-group">
                  <div class="btn btn-outline-dark"  (click)="showFormForCard(course)">Edit</div>
-                 <div class="btn btn-outline-danger"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="selectCourseToDelete(course)">Delete</div>
+                 <div class="btn btn-outline-danger"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="selectCourseToDelete(course)" *ngIf="!course.disabled">Disable</div>
+                 <div class="btn btn-outline-success"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="selectCourseToDelete(course)" *ngIf="course.disabled">Enable</div>
                  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="staticBackdropLabel">Are you sure you want to delete?</h1>
+                          <h1 class="modal-title fs-5" id="staticBackdropLabel">Are you sure you want to continue?</h1>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body btn-group">
-                            <button type="button" class="btn btn-info" data-bs-dismiss="modal" id="closeModal">Close</button>
+                            <button type="button" class="btn btn-info" data-bs-dismiss="modal" id="closeModal" (click)="deletingCourse=null">Close</button>
                             <button type="button" class="btn btn-warning" (click)="deleteCourse()" >Confirm</button>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div>  
                 </div>
               </div>
             </div>

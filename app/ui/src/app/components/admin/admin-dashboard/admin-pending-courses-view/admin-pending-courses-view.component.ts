@@ -6,6 +6,7 @@ import { CourseCardComponent } from '../../../utilities/course-card/course-card.
 import { TruncateStringSizePipe } from '../../../../pipes/truncate-string-size.pipe';
 import { CommonModule } from '@angular/common';
 import { CourseCardApprovalCardsComponent } from '../../../utilities/course-card-approval-cards/course-card-approval-cards.component';
+import { courseConstants } from '../../../../constants/CourseConstants';
 
 @Component({
   selector: 'app-admin-pending-courses-view',
@@ -26,7 +27,7 @@ export class AdminPendingCoursesViewComponent {
   getCourses(){
     this.courseService.getCourses().subscribe({
       next: (value) => {
-        this.courses=value.filter((ele:Course)=>ele.approvalStatus=="pending")
+        this.courses=value.filter((ele:Course)=>ele.approvalStatus==courseConstants.course_pending)
       },
       error: (err) => console.error('Observable emitted an error: ' + err),
       complete: () => {},

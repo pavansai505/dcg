@@ -311,10 +311,10 @@ public class CourseController {
 
     }
 
-    @DeleteMapping("/{id}/delete")
-    public ResponseEntity<Void> deleteCourse(@PathVariable("id") Long courseId) {
+    @DeleteMapping("/{id}/disable")
+    public ResponseEntity<Void> disableCourse(@PathVariable("id") Long courseId) {
         try {
-            courseService.deleteCourse(courseId);
+            courseService.disableCourse(courseId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204 No Content
         } catch (CourseNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 Not Found

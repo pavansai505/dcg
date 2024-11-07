@@ -32,6 +32,7 @@ export class SignupComponent {
       next: (value) => {
         this.tokenService.setToken('jwt', value.token);
         this.tokenService.setToken('username', value.username);
+        this.tokenService.setToken('refreshToken', value.refreshToken);
         this.accessControl.refreshAccessControl();
       },
       error: (err) => console.error('Observable emitted an error: ' + err),

@@ -109,4 +109,11 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("An error occurred: " + ex.getMessage());
     }
+
+    @ExceptionHandler(RefreshTokenException.class)
+    public ResponseEntity<String> handleRefreshTokenException(RefreshTokenException ex) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(ex.getMessage());
+    }
 }

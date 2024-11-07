@@ -30,7 +30,7 @@ export class InstructorAddLessonsComponent {
 imageUrl: any;
   constructor(private courseService: CourseDataService,private toast:ToastService) {
     this.lessonFormGroup = new FormGroup({
-      lessonId: new FormControl('', Validators.required),
+      lessonId: new FormControl(0, Validators.required),
       lessonTitle: new FormControl('', Validators.required),
       lessonNotes: new FormControl('', Validators.required),
       lessonVideo: new FormControl('', Validators.required),

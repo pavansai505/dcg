@@ -144,7 +144,7 @@
           <div class="col col-10">
             <swiper-container #swiperContainer keyboard="true" autoplay="true">
               <ng-container *ngFor="let course of courses">
-                <swiper-slide>
+                <swiper-slide  *ngIf="course.approvalStatus==constants.course_approved && !course.disabled">
                   <app-course-card [course]="course"></app-course-card>
                 </swiper-slide>
               </ng-container>

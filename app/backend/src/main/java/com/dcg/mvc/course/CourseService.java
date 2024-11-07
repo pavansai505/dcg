@@ -288,10 +288,10 @@ public class CourseService {
             throw new CourseNotFoundException("Course not found with ID: " + courseId);
         }
     }
-    public void deleteCourse(Long courseId) {
+    public void disableCourse(Long courseId) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new CourseNotFoundException("Course not found with ID: " + courseId));
-        course.setApprovalStatus("rejected");
+        course.setDisabled(!course.isDisabled());
         courseRepository.save(course);
     }
 

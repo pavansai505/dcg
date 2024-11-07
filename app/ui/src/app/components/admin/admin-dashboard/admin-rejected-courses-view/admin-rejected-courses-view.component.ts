@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { CourseCardComponent } from '../../../utilities/course-card/course-card.component';
 import { TruncateStringSizePipe } from '../../../../pipes/truncate-string-size.pipe';
 import { CourseCardApprovalCardsComponent } from '../../../utilities/course-card-approval-cards/course-card-approval-cards.component';
+import { courseConstants } from '../../../../constants/CourseConstants';
 
 @Component({
   selector: 'app-admin-rejected-courses-view',
@@ -26,7 +27,7 @@ export class AdminRejectedCoursesViewComponent {
   getCourses(){
     this.courseService.getCourses().subscribe({
       next: (value) => {
-        this.courses=value.filter((ele:Course)=>ele.approvalStatus=="rejected")
+        this.courses=value.filter((ele:Course)=>ele.approvalStatus==courseConstants.course_rejected)
       },
       error: (err) => console.error('Observable emitted an error: ' + err),
       complete: () => {},
