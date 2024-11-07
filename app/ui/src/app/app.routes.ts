@@ -59,6 +59,7 @@ import { InstructorDeleteUnitsComponent } from './components/instructor/instruct
 import { AdminAddUsersComponent } from './components/admin/admin-dashboard/admin-add-users/admin-add-users.component';
 import { InstructorAddQuizLecturesComponent } from './components/instructor/instructor-dashboard/instructor-add-quiz-lectures/instructor-add-quiz-lectures.component';
 import { InstructorDeleteLecturesComponent } from './components/instructor/instructor-dashboard/instructor-delete-lectures/instructor-delete-lectures.component';
+import { ResourcesComponent } from './components/resources/resources.component';
 
 export const routes: Routes = [
   // Home route
@@ -448,6 +449,13 @@ export const routes: Routes = [
         canActivate: [titleGuardGuard],
       },
     ],
+  },
+  // Resources
+  {
+    path: 'resources',
+    component: ResourcesComponent,
+    data: { title: 'Resources' },
+    canActivate: [titleGuardGuard],
   },
   // Miscellaneous
   {
