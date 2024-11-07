@@ -111,6 +111,11 @@
           >
         </li>
         <li>
+          <a [routerLink]="['/resources']" class="nav-link px-2 text-dark"
+            >Resources</a
+          >
+        </li>
+        <li>
           <a
             [routerLink]="['/contact']"
             routerLinkActive="router-link-active"
@@ -179,7 +184,6 @@
             type="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
-            
           >
             <img
               src="https://github.com/mdo.png"
@@ -189,7 +193,7 @@
               class="rounded-circle"
             />
           </a>
-          <ul class="dropdown-menu" >
+          <ul class="dropdown-menu">
             <li>
               <a
                 [routerLink]="['/user/dashboard']"
