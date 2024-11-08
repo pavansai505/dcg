@@ -10,11 +10,14 @@ import com.dcg.mvc.coupon.CouponService;
 import com.dcg.mvc.course.Course;
 import com.dcg.mvc.course.CourseDTO;
 import com.dcg.mvc.course.CourseMapper;
+import com.dcg.mvc.user.social.GoogleUser;
+import com.dcg.mvc.user.social.SocialAuth;
 import com.dcg.response.CustomResponse;
 import com.dcg.response.TokenResponse;
 import com.dcg.security.JwtTokenCreation;
 import com.dcg.services.EmailService;
 //import jakarta.annotation.Resource;
+import com.google.auth.oauth2.TokenVerifier;
 import jakarta.servlet.ServletException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
@@ -32,6 +35,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,11 +50,8 @@ public class UserController {
     private final UserService userService;
     private final ForgotPasswordHandler forgotPasswordHandler;
     private final EmailService emailService;
-    private final UserMapper userMapper;
     private final CourseMapper courseMapper;
-    private final CouponService couponService;
-//    private final String imagePath = Paths.get("src", "main", "resources", "static", "profile", "pics").toAbsolutePath().toString();
-    private final ResourceLoader resourceLoader;
+    private final SocialAuth socialAuth;
     private final JwtTokenCreation jwtTokenCreation;
     /**
      * Register a new user and return an authentication token.
@@ -59,13 +60,23 @@ public class UserController {
      * @throws ServletException If a servlet error occurs.
      * @throws IOException If an I/O error occurs.
      */
+
     @PostMapping("/auth/register")
     public ResponseEntity<TokenResponse> registerUser(@RequestBody User user) throws ServletException, IOException {
         userService.createAccount(user);
         TokenResponse token = userService.userLogin(user);
         return ResponseEntity.ok(token);
     }
+    @PostMapping("/auth/google/register")
+    public ResponseEntity<TokenResponse> registerUserWithGoogle(@RequestBody GoogleLoginRequest googleLoginRequest) {
+        String idToken = googleLoginRequest.getIdToken();
 
+        try {
+            return ResponseEntity.ok(socialAuth.registerUser(idToken));
+        } catch (TokenVerifier.VerificationException | ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     /**
      * Authenticate a user and return an authentication token.
      * @param request The user login details.
@@ -78,6 +89,18 @@ public class UserController {
         TokenResponse token = userService.userLogin(request);
         return ResponseEntity.ok(token);
     }
+    @PostMapping("/auth/google/login")
+    public ResponseEntity<TokenResponse> loginUserWithGoogle(@RequestBody GoogleLoginRequest googleLoginRequest) {
+       String idToken = googleLoginRequest.getIdToken();
+
+        try {
+
+            return ResponseEntity.ok(socialAuth.loginUser(idToken));
+        } catch (TokenVerifier.VerificationException | ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @GetMapping("/auth/refresh")
     public ResponseEntity<TokenResponse> refreshTokens(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) throws ServletException, IOException {
         // Extract token from the Authorization header

@@ -7,23 +7,44 @@ import ForgotPassword from '../../models/auth/forgotPasswordRequest';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  
-
-  constructor(private http:HttpClient) { }
-  signIn=(data:UserCredentials):Observable<any>=>{
-    return this.http.post<any>(environment.apiBaseUrl+"user/auth/login",data);
-  }
-  register=(data:UserRegistration):Observable<any>=>{
-    return this.http.post<any>(environment.apiBaseUrl+"user/auth/register",data);
-  }
-  forgotPassword=(data:ForgotPassword):Observable<any>=>{
-    return this.http.post<any>(environment.apiBaseUrl+"user/auth/forgot-password",data);
-  }
+  constructor(private http: HttpClient) {}
+  signIn = (data: UserCredentials): Observable<any> => {
+    return this.http.post<any>(
+      environment.apiBaseUrl + 'user/auth/login',
+      data
+    );
+  };
+  signInWithGoogle = (data: any): Observable<any> => {
+    return this.http.post<any>(
+      environment.apiBaseUrl + 'user/auth/google/login',
+      data
+    );
+  };
+  register = (data: UserRegistration): Observable<any> => {
+    return this.http.post<any>(
+      environment.apiBaseUrl + 'user/auth/register',
+      data
+    );
+  };
+  registerWithGoogle = (data: any): Observable<any> => {
+    return this.http.post<any>(
+      environment.apiBaseUrl + 'user/auth/google/register',
+      data
+    );
+  };
+  forgotPassword = (data: ForgotPassword): Observable<any> => {
+    return this.http.post<any>(
+      environment.apiBaseUrl + 'user/auth/forgot-password',
+      data
+    );
+  };
   resetPassword(token: string, password: any) {
-    return this.http.post<any>(environment.apiBaseUrl+"user/auth/reset-password",{token:token,password:password});
+    return this.http.post<any>(
+      environment.apiBaseUrl + 'user/auth/reset-password',
+      { token: token, password: password }
+    );
   }
-
 }

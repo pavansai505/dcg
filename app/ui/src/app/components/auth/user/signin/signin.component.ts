@@ -10,11 +10,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { TokenService } from '../../../../services/token/token.service';
 import { AccessControlService } from '../../../../services/auth/access-control.service';
+import { GoogleSinginComponent } from "../social/google-singin/google-singin.component";
 
 @Component({
   selector: 'app-signin',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, CommonModule],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule, GoogleSinginComponent],
   templateUrl: './signin.component.html',
   styleUrl: './signin.component.css',
 })

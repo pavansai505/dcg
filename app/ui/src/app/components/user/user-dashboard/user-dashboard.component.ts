@@ -18,7 +18,7 @@ export class UserDashboardComponent {
   }
   signOut(){
     this.access.refreshAccessControl()
-    this.token.removeToken("jwt")
+    this.token.clearMainTokens()
   }
   
 }

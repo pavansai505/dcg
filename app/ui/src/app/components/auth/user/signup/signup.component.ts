@@ -11,11 +11,12 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { error } from 'console';
 import { AccessControlService } from '../../../../services/auth/access-control.service';
 import { TokenService } from '../../../../services/token/token.service';
+import { GoogleSingupComponent } from "../social/google-singup/google-singup.component";
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, CommonModule],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule, GoogleSingupComponent],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })

@@ -33,4 +33,12 @@ export class TokenService {
       this.router.navigate(['/auth/user/signin'])
     }
   }
+  clearMainTokens(): void {
+    if (this.isBrowser) {
+      window.localStorage.removeItem("jwt");
+      window.localStorage.removeItem("username");
+      window.localStorage.removeItem("refreshToken");
+      this.router.navigate(['/auth/user/signin'])
+    }
+  }
 }
