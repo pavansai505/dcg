@@ -12,6 +12,7 @@ import com.dcg.mvc.user.User;
 import com.dcg.mvc.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,8 @@ public class CourseService {
     private final LectureRepository lectureRepository;
     private final UserRepository userRepository;
     private final CourseActionHistoryRepository courseActionHistoryRepository;
+    @Value(("${app.base.url}"))
+    private String baseUrl;
 
     /**
      * Adds a single course and sets its created by and approval status.
@@ -245,10 +248,21 @@ public class CourseService {
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
         // Update the user with the new image URL
-        course.setImageUrl(fileName); // Save only the file name
+        course.setImageUrl(baseUrl+splitImageUrl(filePath.toString())); // Save only the file name
         courseRepository.save(course);
 
-        return fileName; // Returning the filename
+        return course.getImageUrl(); // Returning the filename
+    }
+    public String splitImageUrl(String path) {
+        // Split the path at "static\\" and take the second part
+        String[] parts = path.split("static\\\\");
+        if (parts.length > 1) {
+            // Replace backslashes with forward slashes in the remaining path
+            return parts[1].replace("\\", "/");
+        } else {
+            System.out.println("The specified path does not contain 'static'.");
+            return null;  // Return null or an empty string if 'static' is not found
+        }
     }
     public Course updateCourse(Long courseId, Course updatedCourse) {
         Optional<Course> existingCourseOptional = courseRepository.findById(courseId);

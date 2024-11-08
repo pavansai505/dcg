@@ -104,6 +104,7 @@ public class SocialAuth {
                 .username(user.getFullName())
                 .token(jwtToken)
                 .refreshToken(refreshToken)
+                .imageUrl(user.getPictureUrl())
                 .build();
     }
 }

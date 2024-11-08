@@ -73,4 +73,7 @@ export class UserDetailsService {
   addUsers(users: any[]): Observable<any> {
     return this.http.post<any>(`${environment.apiBaseUrl}user/bulk-add`, users);
   }
+  getUserImage(): Observable<any> {
+    return this.http.get<any>(`${environment.apiBaseUrl}user/profile/image`);
+  }
 }

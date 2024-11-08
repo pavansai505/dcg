@@ -38,6 +38,7 @@ export class TokenService {
       window.localStorage.removeItem("jwt");
       window.localStorage.removeItem("username");
       window.localStorage.removeItem("refreshToken");
+      window.localStorage.removeItem("imageUrl");
       this.router.navigate(['/auth/user/signin'])
     }
   }

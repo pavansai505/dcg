@@ -9,7 +9,7 @@
             routerLinkActive="router-link-active"
           >
           <img
-          [src]="course.imageUrl?(imagePageUrl+'images/course/'+ course.id +'/'+ course.imageUrl) : 'https://www.picsum.photos/170/100'" 
+          [src]="course.imageUrl?course.imageUrl : 'https://www.picsum.photos/170/100'" 
           loading="lazy"
           class="card-img-top"
         

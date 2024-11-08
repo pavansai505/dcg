@@ -1,6 +1,6 @@
 <div class="card bg-body-tertiary h-100" style="min-height: 360px;">
   <img
-  [src]="course.imageUrl? (imagePageUrl+'images/course/'+ course.id +'/'+ course.imageUrl) : 'https://www.picsum.photos/170/100'" 
+  [src]="course.imageUrl? course.imageUrl : 'https://www.picsum.photos/170/100'" 
   loading="lazy"
     class="card-img-top"
     style="height: 45%;"

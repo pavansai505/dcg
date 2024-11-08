@@ -11,4 +11,5 @@ public class TokenResponse {
     private String token;
     private String username;
     private String refreshToken;
+    private String imageUrl;
 }

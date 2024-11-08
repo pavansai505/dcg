@@ -5,3 +5,10 @@ server:
     key-store-password: password123  
     key-store-type: PKCS12  # Specify the type of the keystore
     key-alias: dcg  # Alias of the key in the keystore
+google:
+  client:
+    id: 1064127118398-me5kmlm6ulp1dsh051bak4rabvb3ckej.apps.googleusercontent.com
+
+app:
+  base:
+    url: https://dcgservice.online:8443/api/v1/

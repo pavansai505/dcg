@@ -17,6 +17,7 @@ import jakarta.servlet.ServletException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -49,6 +50,9 @@ public class UserService {
     private final JwtTokenCreation jwtTokenCreation;
     private final EmailService emailService;
     private final CouponService couponService;
+
+    @Value(("${app.base.url}"))
+    private String baseUrl;
 
 
 //    @Value("${upload.dir}")
@@ -103,7 +107,8 @@ public class UserService {
             logger.debug("Authentication details: {}", auth);
             return TokenResponse.builder().username(user.getFullName())
                     .token(jwtTokenCreation.createToken((User) auth.getPrincipal()))
-                    .refreshToken(jwtTokenCreation.createRefreshToken((User) auth.getPrincipal())).build();
+                    .refreshToken(jwtTokenCreation.createRefreshToken((User) auth.getPrincipal()))
+                    .imageUrl(optionalUser.get().getImageUrl()).build();
         } catch (UserDisabledException e) {
             throw e; // Re-throwing the custom exception to be handled by the handler
         } catch (BadCredentialsException e) {
@@ -119,7 +124,8 @@ public class UserService {
 
         return TokenResponse.builder().username(user.getFullName())
                 .token(jwtTokenCreation.createToken(user))
-                .refreshToken(jwtTokenCreation.createRefreshToken(user)).build();
+                .refreshToken(jwtTokenCreation.createRefreshToken(user))
+                .imageUrl(user.getImageUrl()).build();
 
     }
 
@@ -276,10 +282,21 @@ public class UserService {
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
         // Update the user with the new image URL
-        user.setImageUrl(fileName); // Save only the file name
+        user.setImageUrl(baseUrl+splitImageUrl(filePath.toString())); // Save only the file name
         userRepository.save(user);
 
-        return fileName; // Returning the filename
+        return user.getImageUrl(); // Returning the filename
+    }
+    public String splitImageUrl(String path) {
+        // Split the path at "static\\" and take the second part
+        String[] parts = path.split("static\\\\");
+        if (parts.length > 1) {
+            // Replace backslashes with forward slashes in the remaining path
+            return parts[1].replace("\\", "/");
+        } else {
+            System.out.println("The specified path does not contain 'static'.");
+            return null;  // Return null or an empty string if 'static' is not found
+        }
     }
 
     public String getUserImageUrl(String username) {

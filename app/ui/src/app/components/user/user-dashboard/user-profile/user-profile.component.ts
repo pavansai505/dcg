@@ -180,6 +180,7 @@ export class UserProfileComponent implements OnInit {
         this.toast.showToast('Image uploaded succesfully.', 'success');
         // Update the user profile with the new image URL
         this.user.imageUrl = response.imageUrl; // Adjust based on your backend response
+        console.log(this.user.imageUrl)
       },
       error: (error) => {
         console.error('Error uploading image:', error);

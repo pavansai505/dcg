@@ -43,6 +43,7 @@ export class SigninComponent {
         this.tokenService.setToken('jwt', value.token);
         this.tokenService.setToken('username', value.username);
         this.tokenService.setToken('refreshToken', value.refreshToken);
+        this.tokenService.setToken('imageUrl', value.imageUrl);
         this.accessControl.refreshAccessControl();
     },
       error: (err) => console.error('Observable emitted an error: ' + err),
