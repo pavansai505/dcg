@@ -11,6 +11,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { TokenService } from '../../../../services/token/token.service';
 import { AccessControlService } from '../../../../services/auth/access-control.service';
 import { GoogleSinginComponent } from "../social/google-singin/google-singin.component";
+import { ToastService } from '../../../../services/toast/toast.service';
 
 @Component({
   selector: 'app-signin',
@@ -26,7 +27,8 @@ export class SigninComponent {
     private router: Router,
     private tokenService: TokenService,
     private route: ActivatedRoute,
-    private accessControl: AccessControlService
+    private accessControl: AccessControlService,
+    private toast:ToastService
   ) {
     let params = this.route.snapshot.queryParams;
     if (params['redirectURL']) {
@@ -38,15 +40,18 @@ export class SigninComponent {
     password: new FormControl('', Validators.required),
   });
   onSubmit(form: FormGroup) {
-    this.authService.signIn(form.value).subscribe({
+    const formData = {
+      ...form.value,
+      email: form.value.email.toLowerCase(), // Convert email to lowercase
+    };
+    this.authService.signIn(formData).subscribe({
       next: (value) => {
         this.tokenService.setToken('jwt', value.token);
         this.tokenService.setToken('username', value.username);
         this.tokenService.setToken('refreshToken', value.refreshToken);
         this.tokenService.setToken('imageUrl', value.imageUrl);
         this.accessControl.refreshAccessControl();
-    },
-      error: (err) => console.error('Observable emitted an error: ' + err),
+    },error:(err)=>this.toast.showToast("Error please try again.",'warning'),
       complete: () => {
         if (this.redirectURL) {
           console.log("here","/"+this.redirectURL.slice(1));

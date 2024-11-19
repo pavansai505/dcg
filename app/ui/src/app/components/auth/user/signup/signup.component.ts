@@ -29,7 +29,12 @@ export class SignupComponent {
     password: new FormControl('', Validators.required),
   });
   onSubmit(form: FormGroup) {
-    this.authService.register(form.value).subscribe({
+    const formData = {
+      ...form.value,
+      email: form.value.email.toLowerCase(), // Convert email to lowercase
+    };
+    
+    this.authService.register(formData).subscribe({
       next: (value) => {
         this.tokenService.setToken('jwt', value.token);
         this.tokenService.setToken('username', value.username);

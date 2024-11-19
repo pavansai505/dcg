@@ -6,11 +6,12 @@ import { Contest } from '../../../models/contest/contest';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LoaderComponent } from "../../utilities/loader/loader.component";
+import { CourseNavbarComponent } from "../../courses/course-navbar/course-navbar.component";
 
 @Component({
   selector: 'app-contests',
   standalone: true,
-  imports: [NavbarComponent, FooterComponent, CommonModule, RouterLink, DatePipe, LoaderComponent],
+  imports: [NavbarComponent, FooterComponent, CommonModule, RouterLink, DatePipe, LoaderComponent, CourseNavbarComponent],
   templateUrl: './contests.component.html',
   styleUrl: './contests.component.css'
 })

@@ -37,7 +37,7 @@ export class InstructorAddUnitsComponent {
   constructor(
     private courseService: CourseDataService,
     private fb: FormBuilder,
-    private toast:ToastService
+    private toast: ToastService
   ) {
     this.unitForm = this.fb.group({
       units: this.fb.array([
@@ -53,11 +53,10 @@ export class InstructorAddUnitsComponent {
       error: (err) => console.error('Observable emitted an error: ' + err),
       complete: () => {},
     });
-    
   }
   // makeAToast() {
   //   // Make sure Bootstrap is included in your project
-    
+
   //   const toastLiveExample = document.getElementById('liveToast');
 
   //   if (toastLiveExample) {
@@ -92,14 +91,16 @@ export class InstructorAddUnitsComponent {
         .addUnits(this.unitForm.value.units, this.selectedCourse.id)
         .subscribe({
           next: (value) => {
-            this.toast.showToast("Unit added succesfully")
+            this.toast.showToast('Unit added succesfully');
           },
           error: (err) => console.error('Observable emitted an error: ' + err),
-          complete: () => {this.resetForm();},
+          complete: () => {
+            // this.resetForm();
+          },
         });
     }
   }
-  
+
   private resetForm() {
     this.unitForm.reset({
       units: [

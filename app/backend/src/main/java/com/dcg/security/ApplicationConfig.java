@@ -71,7 +71,9 @@ public class ApplicationConfig {
                 "http://157.173.219.134",
                 "http://157.173.219.134:80",
                 "http://dcgservice.online",
-                "https://dcgservice.online"));
+                "https://dcgservice.online",
+                "https://www.dcgservice.online"
+                ));
 
         config.setAllowedHeaders(Arrays.asList(
                 HttpHeaders.ORIGIN,

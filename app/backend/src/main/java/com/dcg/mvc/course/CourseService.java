@@ -254,16 +254,17 @@ public class CourseService {
         return course.getImageUrl(); // Returning the filename
     }
     public String splitImageUrl(String path) {
-        // Split the path at "static\\" and take the second part
-        String[] parts = path.split("static\\\\");
+        // Split the path at "static" and take the second part
+        String[] parts = path.split("static");
         if (parts.length > 1) {
-            // Replace backslashes with forward slashes in the remaining path
+            // Replace any backslashes with forward slashes in the remaining path for consistency
             return parts[1].replace("\\", "/");
         } else {
             System.out.println("The specified path does not contain 'static'.");
-            return null;  // Return null or an empty string if 'static' is not found
+            return null;  // Return null if 'static' is not found
         }
     }
+
     public Course updateCourse(Long courseId, Course updatedCourse) {
         Optional<Course> existingCourseOptional = courseRepository.findById(courseId);
 

@@ -1,6 +1,8 @@
 <div class="container-fluid p-0">
     <div class="row justify-content-center">
       <div class="col" *ngIf="!showForm">
+        <h1 class="pb-2 border-bottom fw-bold text-uppercase">Add Badges</h1>
+
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           <div class="col" *ngFor="let course of courses">
             <div
@@ -9,7 +11,7 @@
               routerLinkActive="router-link-active"
             >
               <img
-              [src]="course.imageUrl?(imageUrl+'images/course/'+ course.id +'/'+ course.imageUrl) : 'https://www.picsum.photos/170/100'" 
+              [src]="course.imageUrl?course.imageUrl : 'https://www.picsum.photos/170/100'" 
                 class="card-img-top"
                 alt="..."
               />

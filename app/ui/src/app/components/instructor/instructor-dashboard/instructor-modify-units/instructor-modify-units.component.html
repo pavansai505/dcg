@@ -1,7 +1,8 @@
 <div class="container-fluid p-0">
   <div class="row justify-content-center">
     <div class="col" *ngIf="!showForm">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <h1 class="pb-2 border-bottom fw-bold text-uppercase">Modify Units</h1>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 py-3">
         <div class="col" *ngFor="let course of courses">
           <div
             class="card bg-body-tertiary h-100"
@@ -11,11 +12,7 @@
             <img
               [src]="
                 course.imageUrl
-                  ? imagePageUrl +
-                    'images/course/' +
-                    course.id +
-                    '/' +
-                    course.imageUrl
+                  ? course.imageUrl
                   : 'https://www.picsum.photos/170/100'
               "
               loading="lazy"
@@ -79,8 +76,20 @@
                       >ID: {{ unit.id }}</span
                     >
                   </li>
-                  <button class="btn btn-primary" (click)="onSubmit()" *ngIf="!unitsUpdated">Submit</button>
-                  <button class="btn btn-success" [disabled]="true" *ngIf="unitsUpdated">Submitted successfully</button>
+                  <button
+                    class="btn btn-primary"
+                    (click)="onSubmit()"
+                    *ngIf="!unitsUpdated"
+                  >
+                    Submit
+                  </button>
+                  <button
+                    class="btn btn-success"
+                    [disabled]="true"
+                    *ngIf="unitsUpdated"
+                  >
+                    Submitted successfully
+                  </button>
                 </ul>
               </div>
             </div>

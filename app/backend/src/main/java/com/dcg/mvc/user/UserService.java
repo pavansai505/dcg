@@ -280,7 +280,7 @@ public class UserService {
         // Save the file to the specified directory
         Path filePath = uploadDir.resolve(fileName);
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
+        System.out.println(baseUrl+splitImageUrl(filePath.toString())+"----"+filePath+"----"+fileName);
         // Update the user with the new image URL
         user.setImageUrl(baseUrl+splitImageUrl(filePath.toString())); // Save only the file name
         userRepository.save(user);
@@ -288,16 +288,17 @@ public class UserService {
         return user.getImageUrl(); // Returning the filename
     }
     public String splitImageUrl(String path) {
-        // Split the path at "static\\" and take the second part
-        String[] parts = path.split("static\\\\");
+        // Split the path at "static" and take the second part
+        String[] parts = path.split("static");
         if (parts.length > 1) {
-            // Replace backslashes with forward slashes in the remaining path
+            // Replace any backslashes with forward slashes in the remaining path for consistency
             return parts[1].replace("\\", "/");
         } else {
             System.out.println("The specified path does not contain 'static'.");
-            return null;  // Return null or an empty string if 'static' is not found
+            return null;  // Return null if 'static' is not found
         }
     }
+
 
     public String getUserImageUrl(String username) {
         User user = userRepository.findByEmail(username)

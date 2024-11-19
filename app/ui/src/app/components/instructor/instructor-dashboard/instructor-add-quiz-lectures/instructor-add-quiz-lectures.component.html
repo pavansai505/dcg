@@ -1,7 +1,9 @@
 <div class="container-fluid p-0">
   <div class="row justify-content-center">
-    <div class="col" *ngIf="!showForm">
+    <div class="col" *ngIf="!showForm">  <h1 class="pb-2 border-bottom fw-bold text-uppercase">Add Quiz</h1>
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-3">
+      
+
         <div class="col" *ngFor="let course of courses">
           <div
             class="card bg-body-tertiary h-100"
@@ -11,11 +13,7 @@
             <img
               [src]="
                 course.imageUrl
-                  ? imagePageUrl +
-                    'images/course/' +
-                    course.id +
-                    '/' +
-                    course.imageUrl
+                  ? course.imageUrl
                   : 'https://www.picsum.photos/170/100'
               "
               loading="lazy"
@@ -47,7 +45,12 @@
         <div class="card-body p-5">
           <button
             class="card-title text-start mb-4 btn btn-info fw-bolder"
-            (click)="selectedCourse = null;selectedUnit=null;selectedLecture=null; showForm = false"
+            (click)="
+              selectedCourse = null;
+              selectedUnit = null;
+              selectedLecture = null;
+              showForm = false
+            "
           >
             Back
           </button>
@@ -91,37 +94,76 @@
             </select>
           </div>
 
-
           <div [formGroup]="quizForm" class="container mt-5" *ngIf="showQuiz">
             <h2 class="mb-4">Create Quiz</h2>
             <form (ngSubmit)="onSubmit()" [formGroup]="quizForm">
               <div formArrayName="questions" class="mb-4">
                 <h3 class="mb-3">Questions</h3>
-                <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i" class="mb-3 border p-3 rounded">
+                <div
+                  *ngFor="let question of questions.controls; let i = index"
+                  [formGroupName]="i"
+                  class="mb-3 border p-3 rounded"
+                >
                   <h4 class="mb-3">Question {{ i + 1 }}</h4>
                   <div class="form-group mb-3">
-                    <label for="questionText" class="form-label">Question Text</label>
-                    <input id="questionText" formControlName="questionText" class="form-control" />
+                    <label for="questionText" class="form-label"
+                      >Question Text</label
+                    >
+                    <input
+                      id="questionText"
+                      formControlName="questionText"
+                      class="form-control"
+                    />
                   </div>
-          
+
                   <div formArrayName="options" class="form-group mb-3">
                     <label class="form-label">Options</label>
-                    <div *ngFor="let option of getOptionsControls(i).controls; let j = index" class="input-group mb-2">
+                    <div
+                      *ngFor="
+                        let option of getOptionsControls(i).controls;
+                        let j = index
+                      "
+                      class="input-group mb-2"
+                    >
                       <input [formControlName]="j" class="form-control" />
                     </div>
                   </div>
-          
+
                   <div class="form-group mb-3">
-                    <label for="correctAnswer" class="form-label">Correct Answer</label>
-                    <input id="correctAnswer" formControlName="correctAnswer" class="form-control" />
+                    <label for="correctAnswer" class="form-label"
+                      >Correct Answer</label
+                    >
+                    <input
+                      id="correctAnswer"
+                      formControlName="correctAnswer"
+                      class="form-control"
+                    />
                   </div>
-          
-                  <button type="button" class="btn btn-danger" (click)="removeQuestion(i)">Remove Question</button>
+
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    (click)="removeQuestion(i)"
+                  >
+                    Remove Question
+                  </button>
                 </div>
-                <button type="button" class="btn btn-primary" (click)="addQuestion()">Add Question</button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="addQuestion()"
+                >
+                  Add Question
+                </button>
               </div>
-          
-              <button type="submit" class="btn btn-success" [disabled]="quizForm.invalid">Submit</button>
+
+              <button
+                type="submit"
+                class="btn btn-success"
+                [disabled]="quizForm.invalid"
+              >
+                Submit
+              </button>
             </form>
           </div>
         </div>

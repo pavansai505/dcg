@@ -8,6 +8,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import CourseRegister from '../../../models/course/courseRegister';
 import { Subscription } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { CourseNavbarComponent } from "../course-navbar/course-navbar.component";
 
 @Component({
   selector: 'app-course-info',
@@ -18,7 +19,8 @@ import { environment } from '../../../../environments/environment';
     CommonModule,
     RouterLink,
     DatePipe,
-  ],
+    CourseNavbarComponent
+],
   templateUrl: './course-info.component.html',
   styleUrls: ['./course-info.component.css'], // Corrected from styleUrl to styleUrls
 })

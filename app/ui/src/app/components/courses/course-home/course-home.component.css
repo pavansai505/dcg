@@ -19,23 +19,19 @@ swiper-container {
     object-fit: cover;
   }
 
-  .carousel-control-prev-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M11.354 1.354a.5.5 0 0 1 0 .707L5.207 8l6.147 6.146a.5.5 0 0 1-.708.708l-6.5-6.5a.5.5 0 0 1 0-.708l6.5-6.5a.5.5 0 0 1 .708 0z'/%3E%3C/svg%3E") !important;
-    background-size: 24px 24px;
-    width: 40px;
-    height: 40px;
-    background-color: rgba(0, 0, 0, 0.5); /* Adding a slight background for better visibility */
-    border-radius: 50%; /* Making it a circle */
+ /* Default style - show carousel controls */
+.carousel-control-prev,
+.carousel-control-next {
+  display: block; /* Make sure buttons are shown on larger devices */
+}
+
+/* Hide carousel controls on smaller (scrollable) devices */
+@media (max-width: 768px) {  /* Target tablets and smaller screens */
+  .carousel-control-prev,
+  .carousel-control-next {
+    display: none;  /* Hide the buttons */
   }
-  
-  .carousel-control-next-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 14.854a.5.5 0 0 1 0-.708L10.793 8 4.646 1.854a.5.5 0 0 1 .708-.708l6.5 6.5a.5.5 0 0 1 0 .708l-6.5 6.5a.5.5 0 0 1-.708 0z'/%3E%3C/svg%3E") !important;
-    background-size: 24px 24px;
-    width: 40px;
-    height: 40px;
-    background-color: rgba(0, 0, 0, 0.5); /* Adding a slight background for better visibility */
-    border-radius: 50%; /* Making it a circle */
-  }
+}
   
 
    .carousel-inner {
@@ -81,3 +77,58 @@ swiper-container {
   }
   
 
+  .skeleton-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .skeleton-image {
+    background-color: #e0e0e0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16 / 9;  /* Maintain aspect ratio of the image */
+    border-radius: 10px;
+    animation: skeleton-loading 1.5s infinite ease-in-out;
+  }
+  
+  .skeleton-title {
+    background-color: #e0e0e0;
+    width: 80%;
+    height: 40px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    animation: skeleton-loading 1.5s infinite ease-in-out;
+  }
+  
+  .skeleton-text {
+    background-color: #e0e0e0;
+    width: 90%;
+    height: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    animation: skeleton-loading 1.5s infinite ease-in-out;
+  }
+  
+  .skeleton-button {
+    background-color: #e0e0e0;
+    width: 200px;
+    height: 40px;
+    border-radius: 8px;
+    margin-top: 20px;
+    animation: skeleton-loading 1.5s infinite ease-in-out;
+  }
+  
+  /* Animation for skeleton loader */
+  @keyframes skeleton-loading {
+    0% {
+      background-color: #e0e0e0;
+    }
+    50% {
+      background-color: #c0c0c0;
+    }
+    100% {
+      background-color: #e0e0e0;
+    }
+  }
+  

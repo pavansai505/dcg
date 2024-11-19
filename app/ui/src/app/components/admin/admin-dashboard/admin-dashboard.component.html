@@ -1,4 +1,4 @@
-<app-navbar></app-navbar>
+<app-course-navbar></app-course-navbar>
 <div class="container p-5">
   <div class="row">
     <div class="col-lg-3 col">
@@ -25,7 +25,7 @@
               routerLinkActive="router-link-active"
             >
               <i class="bi bi-person-circle pe-none me-2"></i>
-              Profile
+              Admin Profile
             </a>
           </li>
           <li>
@@ -43,7 +43,7 @@
               <small>Courses</small>
             </a>
           </li>
-          
+
           <li>
             <a
               [routerLink]="['courses/approved']"
@@ -73,7 +73,8 @@
               <i class="bi bi-ban pe-none me-2"></i>
               Rejected Courses
             </a>
-          </li> <li>
+          </li>
+          <li>
             <a class="nav-link link-body-emphasis">
               <small>Users</small>
             </a>
@@ -98,13 +99,13 @@
               Add Users
             </a>
           </li>
-          
+
           <li>
             <a class="nav-link link-body-emphasis">
               <small>Awards</small>
             </a>
           </li>
-          
+
           <li>
             <a class="nav-link link-body-emphasis">
               <i class="bi bi-patch-check pe-none me-2"></i>
@@ -169,6 +170,29 @@
             >
               <i class="bi bi-card-checklist pe-none me-2"></i>
               Coupons List
+            </a>
+          </li>
+          <li>
+            <a class="nav-link link-body-emphasis">
+              <small>FAQ</small>
+            </a>
+          </li>
+          <li>
+            <a
+              class="nav-link link-body-emphasis"
+              [routerLink]="['faq/add']"
+            >
+              <i class="bi bi-question-circle pe-none me-2"></i>
+              Create FAQ
+            </a>
+          </li>
+          <li>
+            <a
+              class="nav-link link-body-emphasis"
+              [routerLink]="['faq/delete']"
+            >
+              <i class="bi bi-question-circle pe-none me-2"></i>
+              Delete FAQ
             </a>
           </li>
         </ul>

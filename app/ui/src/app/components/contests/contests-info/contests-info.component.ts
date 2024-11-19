@@ -10,11 +10,12 @@ import { ToastService } from '../../../services/toast/toast.service';
 import { error } from 'console';
 import { ScoreService } from '../../../services/score/score.service';
 import { Score } from '../../../models/course/quiz';
+import { CourseNavbarComponent } from "../../courses/course-navbar/course-navbar.component";
 
 @Component({
   selector: 'app-contests-info',
   standalone: true,
-  imports: [NavbarComponent, FooterComponent, DatePipe, CommonModule],
+  imports: [NavbarComponent, FooterComponent, DatePipe, CommonModule, CourseNavbarComponent],
   templateUrl: './contests-info.component.html',
   styleUrl: './contests-info.component.css',
 })

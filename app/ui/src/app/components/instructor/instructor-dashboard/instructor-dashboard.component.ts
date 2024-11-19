@@ -5,11 +5,12 @@ import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterOutlet } from 
 import { filter } from 'rxjs';
 import { TokenService } from '../../../services/token/token.service';
 import { AccessControlService } from '../../../services/auth/access-control.service';
+import { CourseNavbarComponent } from "../../courses/course-navbar/course-navbar.component";
 
 @Component({
   selector: 'app-instructor-dashboard',
   standalone: true,
-  imports: [NavbarComponent,FooterComponent,RouterOutlet,RouterLink],
+  imports: [NavbarComponent, FooterComponent, RouterOutlet, RouterLink, CourseNavbarComponent],
   templateUrl: './instructor-dashboard.component.html',
   styleUrl: './instructor-dashboard.component.css'
 })

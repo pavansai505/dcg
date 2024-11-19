@@ -21,6 +21,7 @@ import Swiper from 'swiper';
 import { SwiperOptions } from 'swiper/types';
 import { forkJoin } from 'rxjs';
 import { courseConstants } from '../../../constants/CourseConstants';
+import { CourseNavbarComponent } from "../course-navbar/course-navbar.component";
 
 @Component({
   selector: 'app-course-home',
@@ -33,7 +34,8 @@ import { courseConstants } from '../../../constants/CourseConstants';
     CourseCardComponent,
     CrewComponent,
     FooterComponent,
-  ],
+    CourseNavbarComponent
+],
   templateUrl: './course-home.component.html',
   styleUrls: ['./course-home.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -1,4 +1,4 @@
-<app-navbar></app-navbar>
+<app-course-navbar></app-course-navbar>
 
 <!-- * Main -->
 <main>
@@ -21,49 +21,94 @@
 </div> -->
 
   <!-- * Carousel -->
-  <div class="container mt-4" >
+  <div class="container mt-0 mt-lg-4 ">
     <div
       id="carouselExampleCaptions"
       class="carousel slide"
       data-bs-ride="carousel"
       data-bs-interval="3000"
+      data-bs-touch="true"
     >
-      
-      <div class="carousel-inner">
+      <div class="carousel-inner ">
+        <div
+          *ngIf="!contests || contests.length === 0"
+          class="carousel-item skeleton-loader"
+        >
+          <!-- Skeleton Loader for Carousel Item -->
+          <div class="container-fluid col-xxl-8 px-4 py-0 py-lg-5">
+            <div
+              class="row flex-lg-row-reverse align-items-center justify-content-around g-5 py-5"
+            >
+              <div class="col-10 col-sm-8 col-lg-6">
+                <div class="skeleton-image"></div>
+              </div>
+              <div class="col-lg-6">
+                <div class="skeleton-title"></div>
+                <div class="skeleton-text"></div>
+                <div class="skeleton-button"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div
           *ngFor="let contest of contests; let i = index; trackBy: trackByFn"
           class="carousel-item"
           [class.active]="i === 0"
         >
-          <img
-          [routerLink]="['/contests/'+contest.id+'/info']" routerLinkActive="router-link-active" 
-            [src]="'https://picsum.photos/1600/600?random=' + i"
-            class="d-block w-100"
-            [alt]="contest.title"
-            loading="lazy"
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>{{ contest.title }}</h5>
-            <p>{{ contest.description }}</p>
+          <!-- Actual Contest Content -->
+          <div class="container col-xxl-8 py-0 py-lg-5">
+            <div
+              class="row flex-lg-row-reverse align-items-center justify-content-around g-5 py-5"
+            >
+              <div class="col-10 col-sm-8 col-lg-6">
+                <img
+                  src="assets/img/mainPage.png"
+                  loading="lazy"
+                  class="d-block mx-lg-auto img-fluid rounded "
+                  alt="E-Learning Platform Preview"
+                  width="700"
+                  height="500"
+                />
+              </div>
+              <div class="col-lg-6">
+                <h1 class="display-4 fw-bold text-dark mb-4">
+                  {{ contest.title }}
+                </h1>
+                <p class="lead text-muted mb-4">{{ contest.description }}</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                  <a
+                    [routerLink]="['/contests/' + contest.id + '/info']"
+                    routerLinkActive="router-link-active"
+                    class="btn btn-outline-secondary btn-lg px-4"
+                    >Join Now</a
+                  >
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <!-- Carousel Control Buttons with Bootstrap Icons -->
       <button
         class="carousel-control-prev"
         type="button"
         data-bs-target="#carouselExampleCaptions"
         data-bs-slide="prev"
+        aria-label="Previous Slide"
       >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <i class=" carousel-control-prev-icon"></i>
         <span class="visually-hidden">Previous</span>
       </button>
+
       <button
         class="carousel-control-next"
         type="button"
         data-bs-target="#carouselExampleCaptions"
         data-bs-slide="next"
+        aria-label="Next Slide"
       >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <i class="   carousel-control-next-icon"></i>
         <span class="visually-hidden">Next</span>
       </button>
     </div>
@@ -134,7 +179,6 @@
     </div> -->
     <div class="album py-5 bg-body-tertiary">
       <div class="container text-center">
-      
         <div class="row">
           <div class="col col-1 centerIt">
             <div class="btn" (click)="swiperEl.swiper.slidePrev()">
@@ -144,7 +188,12 @@
           <div class="col col-10">
             <swiper-container #swiperContainer keyboard="true" autoplay="true">
               <ng-container *ngFor="let course of courses">
-                <swiper-slide  *ngIf="course.approvalStatus==constants.course_approved && !course.disabled">
+                <swiper-slide
+                  *ngIf="
+                    course.approvalStatus == constants.course_approved &&
+                    !course.disabled
+                  "
+                >
                   <app-course-card [course]="course"></app-course-card>
                 </swiper-slide>
               </ng-container>
@@ -161,7 +210,7 @@
   </div>
 
   <!-- * teachers -->
-  <app-crew></app-crew>
+  <app-crew id="team"></app-crew>
 
   <!-- * Testimonials -->
   <div class="container px-4 py-5" id="featured-3">

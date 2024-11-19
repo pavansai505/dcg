@@ -27,7 +27,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   // If the token is expired, attempt to refresh it
-  if (isTokenExpired(authToken)) {
+  if (authToken && isTokenExpired(authToken)) {
     // Attempt to refresh the token
     return httpClient.post('/api/v1/user/auth/refresh', { refreshToken }).pipe(
       switchMap((response: any) => {

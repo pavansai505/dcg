@@ -5,10 +5,11 @@ import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/route
 import { TokenService } from '../../../services/token/token.service';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { AccessControlService } from '../../../services/auth/access-control.service';
+import { CourseNavbarComponent } from "../../courses/course-navbar/course-navbar.component";
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [NavbarComponent,FooterComponent,RouterOutlet,RouterLink],
+  imports: [NavbarComponent, FooterComponent, RouterOutlet, RouterLink, CourseNavbarComponent],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css'
 })

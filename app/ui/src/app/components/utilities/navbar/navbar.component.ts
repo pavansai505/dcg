@@ -49,5 +49,9 @@ changePageToSearch(){
   this.router.navigate(['/courses/search'])
 }
 
+signOut(){
+  this.accessControl.refreshAccessControl()
+  this.token.clearMainTokens()
+}
 
 }

@@ -81,7 +81,7 @@ public class SocialAuth {
         User newUser = User.builder()
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
-                .email(user.getEmail())
+                .email(user.getEmail()).imageUrl(user.getPictureUrl())
                 .roles(List.of(roleRepository.findByName(Roles.ROLE_USER)
                         .orElseThrow(() -> new CustomUserExceptions.RoleNotFoundException("Role not found"))))
                 .build();

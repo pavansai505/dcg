@@ -132,6 +132,14 @@
             >About</a
           >
         </li>
+        <li>
+          <a
+            [routerLink]="['/faq']"
+            routerLinkActive="router-link-active"
+            class="nav-link px-2 text-dark"
+            >FAQ</a
+          >
+        </li>
       </ul>
       <div
         class="col-12 col-lg-4 mb-3 mb-lg-0 mx-auto border text-center"
@@ -225,6 +233,17 @@
                 aria-expanded="false"
               >
                 Admin profile
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li *ngIf="isUserLoggedIn">
+              <a
+                (click)="signOut()"
+                class="dropdown-item"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Signout
               </a>
             </li>
           </ul>

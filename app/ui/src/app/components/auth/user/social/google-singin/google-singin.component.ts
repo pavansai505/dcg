@@ -74,7 +74,7 @@ export class GoogleSinginComponent {
         this.tokenService.setToken('imageUrl', value.imageUrl);
         this.accessControl.refreshAccessControl();
     },
-      error: (err) => this.toast.showToast('User not found.','danger'),
+      error: (err) => this.toast.showToast('Please Sign Up first for account creation. ','danger'),
       complete: () => {
         if (this.redirectURL) {
           console.log("here","/"+this.redirectURL.slice(1));

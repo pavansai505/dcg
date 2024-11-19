@@ -1,0 +1,30 @@
+<div class="container mt-5">
+  <h2 class="mb-4">Add FAQs</h2>
+  <form [formGroup]="faqForm" (ngSubmit)="onSubmit()">
+    <div formArrayName="faqs" *ngFor="let faq of faqs.controls; let i = index" class="faq-item mb-3">
+      <div [formGroupName]="i">
+        <div class="form-group">
+          <label for="question{{i}}">Question</label>
+          <input type="text" class="form-control" id="question{{i}}" formControlName="question" required>
+        </div>
+        <div class="form-group mb-2">
+          <label for="category{{i}}">Category</label>
+          <select id="category{{i}}" class="form-select" aria-label="Default select example" formControlName="category">
+            <ng-container *ngFor="let category of categories">
+              <option value="{{category}}">{{category | lowercase}}</option>
+            </ng-container>
+          </select>
+        </div>
+        <div class="form-group mb-2">
+          <label for="answer{{i}}">Answer</label>
+          <textarea class="form-control" id="answer{{i}}" formControlName="answer" rows="3" required></textarea>
+        </div>
+        <button type="button" class="btn btn-danger" (click)="removeFaq(i)">Remove</button>
+      </div>
+    </div>
+    <div class="vstack gap-3 w-25">
+      <button type="button" class="btn btn-primary" (click)="addFaq()">Add Another FAQ</button>
+    <button type="submit" class="btn btn-success" [disabled]="!this.faqs.valid">Submit</button>
+    </div>
+  </form>
+</div>

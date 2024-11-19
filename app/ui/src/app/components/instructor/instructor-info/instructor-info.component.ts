@@ -9,11 +9,12 @@ import { CourseDataService } from '../../../services/course/course-data.service'
 import { CourseCardComponent } from '../../utilities/course-card/course-card.component';
 import { CommonModule } from '@angular/common';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { CourseNavbarComponent } from "../../courses/course-navbar/course-navbar.component";
 
 @Component({
   selector: 'app-instructor-info',
   standalone: true,
-  imports: [NavbarComponent, CourseCardComponent, CommonModule,InfiniteScrollModule],
+  imports: [NavbarComponent, CourseCardComponent, CommonModule, InfiniteScrollModule, CourseNavbarComponent],
   templateUrl: './instructor-info.component.html',
   styleUrl: './instructor-info.component.css',
 })

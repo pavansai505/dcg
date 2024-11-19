@@ -1,0 +1,48 @@
+<app-course-navbar></app-course-navbar>
+
+<!-- Skeleton Loader for FAQ Items while loading -->
+<div *ngIf="!faqs" class="container-fluid text-center">
+  <div class="row mb-5">
+    <div class="col">
+      <h1 class="fw-bolder">FAQ</h1>
+    </div>
+  </div>
+
+  <div class="row mt-5 w-75 mx-auto">
+    <div class="col-12">
+      <div class="skeleton-loader" *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9]">
+        <div class="skeleton-title"></div>
+        <div class="skeleton-text"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ Content after data is loaded -->
+<div *ngIf="faqs" class="container-fluid text-center">
+  <div class="row mb-5">
+    <div class="col">
+      <h1 class="fw-bolder">FAQ</h1>
+    </div>
+  </div>
+
+  <div class="row mt-5 w-75 mx-auto">
+    <ng-container *ngFor="let category of data | keyvalue">
+      <h4 class="my-3 text-start">{{category.key.split('_').join(' ')}}</h4>
+      <mat-accordion class="col-12">
+        <ng-container *ngFor="let faq of category.value; let i = index">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ faq.question }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>{{ faq.answer }}</p>
+          </mat-expansion-panel>
+        </ng-container>
+      </mat-accordion>
+    </ng-container>
+  </div>
+</div>
+
+<app-footer></app-footer>
